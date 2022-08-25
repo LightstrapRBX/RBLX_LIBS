@@ -244,19 +244,19 @@ function library:CreateWindow(windowName, keybind)
 		end)
 	end)
 	
-	local tabs = {}
+	local tabs = {tabOBJs = {}}
 	
 	tabs.CreateTab = function(tabName)
-		if not tabs[tabName] then
-			table.insert(tabs, tabName)
+		if not tabs.tabOBJs[tabName] then
+			table.insert(tabs.tabOBJs, tabName)
 		else
 			local amt = 0
-			for _, tabObjName in pairs(tabs) do
+			for _, tabObjName in pairs(tabs.tabOBJs) do
 				if tabObjName == tabName then
 					amt = amt + 1
 				end
 			end
-			table.insert(tabs, tabName .. "_" .. amt)
+			table.insert(tabs.tabOBJs, tabName .. "_" .. amt)
 		end
 		
 		local TabBtn = Instance.new("TextButton")
@@ -286,7 +286,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.Position = UDim2.new(0.5, 0, 0.5, 0)
 		TabBtnText.Size = UDim2.new(0.699999988, 0, 0.600000024, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
-		TabBtnText.Text = tabName or ("Tab " .. #tabs)
+		TabBtnText.Text = tabName or ("Tab " .. #tabs.tabOBJs)
 		TabBtnText.TextColor3 = Color3.fromRGB(58, 58, 58)
 		TabBtnText.TextScaled = true
 		TabBtnText.TextSize = 14.000

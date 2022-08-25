@@ -2,7 +2,7 @@ local library = {}
 
 function library:CreateWindow(windowName, keybind)
 
-	for _, obj in game:GetService("CoreGui"):GetChildren() do
+	for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
 		if obj.Name == "LightLib_Hub" then
 			obj:Destroy()
 		end

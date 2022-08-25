@@ -1,6 +1,13 @@
 local library = {}
 
 function library:CreateWindow(windowName, keybind)
+
+	for _, obj in game:GetService("CoreGui"):GetChildren() do
+		if obj.Name == "LightLib_Hub" then
+			obj:Destroy()
+		end
+	end
+
 	local LightLib_Hub = Instance.new("ScreenGui")
 	local Container = Instance.new("Frame")
 	local Drag = Instance.new("Frame")
@@ -28,7 +35,7 @@ function library:CreateWindow(windowName, keybind)
 	local DataHolderLayout = Instance.new("UIListLayout")
 	
 	LightLib_Hub.Name = "LightLib_Hub"
-	LightLib_Hub.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	LightLib_Hub.Parent = game:GetService("CoreGui")
 	LightLib_Hub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	LightLib_Hub.ResetOnSpawn = false
 

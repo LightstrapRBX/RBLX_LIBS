@@ -283,6 +283,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.Position = UDim2.new(0.5, 0, 0.5, 0)
 		TabBtnText.Size = UDim2.new(0.699999988, 0, 0.600000024, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
+		print(tabName)
 		TabBtnText.Text = tabName or "Tab"
 		TabBtnText.TextColor3 = Color3.fromRGB(58, 58, 58)
 		TabBtnText.TextScaled = true

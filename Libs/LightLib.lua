@@ -255,7 +255,7 @@ function library:CreateWindow(windowName, keybind)
 
 	local tabs = {}
 
-	tabs.CreateTab = function(tabName)
+	function tabs:CreateTab(tabName)
 		local TabBtn = Instance.new("TextButton")
 		local TabBtnText = Instance.new("TextLabel")
 		local TabBtnDivider = Instance.new("Frame")
@@ -299,7 +299,7 @@ function library:CreateWindow(windowName, keybind)
 
 		local tabData = {}
 
-		tabData.CreateButton = function(name, callback)
+		function tabData:CreateButton(name, callback)
 			if typeof(callback) == "function" then
 				local DataBtn = Instance.new("TextButton")
 				local BtnText = Instance.new("TextLabel")
@@ -356,7 +356,7 @@ function library:CreateWindow(windowName, keybind)
 			end
 		end
 
-		tabData.CreateLabel = function(text)
+		function tabData:CreateLabel(text)
 			local DataTxtLbl = Instance.new("Frame")
 			local Lbl = Instance.new("TextLabel")
 			local DataTxtLblDivider = Instance.new("Frame")
@@ -403,7 +403,7 @@ function library:CreateWindow(windowName, keybind)
 			DataTxtLblDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
 		end
 
-		tabData.CreateToggle = function(name, default, callback)
+		function tabData:CreateToggle(name, default, callback)
 			if typeof(callback) == "function" then
 				local DataTgl = Instance.new("Frame")
 				local DataTglLbl = Instance.new("TextLabel")

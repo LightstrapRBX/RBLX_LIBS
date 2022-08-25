@@ -270,7 +270,7 @@ function library:CreateWindow(windowName, keybind)
 		TabData.Parent = DataHolder
 
 		TabBtn.Name = "TabBtn"
-		TabBtn.Parent = TabData
+		TabBtn.Parent = TabHolder
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 		TabBtn.BorderSizePixel = 0
@@ -284,7 +284,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtn.TextWrapped = true
 
 		TabBtnText.Name = "TabBtnText"
-		TabBtnText.Parent = TabBtn
+		TabBtnText.Parent = TabHolder
 		TabBtnText.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtnText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		TabBtnText.BackgroundTransparency = 1.000
@@ -299,7 +299,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.TextWrapped = true
 
 		TabBtnDivider.Name = "TabBtnDivider"
-		TabBtnDivider.Parent = TabBtn
+		TabBtnDivider.Parent = TabHolder
 		TabBtnDivider.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtnDivider.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
 		TabBtnDivider.BorderSizePixel = 0
@@ -510,6 +510,7 @@ function library:CreateWindow(windowName, keybind)
 
 				TglBtn.Activated:Connect(function()
 					toggled = not toggled
+					print(toggled)
 					if toggled then
 						status = "ON"
 						TglStatus.BackgroundColor3 = onColor

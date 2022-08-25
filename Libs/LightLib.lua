@@ -187,6 +187,8 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.TextSize = 14.000
 	UpdatedTimeText.TextWrapped = true
 	UpdatedTimeText.TextXAlignment = Enum.TextXAlignment.Right
+
+	keybind = keybind or Enum.KeyCode.RightControl
 	
 	task.spawn(function()
 		local UIS = game:GetService("UserInputService")

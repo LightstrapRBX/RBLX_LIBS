@@ -269,6 +269,11 @@ function library:CreateWindow(windowName, keybind)
 		TabData.Name = #DataHolder:GetChildren() + 1
 		TabData.Parent = DataHolder
 
+		TabDataLayout.Name = "TabDataLayout"
+		TabDataLayout.Parent = TabData
+		TabDataLayout.SortOrder = Enum.SortOrder.LayoutOrder
+		TabDataLayout.Padding = UDim.new(0.00300000003, 0)
+
 		TabBtn.Name = "TabBtn"
 		TabBtn.Parent = TabHolder
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -282,6 +287,15 @@ function library:CreateWindow(windowName, keybind)
 		TabBtn.TextScaled = true
 		TabBtn.TextSize = 14.000
 		TabBtn.TextWrapped = true
+
+		task.spawn(function()
+			TabBtn.Activated:Connect(function()
+				for _, obj in pairs(DataHolder:GetChildren()) do
+					obj.Visible = false
+				end
+				TabData.Visible = true
+			end)
+		end)
 
 		TabBtnText.Name = "TabBtnText"
 		TabBtnText.Parent = TabHolder

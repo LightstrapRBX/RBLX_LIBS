@@ -110,7 +110,7 @@ function library:CreateWindow(windowName, keybind)
 	TabHolder.BorderSizePixel = 0
 	TabHolder.Position = UDim2.new(0.555480063, 0, 0.5, 0)
 	TabHolder.Size = UDim2.new(1.11096001, 0, 1, 0)
-	TabHolder.ScrollBarThickness = 9
+	TabHolder.ScrollBarImageTransparency = 1
 
 	TabHolderLayout.Name = "TabHolderLayout"
 	TabHolderLayout.Parent = TabHolder
@@ -138,7 +138,7 @@ function library:CreateWindow(windowName, keybind)
 	DataHolder.BorderSizePixel = 0
 	DataHolder.Position = UDim2.new(0.555480063, 0, 0.5, 0)
 	DataHolder.Size = UDim2.new(1.11096001, 0, 1, 0)
-	DataHolder.ScrollBarThickness = 9
+	DataHolder.ScrollBarImageTransparency = 1
 
 	DataHolderLayout.Name = "DataHolderLayout"
 	DataHolderLayout.Parent = DataHolder

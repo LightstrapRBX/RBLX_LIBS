@@ -95,7 +95,7 @@ function library:CreateWindow(windowName, keybind)
 	TabContainer.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabContainer.BorderSizePixel = 0
 	TabContainer.Position = UDim2.new(0.185000032, 0, 0.537698388, 0)
-	TabContainer.Size = UDim2.new(0.328999996, 0, 0.864603221, 0)
+	TabContainer.Size = UDim2.new(0.329, 0,0.864, 0)
 
 	TabCorner.CornerRadius = UDim.new(0.0199999996, 0)
 	TabCorner.Name = "TabCorner"
@@ -140,10 +140,10 @@ function library:CreateWindow(windowName, keybind)
 	DataHolder.Size = UDim2.new(1.11096001, 0, 1, 0)
 	DataHolder.ScrollBarImageTransparency = 1
 
-	DataHolderLayout.Name = "DataHolderLayout"
+	--[[DataHolderLayout.Name = "DataHolderLayout"
 	DataHolderLayout.Parent = DataHolder
 	DataHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	DataHolderLayout.Padding = UDim.new(0.00300000003, 0)
+	DataHolderLayout.Padding = UDim.new(0.00300000003, 0)]]
 
 	TitleContainer.Name = "TitleContainer"
 	TitleContainer.Parent = Window
@@ -256,12 +256,21 @@ function library:CreateWindow(windowName, keybind)
 	local tabs = {}
 
 	function tabs:CreateTab(tabName)
+		local TabData = Instance.new("Frame")
 		local TabBtn = Instance.new("TextButton")
 		local TabBtnText = Instance.new("TextLabel")
 		local TabBtnDivider = Instance.new("Frame")
 
+		TabData.AnchorPoint = Vector2.new(0.5, 0.5)
+		TabData.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TabData.BackgroundTransparency = 1.000
+		TabData.Position = UDim2.new(0.5, 0, 0.5, 0)
+		TabData.Size = UDim2.new(1, 0, 1, 0)
+		TabData.Name = #DataHolder:GetChildren() + 1
+		TabData.Parent = DataHolder
+
 		TabBtn.Name = "TabBtn"
-		TabBtn.Parent = TabHolder
+		TabBtn.Parent = TabData
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 		TabBtn.BorderSizePixel = 0
@@ -283,7 +292,6 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.Position = UDim2.new(0.5, 0, 0.5, 0)
 		TabBtnText.Size = UDim2.new(0.699999988, 0, 0.600000024, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
-		print(tabName)
 		TabBtnText.Text = tabName or "Tab"
 		TabBtnText.TextColor3 = Color3.fromRGB(58, 58, 58)
 		TabBtnText.TextScaled = true
@@ -308,7 +316,7 @@ function library:CreateWindow(windowName, keybind)
 
 				local function getNumOfBTNs()
 					local numOfBTNs = 0
-					for _, obj in DataHolder:GetChildren() do
+					for _, obj in TabData:GetChildren() do
 						if obj:IsA("TextButton") then
 							numOfBTNs = numOfBTNs + 1
 						end
@@ -317,7 +325,7 @@ function library:CreateWindow(windowName, keybind)
 				end
 
 				DataBtn.Name = "DataBtn"
-				DataBtn.Parent = DataHolder
+				DataBtn.Parent = TabData
 				DataBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 				DataBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 				DataBtn.BorderSizePixel = 0
@@ -364,7 +372,7 @@ function library:CreateWindow(windowName, keybind)
 
 			local function getNumOfLBLs()
 				local numOfLBLs = 0
-				for _, obj in DataHolder:GetChildren() do
+				for _, obj in TabData:GetChildren() do
 					if obj.Name == "DataTxtLbl" then
 						numOfLBLs = numOfLBLs + 1
 					end
@@ -373,7 +381,7 @@ function library:CreateWindow(windowName, keybind)
 			end
 
 			DataTxtLbl.Name = "DataTxtLbl"
-			DataTxtLbl.Parent = DataHolder
+			DataTxtLbl.Parent = TabData
 			DataTxtLbl.AnchorPoint = Vector2.new(0.5, 0.5)
 			DataTxtLbl.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 			DataTxtLbl.BorderColor3 = Color3.fromRGB(27, 42, 53)
@@ -414,7 +422,7 @@ function library:CreateWindow(windowName, keybind)
 
 				local function getNumOfTGLs()
 					local numOfTGLs = 0
-					for _, obj in DataHolder:GetChildren() do
+					for _, obj in TabData:GetChildren() do
 						if obj.Name == "DataTgl" then
 							numOfTGLs = numOfTGLs + 1
 						end
@@ -436,7 +444,7 @@ function library:CreateWindow(windowName, keybind)
 				local toggled = default
 
 				DataTgl.Name = "DataTgl"
-				DataTgl.Parent = DataHolder
+				DataTgl.Parent = TabData
 				DataTgl.AnchorPoint = Vector2.new(0.5, 0.5)
 				DataTgl.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 				DataTgl.BorderColor3 = Color3.fromRGB(27, 42, 53)

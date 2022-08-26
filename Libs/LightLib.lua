@@ -267,7 +267,9 @@ function library:CreateWindow(windowName, keybind)
 		end)
 	end)
 
-	local tabs = {}
+	local tabs = {
+		currentTabs = {}
+	}
 
 	function tabs:CreateTab(tabName)
 		local TabData = Instance.new("Frame")
@@ -283,8 +285,26 @@ function library:CreateWindow(windowName, keybind)
 		TabData.BackgroundTransparency = 1.000
 		TabData.Position = UDim2.new(0.5, 0, 0.5, 0)
 		TabData.Size = UDim2.new(1, 0, 1, 0)
-		TabData.Name = tabName or #DataHolder:GetChildren() + 1
+		TabData.Name = #DataHolder:GetChildren() + 1
 		TabData.Parent = DataHolder
+
+		print("New tab name:", TabData.Name)
+
+		if not table.find(tabs.currentTabs, TabData.Name) then
+			table.insert(tabs.currentTabs, TabData.Name)
+		else
+			local amtOfSame = 0
+			for _, tn in ipairs(tabs.currentTabs) do
+				if tn == TabData.Name then
+					amtOfSame = amtOfSame + 1
+				end
+			end
+			table.insert(tabs.currentTabs, TabData.Name .. "_SAME_NAME_" .. tostring(amtOfSame))
+		end
+
+		for ind, val in ipairs(tabs.currentTabs) do
+			print(ind, ": ", val)
+		end
 
 		TabDataLayout.Name = "TabDataLayout"
 		TabDataLayout.Parent = TabData
@@ -326,11 +346,25 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.Position = UDim2.new(0.5, 0, 0.5, 0)
 		TabBtnText.Size = UDim2.new(0.7, 0, 0.6, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
-		TabBtnText.Text = tabName or "Tab"
+
+		if typeof(tabName) == "string" and tabName ~= "" and tabName ~= nil then
+			TabBtnText.Text = tabName
+		else
+			TabBtnText.Text = "Tab "..#tabs.currentTabs
+		end
+
 		TabBtnText.TextColor3 = Color3.fromRGB(157, 157, 157)
 		TabBtnText.TextScaled = true
 		TabBtnText.TextSize = 14.000
 		TabBtnText.TextWrapped = true
+
+		for _, obj in pairs(DataHolder:GetChildren()) do
+			if obj.Name == 1 then
+				obj.Visible = true
+			else
+				obj.Visible = false
+			end
+		end
 
 		task.spawn(function()
 			local connection1, connection2
@@ -349,7 +383,7 @@ function library:CreateWindow(windowName, keybind)
 					}):Play()
 				end)
 				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
-					Color = Color3.fromRGB(255, 255, 255)
+					Color = Color3.fromRGB(104, 104, 104)
 				}):Play()
 			end)
 			connection2 = TabBtn.MouseLeave:Connect(function()
@@ -519,8 +553,14 @@ function library:CreateWindow(windowName, keybind)
 				DataTglLbl.Position = UDim2.new(0.324374288, 0, 0.5, 0)
 				DataTglLbl.Size = UDim2.new(0.450000077, 0, 0.600000024, 0)
 				DataTglLbl.Font = Enum.Font.GothamBold
-				DataTglLbl.Text = name or getNumOfTGLs()
-				DataTglLbl.TextColor3 = Color3.fromRGB(58, 58, 58)
+
+				if typeof(name) == "string" and name ~= nil and name ~= "" then
+					DataTglLbl.Text = name
+				else
+					DataTglLbl.Text = "Toggle " .. getNumOfTGLs
+				end
+
+				DataTglLbl.TextColor3 = onColor
 				DataTglLbl.TextScaled = true
 				DataTglLbl.TextSize = 14.000
 				DataTglLbl.TextWrapped = true
@@ -608,21 +648,35 @@ function library:CreateWindow(windowName, keybind)
 						TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
-								Position = UDim2.new(0.748, 0, 0.5, 0),
-								BackgroundColor3 = onColor
-							}):Play()
+							task.spawn(function()
+								game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
+									Position = UDim2.new(0.748, 0, 0.5, 0),
+									BackgroundColor3 = onColor
+								}):Play()
+							end)
+							task.spawn(function()
+								game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+									TextColor3 = onColor
+								}):Play()
+							end)
 							status = "ON"
-							game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+							game:GetService("TweenService"):Create(DataTglLbl, TweenInfo.new(0.25), {
 								TextColor3 = onColor
 							}):Play()
 						elseif toggled ~= true then
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
-								Position = UDim2.new(0.236, 0, 0.5, 0),
-								BackgroundColor3 = offColor
-							}):Play()
+							task.spawn(function()
+								game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
+									Position = UDim2.new(0.236, 0, 0.5, 0),
+									BackgroundColor3 = offColor
+								}):Play()
+							end)
+							task.spawn(function()
+								game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+									TextColor3 = offColor
+								}):Play()
+							end)
 							status = "OFF"
-							game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+							game:GetService("TweenService"):Create(DataTglLbl, TweenInfo.new(0.25), {
 								TextColor3 = offColor
 							}):Play()
 						end

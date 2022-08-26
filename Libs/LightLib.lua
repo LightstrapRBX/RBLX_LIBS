@@ -178,7 +178,7 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.TextWrapped = true
 	UpdatedTimeText.TextXAlignment = Enum.TextXAlignment.Right
 
-	if not keybind or not Enum.KeyCode[keybind] then
+	if not keybind or not Enum.KeyCode[string.gsub(tostring(keybind), "Enum.KeyCode.", "")] then
 		_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
 	else
 		_G.LightLib_Hub_KEYBIND = keybind

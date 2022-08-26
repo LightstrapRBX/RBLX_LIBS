@@ -347,7 +347,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.Size = UDim2.new(0.7, 0, 0.6, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
 
-		if typeof(tabName) == "string" and tabName ~= "" and tabName ~= nil then
+		if tabName and typeof(tabName) == "string" and tabName ~= "" and tabName ~= nil then
 			TabBtnText.Text = tabName
 		else
 			TabBtnText.Text = "Tab "..#tabs.currentTabs
@@ -439,7 +439,13 @@ function library:CreateWindow(windowName, keybind)
 				BtnText.Position = UDim2.new(0.5, 0, 0.5, 0)
 				BtnText.Size = UDim2.new(0.699999988, 0, 0.600000024, 0)
 				BtnText.Font = Enum.Font.GothamBold
-				BtnText.Text = name or ("Button " .. getNumOfBTNs())
+
+				if name and typeof(name) == "string" and name ~= nil and name ~= "" then
+					BtnText.Text = name
+				else
+					BtnText.Text = "Button " .. getNumOfBTNs()
+				end
+
 				BtnText.TextColor3 = Color3.fromRGB(58, 58, 58)
 				BtnText.TextScaled = true
 				BtnText.TextSize = 14.000
@@ -458,6 +464,7 @@ function library:CreateWindow(windowName, keybind)
 		end
 
 		function tabData:CreateLabel(text)
+			if not text then return end
 			local DataTxtLbl = Instance.new("Frame")
 			local Lbl = Instance.new("TextLabel")
 			local DataTxtLblDivider = Instance.new("Frame")
@@ -554,7 +561,7 @@ function library:CreateWindow(windowName, keybind)
 				DataTglLbl.Size = UDim2.new(0.450000077, 0, 0.600000024, 0)
 				DataTglLbl.Font = Enum.Font.GothamBold
 
-				if typeof(name) == "string" and name ~= nil and name ~= "" then
+				if name and typeof(name) == "string" and name ~= nil and name ~= "" then
 					DataTglLbl.Text = name
 				else
 					DataTglLbl.Text = "Toggle " .. getNumOfTGLs

@@ -1,6 +1,9 @@
 local library = {}
 
-local lastUpdated = "08/25/2022 @ 5:11PM [UTC-7]"
+local date = os.date('*t')
+local time = os.date("*t")
+
+local lastUpdated = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec))) -- "08/25/2022 @ 5:14PM [UTC-7]"
 
 function library:CreateWindow(windowName, keybind)
 

@@ -1,5 +1,7 @@
 local library = {}
 
+local lastUpdated = "08/25/2022 @ 5:11PM [UTC-7]"
+
 function library:CreateWindow(windowName, keybind)
 
 	for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
@@ -11,9 +13,6 @@ function library:CreateWindow(windowName, keybind)
 	local LightLib_Hub = Instance.new("ScreenGui")
 	local Container = Instance.new("Frame")
 	local Drag = Instance.new("Frame")
-
-	local Border = Instance.new("Frame")
-	local UICorner = Instance.new("UICorner")
 
 	local Window = Instance.new("Frame")
 	local WindowCorner = Instance.new("UICorner")
@@ -60,20 +59,6 @@ function library:CreateWindow(windowName, keybind)
 	Drag.Size = UDim2.new(1, 0, 0.100000001, 0)
 	Drag.ZIndex = 0
 
-	Border.Name = "Border"
-	Border.Parent = Drag
-	Border.AnchorPoint = Vector2.new(0.5, 0.5)
-	Border.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	Border.BackgroundTransparency = 1.000
-	Border.Position = UDim2.new(0.5, 0, 4.98170328, 0)
-	Border.Size = UDim2.new(0.646, 0, 11.176, 0)
-
-	local originalBorderPosition = Border.Position
-	local originalBorderSize = Border.Size
-
-	UICorner.CornerRadius = UDim.new(0.0199999996, 0)
-	UICorner.Parent = Border
-
 	Window.Name = "Window"
 	Window.Parent = Drag
 	Window.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -94,10 +79,10 @@ function library:CreateWindow(windowName, keybind)
 	TabContainer.AnchorPoint = Vector2.new(0.5, 0.5)
 	TabContainer.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabContainer.BorderSizePixel = 0
-	TabContainer.Position = UDim2.new(0.185000032, 0, 0.537698388, 0)
-	TabContainer.Size = UDim2.new(0.329, 0,0.864, 0)
+	TabContainer.Position = UDim2.new({0.171, 0},{0.538, 0})
+	TabContainer.Size = UDim2.new({0.3, 0},{0.864, 0})
 
-	TabCorner.CornerRadius = UDim.new(0.0199999996, 0)
+	TabCorner.CornerRadius = UDim.new(0.02, 0)
 	TabCorner.Name = "TabCorner"
 	TabCorner.Parent = TabContainer
 
@@ -108,24 +93,24 @@ function library:CreateWindow(windowName, keybind)
 	TabHolder.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabHolder.BackgroundTransparency = 1.000
 	TabHolder.BorderSizePixel = 0
-	TabHolder.Position = UDim2.new(0.555480063, 0, 0.5, 0)
-	TabHolder.Size = UDim2.new(1.11096001, 0, 1, 0)
+	TabHolder.Position = UDim2.new({0.501, 0},{0.504, 0})
+	TabHolder.Size = UDim2.new({0.928, 0},{0.94, 0})
 	TabHolder.ScrollBarImageTransparency = 1
 
 	TabHolderLayout.Name = "TabHolderLayout"
 	TabHolderLayout.Parent = TabHolder
 	TabHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	TabHolderLayout.Padding = UDim.new(0.00300000003, 0)
+	TabHolderLayout.Padding = UDim.new(0.023, 0)
 
 	TabDataContainer.Name = "TabDataContainer"
 	TabDataContainer.Parent = Window
 	TabDataContainer.AnchorPoint = Vector2.new(0.5, 0.5)
 	TabDataContainer.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabDataContainer.BorderSizePixel = 0
-	TabDataContainer.Position = UDim2.new(0.678481102, 0, 0.535849214, 0)
-	TabDataContainer.Size = UDim2.new(0.610616624, 0, 0.860904753, 0)
+	TabDataContainer.Position = UDim2.new({0.661, 0},{0.536, 0})
+	TabDataContainer.Size = UDim2.new({0.645, 0},{0.861, 0})
 
-	TabDataCorner.CornerRadius = UDim.new(0.0199999996, 0)
+	TabDataCorner.CornerRadius = UDim.new(0.02, 0)
 	TabDataCorner.Name = "TabDataCorner"
 	TabDataCorner.Parent = TabDataContainer
 
@@ -136,14 +121,9 @@ function library:CreateWindow(windowName, keybind)
 	DataHolder.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	DataHolder.BackgroundTransparency = 1.000
 	DataHolder.BorderSizePixel = 0
-	DataHolder.Position = UDim2.new(0.555480063, 0, 0.5, 0)
-	DataHolder.Size = UDim2.new(1.11096001, 0, 1, 0)
+	DataHolder.Position = UDim2.new({0.555, 0},{0.5, 0})
+	DataHolder.Size = UDim2.new({1.111, 0},{1, 0})
 	DataHolder.ScrollBarImageTransparency = 1
-
-	--[[DataHolderLayout.Name = "DataHolderLayout"
-	DataHolderLayout.Parent = DataHolder
-	DataHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	DataHolderLayout.Padding = UDim.new(0.00300000003, 0)]]
 
 	TitleContainer.Name = "TitleContainer"
 	TitleContainer.Parent = Window
@@ -188,21 +168,25 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.Position = UDim2.new(0.5, 0, 0.5, 0)
 	UpdatedTimeText.Size = UDim2.new(1, 0, 1, 0)
 	UpdatedTimeText.Font = Enum.Font.GothamBlack
-	UpdatedTimeText.Text = "Last Updated: 08/24/2022"
+	UpdatedTimeText.Text = "Last Updated: " .. lastUpdated
 	UpdatedTimeText.TextColor3 = Color3.fromRGB(58, 58, 58)
 	UpdatedTimeText.TextScaled = true
 	UpdatedTimeText.TextSize = 14.000
 	UpdatedTimeText.TextWrapped = true
 	UpdatedTimeText.TextXAlignment = Enum.TextXAlignment.Right
 
-	keybind = keybind or Enum.KeyCode.RightControl
+	if not keybind or not Enum.KeyCode[keybind] then
+		_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
+	else
+		_G.LightLib_Hub_KEYBIND = keybind
+	end
 
 	task.spawn(function()
 		local UIS = game:GetService("UserInputService")
 		local UI_TOGGLED = true
 		local debounce = false
 		UIS.InputBegan:Connect(function(input)
-			if input.KeyCode == keybind then
+			if input.KeyCode == _G.LightLib_Hub_KEYBIND then
 				if debounce then return end
 				debounce = true
 				if UI_TOGGLED then
@@ -212,16 +196,9 @@ function library:CreateWindow(windowName, keybind)
 							originalWindowPosition,
 							Enum.EasingDirection.Out,
 							Enum.EasingStyle.Cubic,
-							.5
+							.75
 						)
 					end)
-					Border:TweenSizeAndPosition(
-						originalBorderSize,
-						originalBorderPosition,
-						Enum.EasingDirection.Out,
-						Enum.EasingStyle.Cubic,
-						.5
-					)
 					task.wait(1.5)
 					Drag.Active = true
 					Drag.Visible = true
@@ -235,13 +212,6 @@ function library:CreateWindow(windowName, keybind)
 							.75
 						)
 					end)
-					Border:TweenSizeAndPosition(
-						UDim2.fromScale(0, 0),
-						UDim2.fromScale(0, 0),
-						Enum.EasingDirection.Out,
-						Enum.EasingStyle.Cubic,
-						.75
-					)
 					task.wait(1.5)
 					Drag.Active = false
 					Drag.Visible = false
@@ -257,9 +227,11 @@ function library:CreateWindow(windowName, keybind)
 
 	function tabs:CreateTab(tabName)
 		local TabData = Instance.new("Frame")
+
 		local TabBtn = Instance.new("TextButton")
 		local TabBtnText = Instance.new("TextLabel")
 		local TabBtnDivider = Instance.new("Frame")
+		local TabBtnCorner = Instance.new("UICorner")
 
 		TabData.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabData.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -272,14 +244,14 @@ function library:CreateWindow(windowName, keybind)
 		TabDataLayout.Name = "TabDataLayout"
 		TabDataLayout.Parent = TabData
 		TabDataLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		TabDataLayout.Padding = UDim.new(0.00300000003, 0)
+		TabDataLayout.Padding = UDim.new(0.003, 0)
 
 		TabBtn.Name = "TabBtn"
 		TabBtn.Parent = TabHolder
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 		TabBtn.BorderSizePixel = 0
-		TabBtn.Size = UDim2.new(0.899999976, 0, 0.0599999987, 0)
+		TabBtn.Size = UDim2.new({1, 0},{0.06, 0})
 		TabBtn.AutoButtonColor = false
 		TabBtn.Font = Enum.Font.Oswald
 		TabBtn.Text = ""
@@ -287,6 +259,10 @@ function library:CreateWindow(windowName, keybind)
 		TabBtn.TextScaled = true
 		TabBtn.TextSize = 14.000
 		TabBtn.TextWrapped = true
+		
+		TabBtnCorner.CornerRadius = UDim.new(0.02, 0)
+		TabBtnCorner.Name = "TabBtnCorner"
+		TabBtnCorner.Parent = TabBtn
 
 		task.spawn(function()
 			TabBtn.Activated:Connect(function()
@@ -307,7 +283,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.Size = UDim2.new(0.699999988, 0, 0.600000024, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
 		TabBtnText.Text = tabName or "Tab"
-		TabBtnText.TextColor3 = Color3.fromRGB(58, 58, 58)
+		TabBtnText.TextColor3 = Color3.fromRGB(157, 157, 157)
 		TabBtnText.TextScaled = true
 		TabBtnText.TextSize = 14.000
 		TabBtnText.TextWrapped = true
@@ -431,6 +407,8 @@ function library:CreateWindow(windowName, keybind)
 				local DataTgl = Instance.new("Frame")
 				local DataTglLbl = Instance.new("TextLabel")
 				local DataTglDivider = Instance.new("Frame")
+
+				local TglBg = Instance.new("Frame")
 				local TglBtn = Instance.new("TextButton")
 				local TglStatus = Instance.new("TextLabel")
 
@@ -445,6 +423,7 @@ function library:CreateWindow(windowName, keybind)
 				end
 
 				local status
+				local toggled = default
 
 				if default then
 					status = "ON"
@@ -454,8 +433,6 @@ function library:CreateWindow(windowName, keybind)
 
 				local onColor = Color3.fromRGB(139, 139, 139)
 				local offColor = Color3.fromRGB(58, 58, 58)
-
-				local toggled = default
 
 				DataTgl.Name = "DataTgl"
 				DataTgl.Parent = TabData
@@ -488,15 +465,23 @@ function library:CreateWindow(windowName, keybind)
 				DataTglDivider.Position = UDim2.new(0.5, 0, 1, 0)
 				DataTglDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
 
+				TglBg.Name = "TglBg"
+				TglBg.Parent = DataTgl
+				TglBg.AnchorPoint = Vector2.new(0.5, 0.5)
+				TglBg.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+				TglBg.BorderSizePixel = 0
+				TglBg.Position = UDim2.new({0.708, 0},{0.5, 0})
+				TglBg.Size = UDim2.new({0.211, 0},{0.65, 0})
+
 				TglBtn.Name = "TglBtn"
-				TglBtn.Parent = DataTgl
+				TglBtn.Parent = TglBg
 				TglBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 				TglBtn.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
 				TglBtn.BorderSizePixel = 0
-				TglBtn.Position = UDim2.new(0.73078078, 0, 0.499999851, 0)
-				TglBtn.Size = UDim2.new(0.164690003, 0, 0.649999976, 0)
+				TglBtn.Position = UDim2.new({0.236, 0},{0.5, 0})
+				TglBtn.Size = UDim2.new({0.5, 0},{1, 0})
 				TglBtn.AutoButtonColor = false
-				TglBtn.Font = Enum.Font.SourceSans
+				TglBtn.Font = Enum.Font.GothamBold
 				TglBtn.Text = ""
 				TglBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
 				TglBtn.TextSize = 14.000
@@ -524,22 +509,44 @@ function library:CreateWindow(windowName, keybind)
 
 				TglBtn.Activated:Connect(function()
 					toggled = not toggled
-					print(toggled)
 					if toggled then
+						task.spawn(function()
+							TglBtn:TweenPosition(
+								UDim2.new({0.748, 0},{0.5, 0}),
+								Enum.EasingDirection.Out,
+								Enum.EasingStyle.Cubic,
+								.5
+							)
+						end)
+						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = onColor}):Play()
 						status = "ON"
 						TglStatus.BackgroundColor3 = onColor
 					elseif toggled ~= true then
+						task.spawn(function()
+							TglBtn:TweenPosition(
+								UDim2.new({0.236, 0},{0.5, 0}),
+								Enum.EasingDirection.Out,
+								Enum.EasingStyle.Cubic,
+								.5
+							)
+						end)
+						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = offColor}):Play()
 						status = "OFF"
 						TglStatus.BackgroundColor3 = offColor
 					end
-					TglStatus.Text = status
 
+					TglStatus.Text = status
 					callback(toggled)
 				end)
 			end
 		end
 
 		return tabData
+	end
+
+	function tabs:ChangeKeybind(kb)
+		if not kb or not Enum.KeyCode[kb] then return end
+		_G.LightLib_Hub_KEYBIND = kb
 	end
 
 	return tabs

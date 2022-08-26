@@ -250,6 +250,7 @@ function library:CreateWindow(windowName, keybind)
 		local TabBtn = Instance.new("TextButton")
 		local TabBtnText = Instance.new("TextLabel")
 		local TabBtnDivider = Instance.new("Frame")
+		local TabDataLayout = Instance.new("UIListLayout")
 		local TabBtnCorner = Instance.new("UICorner")
 		local TabBtnStroke = Instance.new("UIStroke")
 

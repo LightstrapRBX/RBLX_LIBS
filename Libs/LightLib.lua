@@ -35,6 +35,7 @@ function library:CreateWindow(windowName, keybind)
 
 	local TabDataContainer = Instance.new("Frame")
 	local TabDataCorner = Instance.new("UICorner")
+	local TabDataStroke = Instance.new("UIStroke")
 	local DataHolder = Instance.new("ScrollingFrame")
 
 	LightLib_Hub.Name = "LightLib_Hub"

@@ -1,12 +1,8 @@
 local library = {
-	VERSION = "1.0.2.2"
+	VERSION = "1.0.2.3"
 }
 
 warn("Required library: VERSION = ", library.VERSION)
-
-local time = os.date("*t")
-
-local lastUpdated = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec))) -- "08/25/2022 @ 5:14PM [UTC-7]"
 
 function library:CreateWindow(windowName, keybind)
 
@@ -204,9 +200,9 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.Size = UDim2.new(1, 0, 1, 0)
 	UpdatedTimeText.Font = Enum.Font.GothamBlack
 
-	UpdatedTimeText.Text = lastUpdated
 	task.spawn(function()
 		while LightLib_Hub do
+			local time = os.date("*t")
 			UpdatedTimeText.Text = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec)))
 			task.wait(0.5)
 		end

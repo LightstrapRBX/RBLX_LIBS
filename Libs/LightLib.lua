@@ -65,7 +65,7 @@ function library:CreateWindow(windowName, keybind)
 	Drag.BorderSizePixel = 0
 	Drag.Draggable = true
 	Drag.Position = UDim2.new(0.5, 0, 0.1, 0)
-	Drag.Size = UDim2.new(0.5, 0, 0.1, 0)
+	Drag.Size = UDim2.new(0.6, 0, 0.1, 0)
 	Drag.ZIndex = 0
 	Drag.SelectionOrder = 10
 
@@ -118,9 +118,10 @@ function library:CreateWindow(windowName, keybind)
 	TabHolder.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabHolder.BackgroundTransparency = 1.000
 	TabHolder.BorderSizePixel = 0
-	TabHolder.Position = UDim2.new(0.501, 0, 0.504, 0)
-	TabHolder.Size = UDim2.new(0.928, 0, 0.94, 0)
+	TabHolder.Position = UDim2.new(0.501, 0, 0.498, 0)
+	TabHolder.Size = UDim2.new(0.928, 0, 0.953, 0)
 	TabHolder.ScrollBarImageTransparency = 1
+	TabHolder.ClipsDescendants = false
 
 	TabHolderLayout.Name = "TabHolderLayout"
 	TabHolderLayout.Parent = TabHolder

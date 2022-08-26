@@ -359,7 +359,8 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.TextWrapped = true
 
 		for _, obj in pairs(DataHolder:GetChildren()) do
-			if obj.Name == 1 then
+			print(obj.Name)
+			if obj.Name == "1" then
 				obj.Visible = true
 			else
 				obj.Visible = false

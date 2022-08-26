@@ -63,13 +63,14 @@ function library:CreateWindow(windowName, keybind)
 	Drag.Position = UDim2.new(0.5, 0, 0.0500000007, 0)
 	Drag.Size = UDim2.new(1, 0, 0.100000001, 0)
 	Drag.ZIndex = 0
+	Drag.SelectionOrder = 10
 
 	Window.Name = "Window"
 	Window.Parent = Drag
 	Window.AnchorPoint = Vector2.new(0.5, 0.5)
 	Window.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 	Window.BackgroundTransparency = 0.050
-	Window.Position = UDim2.new(0.5, 0, 0.5, 0)
+	Window.Position = UDim2.new(0.5, 0, 5, 0)
 	Window.Size = UDim2.new(0.63, 0, 7.746, 0)
 
 	local originalWindowPosition = Window.Position

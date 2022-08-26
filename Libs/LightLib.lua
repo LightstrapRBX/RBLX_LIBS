@@ -177,7 +177,7 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.Position = UDim2.new(0.5, 0, 0.5, 0)
 	UpdatedTimeText.Size = UDim2.new(1, 0, 1, 0)
 	UpdatedTimeText.Font = Enum.Font.GothamBlack
-	UpdatedTimeText.Text = "Executed on: " .. lastUpdated
+	UpdatedTimeText.Text = lastUpdated
 	UpdatedTimeText.TextColor3 = Color3.fromRGB(58, 58, 58)
 	UpdatedTimeText.TextScaled = true
 	UpdatedTimeText.TextSize = 14.000
@@ -533,9 +533,9 @@ function library:CreateWindow(windowName, keybind)
 				TglStatus.AnchorPoint = Vector2.new(0.5, 0.5)
 
 				if status == "OFF" then
-					TglStatus.BackgroundColor3 = offColor
+					TglStatus.TextColor3 = offColor
 				elseif status == "ON" then
-					TglStatus.BackgroundColor3 = onColor
+					TglStatus.TextColor3 = onColor
 				end
 
 				TglStatus.BackgroundTransparency = 1.000
@@ -576,7 +576,7 @@ function library:CreateWindow(windowName, keybind)
 								BackgroundColor3 = onColor
 							}):Play()
 							status = "ON"
-							TglStatus.BackgroundColor3 = onColor
+							TglStatus.TextColor3 = onColor
 						elseif toggled ~= true then
 							task.spawn(function()
 								TglBtn:TweenPosition(
@@ -590,7 +590,7 @@ function library:CreateWindow(windowName, keybind)
 								BackgroundColor3 = offColor
 							}):Play()
 							status = "OFF"
-							TglStatus.BackgroundColor3 = offColor
+							TglStatus.TextColor3 = offColor
 						end
 	
 						TglStatus.Text = status

@@ -177,11 +177,20 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.TextSize = 14.000
 	UpdatedTimeText.TextWrapped = true
 	UpdatedTimeText.TextXAlignment = Enum.TextXAlignment.Right
-
-	if not keybind or not Enum.KeyCode[string.gsub(tostring(keybind), "Enum.KeyCode.", "")] then
+	-- or not Enum.KeyCode[tostring(string.gsub(tostring(keybind), "Enum.KeyCode.", ""))]
+	if not keybind then
 		_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
 	else
-		_G.LightLib_Hub_KEYBIND = keybind
+		if typeof(keybind) == "string" then
+			if not Enum.KeyCode[keybind] then
+				_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
+			else
+				_G.LightLib_Hub_KEYBIND = Enum.KeyCode[keybind]
+			end
+		elseif typeof(keybind) == "EnumItem" then
+			if not string.match(tostring(keybind), "Enum.KeyCode") then return end
+			_G.LightLib_Hub_KEYBIND = keybind
+		end
 	end
 
 	task.spawn(function()
@@ -548,8 +557,15 @@ function library:CreateWindow(windowName, keybind)
 	end
 
 	function tabs:ChangeKeybind(kb)
-		if not kb or not Enum.KeyCode[kb] then return end
-		_G.LightLib_Hub_KEYBIND = kb
+		if not kb then return end
+		if typeof(kb) == "string" then
+			if Enum.KeyCode[kb] then
+				_G.LightLib_Hub_KEYBIND = Enum.KeyCode[kb]
+			end
+		elseif typeof(kb) == "EnumItem" then
+			if not string.match(tostring(kb), "Enum.KeyCode") then return end
+			_G.LightLib_Hub_KEYBIND = kb
+		end
 	end
 
 	return tabs

@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.1"
+	VERSION = "1.0.2.2"
 }
 
 warn("Required library: VERSION = ", library.VERSION)
@@ -206,9 +206,8 @@ function library:CreateWindow(windowName, keybind)
 
 	UpdatedTimeText.Text = lastUpdated
 	task.spawn(function()
-		while UpdatedTimeText do
-			lastUpdated = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec)))
-			UpdatedTimeText.Text = lastUpdated
+		while LightLib_Hub do
+			UpdatedTimeText.Text = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec)))
 			task.wait(0.5)
 		end
 	end)

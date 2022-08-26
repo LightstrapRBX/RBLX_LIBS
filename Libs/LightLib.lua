@@ -1,6 +1,5 @@
 local library = {}
 
-local date = os.date('*t')
 local time = os.date("*t")
 
 local lastUpdated = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec))) -- "08/25/2022 @ 5:14PM [UTC-7]"
@@ -178,7 +177,7 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.Position = UDim2.new(0.5, 0, 0.5, 0)
 	UpdatedTimeText.Size = UDim2.new(1, 0, 1, 0)
 	UpdatedTimeText.Font = Enum.Font.GothamBlack
-	UpdatedTimeText.Text = "Last Updated: " .. lastUpdated
+	UpdatedTimeText.Text = "Executed on: " .. lastUpdated
 	UpdatedTimeText.TextColor3 = Color3.fromRGB(58, 58, 58)
 	UpdatedTimeText.TextScaled = true
 	UpdatedTimeText.TextSize = 14.000

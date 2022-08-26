@@ -28,6 +28,8 @@ function library:CreateWindow(windowName, keybind)
 
 	local TabContainer = Instance.new("Frame")
 	local TabCorner = Instance.new("UICorner")
+	local TabStroke = Instance.new("UIStroke")
+
 	local TabHolder = Instance.new("ScrollingFrame")
 	local TabHolderLayout = Instance.new("UIListLayout")
 
@@ -94,6 +96,13 @@ function library:CreateWindow(windowName, keybind)
 	TabCorner.CornerRadius = UDim.new(0.02, 0)
 	TabCorner.Name = "TabCorner"
 	TabCorner.Parent = TabContainer
+
+	TabStroke.ApplyStrokeMode = "Contextual"
+	TabStroke.Color = Color3.fromRGB(16, 16, 16)
+	TabStroke.LineJoinMode = "Bevel"
+	TabStroke.Thickness = 2
+	TabStroke.Name = "TabStroke"
+	TabStroke.Parent = TabContainer
 
 	TabHolder.Name = "TabHolder"
 	TabHolder.Parent = TabContainer
@@ -234,7 +243,7 @@ function library:CreateWindow(windowName, keybind)
 					Drag.Active = false
 					Drag.Visible = false
 				end
-				task.wait(.25)
+				task.wait(0.25)
 				debounce = false
 			end
 			UI_TOGGLED = not UI_TOGGLED
@@ -270,7 +279,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 		TabBtn.BorderSizePixel = 0
-		TabBtn.Size = UDim2.new(1, 0, .06, 0)
+		TabBtn.Size = UDim2.new(1, 0, 0.06, 0)
 		TabBtn.AutoButtonColor = false
 		TabBtn.Font = Enum.Font.Oswald
 		TabBtn.Text = ""
@@ -282,6 +291,14 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnCorner.CornerRadius = UDim.new(0.02, 0)
 		TabBtnCorner.Name = "TabBtnCorner"
 		TabBtnCorner.Parent = TabBtn
+
+		TabBtnStroke.Name = "TabBtnStroke"
+		TabBtnStroke.Parent = TabBtn
+		TabBtnStroke.ApplyStrokeMode = "Border"
+		TabBtnStroke.Color = Color3.fromRGB(21,21,21)
+		TabBtnStroke.LineJoinMode = "Round"
+		TabBtnStroke.Thickness = 2
+		TabBtnStroke.Transparency = 0.5
 
 		TabBtnText.Name = "TabBtnText"
 		TabBtnText.Parent = TabHolder
@@ -298,14 +315,6 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.TextSize = 14.000
 		TabBtnText.TextWrapped = true
 
-		TabBtnStroke.Name = "TabBtnStroke"
-		TabBtnStroke.Parent = TabBtn
-		TabBtnStroke.ApplyStrokeMode = "Border"
-		TabBtnStroke.Color = Color3.fromRGB(21,21,21)
-		TabBtnStroke.LineJoinMode = "Round"
-		TabBtnStroke.Thickness = 2
-		TabBtnStroke.Transparency = .5
-
 		task.spawn(function()
 			local connection1, connection2
 			TabBtn.Activated:Connect(function()
@@ -318,21 +327,21 @@ function library:CreateWindow(windowName, keybind)
 			end)
 			connection1 = TabBtn.MouseEnter:Connect(function()
 				task.spawn(function()
-					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {
+					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.35), {
 						BackgroundColor3 = Color3.fromRGB(67, 67, 67)
 					}):Play()
 				end)
-				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(.35), {
+				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.35), {
 					Color = Color3.fromRGB(255, 255, 255)
 				}):Play()
 			end)
 			connection2 = TabBtn.MouseLeave:Connect(function()
 				task.spawn(function()
-					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {
+					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.35), {
 						BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 					}):Play()
 				end)
-				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(.35), {
+				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.35), {
 					Color = Color3.fromRGB(21, 21, 21)
 				}):Play()
 			end)
@@ -549,18 +558,29 @@ function library:CreateWindow(windowName, keybind)
 				TglStatus.TextSize = 14.000
 				TglStatus.TextWrapped = true
 
+				local busy = false
+
 				task.spawn(function()
-					TglBtn.MouseEnter:Connect(function()
-						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.125), {
-							Size = UDim2.new(0.525, 0, 1.25, 0),
+					local con1, con2
+					con1 = TglBtn.MouseEnter:Connect(function()
+						if busy then return end
+						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
+							Size = UDim2.new(0.525, 0, 1.25, 0)
 						}):Play()
+						--con1:Disconnect()
 					end)
-					TglBtn.MouseLeave:Connect(function()
-						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.125), {
-							Size = UDim2.new(0.5, 0, 1, 0),
+					con2 = TglBtn.MouseLeave:Connect(function()
+						if busy then return end
+						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
+							Size = UDim2.new(0.5, 0, 1, 0)
 						}):Play()
+						--con2:Disconnect()
 					end)
+				end)
+
+				task.spawn(function()
 					TglBtn.Activated:Connect(function()
+						busy = true
 						TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then
@@ -569,32 +589,39 @@ function library:CreateWindow(windowName, keybind)
 									UDim2.new(0.748, 0, 0.5, 0),
 									Enum.EasingDirection.Out,
 									Enum.EasingStyle.Cubic,
-									.85
+									0.85,
+									true
 								)
 							end)
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.25), {
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
 								BackgroundColor3 = onColor
 							}):Play()
 							status = "ON"
-							TglStatus.TextColor3 = onColor
+							game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+								TextColor3 = onColor
+							}):Play()
 						elseif toggled ~= true then
 							task.spawn(function()
 								TglBtn:TweenPosition(
 									UDim2.new(0.236, 0, 0.5, 0),
 									Enum.EasingDirection.Out,
 									Enum.EasingStyle.Cubic,
-									.85
+									0.85,
+									true
 								)
 							end)
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.25), {
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
 								BackgroundColor3 = offColor
 							}):Play()
 							status = "OFF"
-							TglStatus.TextColor3 = offColor
+							game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+								TextColor3 = offColor
+							}):Play()
 						end
 	
 						TglStatus.Text = status
 						callback(toggled)
+						busy = false
 					end)
 				end)
 			end

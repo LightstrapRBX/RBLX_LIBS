@@ -126,7 +126,7 @@ function library:CreateWindow(windowName, keybind)
 	TabHolderLayout.Name = "TabHolderLayout"
 	TabHolderLayout.Parent = TabHolder
 	TabHolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	TabHolderLayout.Padding = UDim.new(0.023, 0)
+	TabHolderLayout.Padding = UDim.new(0.02, 0)
 
 	TabDataContainer.Name = "TabDataContainer"
 	TabDataContainer.Parent = Window
@@ -302,9 +302,9 @@ function library:CreateWindow(windowName, keybind)
 			table.insert(tabs.currentTabs, TabData.Name .. "_SAME_NAME_" .. tostring(amtOfSame))
 		end
 
-		for ind, val in ipairs(tabs.currentTabs) do
+		--[[for ind, val in ipairs(tabs.currentTabs) do
 			print(ind, ": ", val)
-		end
+		end]]
 
 		TabDataLayout.Name = "TabDataLayout"
 		TabDataLayout.Parent = TabData
@@ -567,7 +567,12 @@ function library:CreateWindow(windowName, keybind)
 					DataTglLbl.Text = "Toggle " .. getNumOfTGLs
 				end
 
-				DataTglLbl.TextColor3 = onColor
+				if status == "ON" then
+					DataTglLbl.TextColor3 = onColor
+				elseif status == "OFF" then
+					DataTglLbl.TextColor3 = offColor
+				end
+
 				DataTglLbl.TextScaled = true
 				DataTglLbl.TextSize = 14.000
 				DataTglLbl.TextWrapped = true
@@ -646,12 +651,14 @@ function library:CreateWindow(windowName, keybind)
 				task.spawn(function()
 					TglBtn.Activated:Connect(function()
 						busy = true
-						if t1.PlaybackState == Enum.PlaybackState.Playing then
+						t1:Cancel()
+						t2:Cancel()
+						--[[if t1.PlaybackState == Enum.PlaybackState.Playing then
 							t1:Cancel()
 						end
 						if t2.PlaybackState == Enum.PlaybackState.Playing then
 							t2:Cancel()
-						end
+						end]]
 						TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then

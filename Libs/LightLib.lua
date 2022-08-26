@@ -1,8 +1,8 @@
 local library = {
-	VERSION = 1.1
+	VERSION = 1.2
 }
 
-warn("Required library; VERSION: ", library.VERSION)
+warn("Required library: VERSION: ", library.VERSION)
 
 local time = os.date("*t")
 

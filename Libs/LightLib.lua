@@ -249,7 +249,6 @@ function library:CreateWindow(windowName, keybind)
 
 		local TabBtn = Instance.new("TextButton")
 		local TabBtnText = Instance.new("TextLabel")
-		local TabBtnDivider = Instance.new("Frame")
 		local TabBtnCorner = Instance.new("UICorner")
 		local TabBtnStroke = Instance.new("UIStroke")
 
@@ -291,21 +290,13 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.BackgroundTransparency = 1.000
 		TabBtnText.BorderSizePixel = 0
 		TabBtnText.Position = UDim2.new(0.5, 0, 0.5, 0)
-		TabBtnText.Size = UDim2.new(0.699999988, 0, 0.600000024, 0)
+		TabBtnText.Size = UDim2.new(0.7, 0, 0.6, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
 		TabBtnText.Text = tabName or "Tab"
 		TabBtnText.TextColor3 = Color3.fromRGB(157, 157, 157)
 		TabBtnText.TextScaled = true
 		TabBtnText.TextSize = 14.000
 		TabBtnText.TextWrapped = true
-
-		TabBtnDivider.Name = "TabBtnDivider"
-		TabBtnDivider.Parent = TabHolder
-		TabBtnDivider.AnchorPoint = Vector2.new(0.5, 0.5)
-		TabBtnDivider.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
-		TabBtnDivider.BorderSizePixel = 0
-		TabBtnDivider.Position = UDim2.new(0.5, 0, 1, 0)
-		TabBtnDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
 
 		TabBtnStroke.Name = "TabBtnStroke"
 		TabBtnStroke.Parent = TabBtn
@@ -316,17 +307,34 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnStroke.Transparency = .5
 
 		task.spawn(function()
+			local connection1, connection2
 			TabBtn.Activated:Connect(function()
+				-- connection1:Disconnect()
+				-- connection2:Disconnect()
 				for _, obj in pairs(DataHolder:GetChildren()) do
 					obj.Visible = false
 				end
 				TabData.Visible = true
 			end)
-			TabBtn.MouseEnter:Connect(function()
-				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {Color = Color3.fromRGB(255, 255, 255), BackgroundColor3 = Color3.fromRGB(67, 67, 67)}):Play()
+			connection1 = TabBtn.MouseEnter:Connect(function()
+				task.spawn(function()
+					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {
+						BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+					}):Play()
+				end)
+				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(.35), {
+					Color = Color3.fromRGB(255, 255, 255)
+				}):Play()
 			end)
-			TabBtn.MouseLeave:Connect(function()
-				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {Color = Color3.fromRGB(21, 21, 21), BackgroundColor3 = Color3.fromRGB(35, 35, 35)}):Play()
+			connection2 = TabBtn.MouseLeave:Connect(function()
+				task.spawn(function()
+					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {
+						BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+					}):Play()
+				end)
+				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(.35), {
+					Color = Color3.fromRGB(21, 21, 21)
+				}):Play()
 			end)
 		end)
 
@@ -553,6 +561,7 @@ function library:CreateWindow(windowName, keybind)
 						}):Play()
 					end)
 					TglBtn.Activated:Connect(function()
+						TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then
 							task.spawn(function()
@@ -560,10 +569,10 @@ function library:CreateWindow(windowName, keybind)
 									UDim2.new(0.748, 0, 0.5, 0),
 									Enum.EasingDirection.Out,
 									Enum.EasingStyle.Cubic,
-									.5
+									.85
 								)
 							end)
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.25), {
 								BackgroundColor3 = onColor
 							}):Play()
 							status = "ON"
@@ -571,13 +580,13 @@ function library:CreateWindow(windowName, keybind)
 						elseif toggled ~= true then
 							task.spawn(function()
 								TglBtn:TweenPosition(
-									UDim2.new({0.236, 0},{0.5, 0}),
+									UDim2.new(0.236, 0, 0.5, 0),
 									Enum.EasingDirection.Out,
 									Enum.EasingStyle.Cubic,
-									.5
+									.85
 								)
 							end)
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.25), {
 								BackgroundColor3 = offColor
 							}):Play()
 							status = "OFF"

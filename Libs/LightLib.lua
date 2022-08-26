@@ -94,6 +94,7 @@ function library:CreateWindow(windowName, keybind)
 	TabContainer.BorderSizePixel = 0
 	TabContainer.Position = UDim2.new(0.171, 0, 0.538, 0)
 	TabContainer.Size = UDim2.new(0.3, 0, 0.864, 0)
+	TabContainer.ClipDescendants = true
 
 	TabCorner.CornerRadius = UDim.new(0.02, 0)
 	TabCorner.Name = "TabCorner"
@@ -310,7 +311,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnStroke.Transparency = 0.5
 
 		TabBtnText.Name = "TabBtnText"
-		TabBtnText.Parent = TabHolder
+		TabBtnText.Parent = TabBtn
 		TabBtnText.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtnText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		TabBtnText.BackgroundTransparency = 1.000
@@ -336,21 +337,21 @@ function library:CreateWindow(windowName, keybind)
 			end)
 			connection1 = TabBtn.MouseEnter:Connect(function()
 				task.spawn(function()
-					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.35), {
+					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
 						BackgroundColor3 = Color3.fromRGB(67, 67, 67)
 					}):Play()
 				end)
-				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.35), {
+				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
 					Color = Color3.fromRGB(255, 255, 255)
 				}):Play()
 			end)
 			connection2 = TabBtn.MouseLeave:Connect(function()
 				task.spawn(function()
-					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.35), {
+					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
 						BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 					}):Play()
 				end)
-				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.35), {
+				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
 					Color = Color3.fromRGB(21, 21, 21)
 				}):Play()
 			end)
@@ -569,7 +570,7 @@ function library:CreateWindow(windowName, keybind)
 
 				local busy = false
 
-				task.spawn(function()
+				--[[task.spawn(function()
 					local con1, con2
 					con1 = TglBtn.MouseEnter:Connect(function()
 						if busy then return end
@@ -585,7 +586,7 @@ function library:CreateWindow(windowName, keybind)
 						}):Play()
 						--con2:Disconnect()
 					end)
-				end)
+				end)]]
 
 				task.spawn(function()
 					TglBtn.Activated:Connect(function()
@@ -593,16 +594,8 @@ function library:CreateWindow(windowName, keybind)
 						TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then
-							task.spawn(function()
-								TglBtn:TweenPosition(
-									UDim2.new(0.748, 0, 0.5, 0),
-									Enum.EasingDirection.Out,
-									Enum.EasingStyle.Cubic,
-									0.85,
-									true
-								)
-							end)
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.85), {
+								Position = UDim2.new(0.748, 0, 0.5, 0),
 								BackgroundColor3 = onColor
 							}):Play()
 							status = "ON"
@@ -610,16 +603,8 @@ function library:CreateWindow(windowName, keybind)
 								TextColor3 = onColor
 							}):Play()
 						elseif toggled ~= true then
-							task.spawn(function()
-								TglBtn:TweenPosition(
-									UDim2.new(0.236, 0, 0.5, 0),
-									Enum.EasingDirection.Out,
-									Enum.EasingStyle.Cubic,
-									0.85,
-									true
-								)
-							end)
 							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
+								Position = UDim2.new(0.236, 0, 0.5, 0),
 								BackgroundColor3 = offColor
 							}):Play()
 							status = "OFF"

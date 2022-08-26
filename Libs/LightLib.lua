@@ -1,8 +1,8 @@
 local library = {
-	VERSION = 1.2
+	VERSION = "1.0.2"
 }
 
-warn("Required library: VERSION: ", library.VERSION)
+warn("Required library: VERSION = ", library.VERSION)
 
 local time = os.date("*t")
 
@@ -359,7 +359,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.TextWrapped = true
 
 		for _, obj in pairs(DataHolder:GetChildren()) do
-			print(obj.Name)
+			--print(obj.Name)
 			if obj.Name == "1" then
 				obj.Visible = true
 			else
@@ -629,7 +629,7 @@ function library:CreateWindow(windowName, keybind)
 				TglStatus.TextWrapped = true
 
 				local busy = false
-				local t1, t2
+				local t1, t2, r1, r2
 
 				task.spawn(function()
 					local con1, con2
@@ -638,6 +638,7 @@ function library:CreateWindow(windowName, keybind)
 						t1 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
 							Size = UDim2.new(0.525, 0, 1.25, 0)
 						})
+						r1 = true
 						t1:Play()
 					end)
 					con2 = TglBtn.MouseLeave:Connect(function()
@@ -645,6 +646,7 @@ function library:CreateWindow(windowName, keybind)
 						t2 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
 							Size = UDim2.new(0.5, 0, 1, 0)
 						})
+						r2 = true
 						t2:Play()
 					end)
 				end)
@@ -652,8 +654,14 @@ function library:CreateWindow(windowName, keybind)
 				task.spawn(function()
 					TglBtn.Activated:Connect(function()
 						busy = true
-						t1:Cancel()
-						t2:Cancel()
+						if r1 then
+							t1:Cancel()
+							r1 = false
+						end
+						if r2 then
+							t2:Cancel()
+							r2 = false
+						end
 						--[[if t1.PlaybackState == Enum.PlaybackState.Playing then
 							t1:Cancel()
 						end

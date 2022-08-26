@@ -19,6 +19,7 @@ function library:CreateWindow(windowName, keybind)
 
 	local Window = Instance.new("Frame")
 	local WindowCorner = Instance.new("UICorner")
+	local WindowStroke = Instance.new("UIStroke")
 
 	local TitleContainer = Instance.new("Frame")
 	local HubNameText = Instance.new("TextLabel")
@@ -34,7 +35,6 @@ function library:CreateWindow(windowName, keybind)
 	local TabDataContainer = Instance.new("Frame")
 	local TabDataCorner = Instance.new("UICorner")
 	local DataHolder = Instance.new("ScrollingFrame")
-	local DataHolderLayout = Instance.new("UIListLayout")
 
 	LightLib_Hub.Name = "LightLib_Hub"
 	LightLib_Hub.Parent = game:GetService("CoreGui")
@@ -76,6 +76,13 @@ function library:CreateWindow(windowName, keybind)
 	WindowCorner.CornerRadius = UDim.new(0.0199999996, 0)
 	WindowCorner.Name = "WindowCorner"
 	WindowCorner.Parent = Window
+
+	WindowStroke.Name = "WindowStroke"
+	WindowStroke.Parent = Window
+	WindowStroke.ApplyStrokeMode = "Contextual"
+	WindowStroke.Color = Color3.fromRGB(0, 0, 0)
+	WindowStroke.LineJoinMode = "Round"
+	WindowStroke.Thickness = 2.5
 
 	TabContainer.Name = "TabContainer"
 	TabContainer.Parent = Window
@@ -244,6 +251,7 @@ function library:CreateWindow(windowName, keybind)
 		local TabBtnText = Instance.new("TextLabel")
 		local TabBtnDivider = Instance.new("Frame")
 		local TabBtnCorner = Instance.new("UICorner")
+		local TabBtnStroke = Instance.new("UIStroke")
 
 		TabData.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabData.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -276,15 +284,6 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnCorner.Name = "TabBtnCorner"
 		TabBtnCorner.Parent = TabBtn
 
-		task.spawn(function()
-			TabBtn.Activated:Connect(function()
-				for _, obj in pairs(DataHolder:GetChildren()) do
-					obj.Visible = false
-				end
-				TabData.Visible = true
-			end)
-		end)
-
 		TabBtnText.Name = "TabBtnText"
 		TabBtnText.Parent = TabHolder
 		TabBtnText.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -307,6 +306,29 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnDivider.BorderSizePixel = 0
 		TabBtnDivider.Position = UDim2.new(0.5, 0, 1, 0)
 		TabBtnDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
+
+		TabBtnStroke.Name = "TabBtnStroke"
+		TabBtnStroke.Parent = TabBtn
+		TabBtnStroke.ApplyStrokeMode = "Border"
+		TabBtnStroke.Color = Color3.fromRGB(21,21,21)
+		TabBtnStroke.LineJoinMode = "Round"
+		TabBtnStroke.Thickness = 2
+		TabBtnStroke.Transparency = .5
+
+		task.spawn(function()
+			TabBtn.Activated:Connect(function()
+				for _, obj in pairs(DataHolder:GetChildren()) do
+					obj.Visible = false
+				end
+				TabData.Visible = true
+			end)
+			TabBtn.MouseEnter:Connect(function()
+				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {Color = Color3.fromRGB(255, 255, 255), BackgroundColor3 = Color3.fromRGB(67, 67, 67)}):Play()
+			end)
+			TabBtn.MouseLeave:Connect(function()
+				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(.35), {Color = Color3.fromRGB(21, 21, 21), BackgroundColor3 = Color3.fromRGB(35, 35, 35)}):Play()
+			end)
+		end)
 
 		local tabData = {}
 
@@ -519,36 +541,48 @@ function library:CreateWindow(windowName, keybind)
 				TglStatus.TextSize = 14.000
 				TglStatus.TextWrapped = true
 
-				TglBtn.Activated:Connect(function()
-					toggled = not toggled
-					if toggled then
-						task.spawn(function()
-							TglBtn:TweenPosition(
-								UDim2.new({0.748, 0},{0.5, 0}),
-								Enum.EasingDirection.Out,
-								Enum.EasingStyle.Cubic,
-								.5
-							)
-						end)
-						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = onColor}):Play()
-						status = "ON"
-						TglStatus.BackgroundColor3 = onColor
-					elseif toggled ~= true then
-						task.spawn(function()
-							TglBtn:TweenPosition(
-								UDim2.new({0.236, 0},{0.5, 0}),
-								Enum.EasingDirection.Out,
-								Enum.EasingStyle.Cubic,
-								.5
-							)
-						end)
-						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = offColor}):Play()
-						status = "OFF"
-						TglStatus.BackgroundColor3 = offColor
-					end
-
-					TglStatus.Text = status
-					callback(toggled)
+				task.spawn(function()
+					TglBtn.MouseEnter:Connect(function()
+						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.125), {
+							Size = UDim2.new({0.525, 0},{1.25, 0}),
+						}):Play()
+					end)
+					TglBtn.MouseLeave:Connect(function()
+						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.125), {
+							Size = UDim2.new({0.5, 0},{1, 0}),
+						}):Play()
+					end)
+					TglBtn.Activated:Connect(function()
+						toggled = not toggled
+						if toggled then
+							task.spawn(function()
+								TglBtn:TweenPosition(
+									UDim2.new({0.748, 0},{0.5, 0}),
+									Enum.EasingDirection.Out,
+									Enum.EasingStyle.Cubic,
+									.5
+								)
+							end)
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = onColor}):Play()
+							status = "ON"
+							TglStatus.BackgroundColor3 = onColor
+						elseif toggled ~= true then
+							task.spawn(function()
+								TglBtn:TweenPosition(
+									UDim2.new({0.236, 0},{0.5, 0}),
+									Enum.EasingDirection.Out,
+									Enum.EasingStyle.Cubic,
+									.5
+								)
+							end)
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = offColor}):Play()
+							status = "OFF"
+							TglStatus.BackgroundColor3 = offColor
+						end
+	
+						TglStatus.Text = status
+						callback(toggled)
+					end)
 				end)
 			end
 		end

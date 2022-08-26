@@ -245,11 +245,11 @@ function library:CreateWindow(windowName, keybind)
 
 	function tabs:CreateTab(tabName)
 		local TabData = Instance.new("Frame")
+		local TabDataLayout = Instance.new("UIListLayout")
 
 		local TabBtn = Instance.new("TextButton")
 		local TabBtnText = Instance.new("TextLabel")
 		local TabBtnDivider = Instance.new("Frame")
-		local TabDataLayout = Instance.new("UIListLayout")
 		local TabBtnCorner = Instance.new("UICorner")
 		local TabBtnStroke = Instance.new("UIStroke")
 
@@ -258,7 +258,7 @@ function library:CreateWindow(windowName, keybind)
 		TabData.BackgroundTransparency = 1.000
 		TabData.Position = UDim2.new(0.5, 0, 0.5, 0)
 		TabData.Size = UDim2.new(1, 0, 1, 0)
-		TabData.Name = #DataHolder:GetChildren() + 1
+		TabData.Name = tabName or #DataHolder:GetChildren() + 1
 		TabData.Parent = DataHolder
 
 		TabDataLayout.Name = "TabDataLayout"

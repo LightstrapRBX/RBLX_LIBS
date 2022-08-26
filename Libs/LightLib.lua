@@ -132,6 +132,13 @@ function library:CreateWindow(windowName, keybind)
 	TabDataCorner.Name = "TabDataCorner"
 	TabDataCorner.Parent = TabDataContainer
 
+	TabDataStroke.Name = "TabDataStroke"
+	TabDataStroke.Parent = TabDataContainer
+	TabDataStroke.ApplyStrokeMode = "Contextual"
+	TabDataStroke.Color = Color3.fromRGB(16, 16, 16)
+	TabDataStroke.LineJoinMode = "Bevel"
+	TabDataStroke.Thickness = 2
+
 	DataHolder.Name = "DataHolder"
 	DataHolder.Parent = TabDataContainer
 	DataHolder.Active = true
@@ -272,7 +279,7 @@ function library:CreateWindow(windowName, keybind)
 		TabDataLayout.Name = "TabDataLayout"
 		TabDataLayout.Parent = TabData
 		TabDataLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		TabDataLayout.Padding = UDim.new(0.003, 0)
+		TabDataLayout.Padding = UDim.new(0.002, 0)
 
 		TabBtn.Name = "TabBtn"
 		TabBtn.Parent = TabHolder

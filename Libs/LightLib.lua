@@ -64,8 +64,8 @@ function library:CreateWindow(windowName, keybind)
 	Drag.BackgroundTransparency = 1.000
 	Drag.BorderSizePixel = 0
 	Drag.Draggable = true
-	Drag.Position = UDim2.new(0.5, 0, 0.0500000007, 0)
-	Drag.Size = UDim2.new(1, 0, 0.100000001, 0)
+	Drag.Position = UDim2.new(0.5, 0, 0.1, 0)
+	Drag.Size = UDim2.new(0.5, 0, 0.1, 0)
 	Drag.ZIndex = 0
 	Drag.SelectionOrder = 10
 
@@ -74,8 +74,8 @@ function library:CreateWindow(windowName, keybind)
 	Window.AnchorPoint = Vector2.new(0.5, 0.5)
 	Window.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 	Window.BackgroundTransparency = 0.050
-	Window.Position = UDim2.new(0.5, 0, 5, 0)
-	Window.Size = UDim2.new(0.63, 0, 7.746, 0)
+	Window.Position = UDim2.new(0.5, 0, 4, 0)
+	Window.Size = UDim2.new(1, 0, 7.746, 0)
 
 	local originalWindowPosition = Window.Position
 	local originalWindowSize = Window.Size
@@ -134,6 +134,7 @@ function library:CreateWindow(windowName, keybind)
 	TabDataContainer.BorderSizePixel = 0
 	TabDataContainer.Position = UDim2.new(0.661, 0, 0.536, 0)
 	TabDataContainer.Size = UDim2.new(0.645, 0, 0.861, 0)
+	TabDataContainer.ClipsDescendants = true
 
 	TabDataCorner.CornerRadius = UDim.new(0.02, 0)
 	TabDataCorner.Name = "TabDataCorner"
@@ -156,6 +157,7 @@ function library:CreateWindow(windowName, keybind)
 	DataHolder.Position = UDim2.new(0.555, 0, 0.5, 0)
 	DataHolder.Size = UDim2.new(1.111, 0, 1, 0)
 	DataHolder.ScrollBarImageTransparency = 1
+	DataHolder.ClipsDescendants = false
 
 	TitleContainer.Name = "TitleContainer"
 	TitleContainer.Parent = Window
@@ -573,32 +575,39 @@ function library:CreateWindow(windowName, keybind)
 				TglStatus.TextWrapped = true
 
 				local busy = false
+				local t1, t2
 
-				--[[task.spawn(function()
+				task.spawn(function()
 					local con1, con2
 					con1 = TglBtn.MouseEnter:Connect(function()
 						if busy then return end
-						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
+						t1 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
 							Size = UDim2.new(0.525, 0, 1.25, 0)
-						}):Play()
-						--con1:Disconnect()
+						})
+						t1:Play()
 					end)
 					con2 = TglBtn.MouseLeave:Connect(function()
 						if busy then return end
-						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
+						t2 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
 							Size = UDim2.new(0.5, 0, 1, 0)
-						}):Play()
-						--con2:Disconnect()
+						})
+						t2:Play()
 					end)
-				end)]]
+				end)
 
 				task.spawn(function()
 					TglBtn.Activated:Connect(function()
 						busy = true
+						if t1.PlaybackState == Enum.PlaybackState.Playing then
+							t1:Cancel()
+						end
+						if t2.PlaybackState == Enum.PlaybackState.Playing then
+							t2:Cancel()
+						end
 						TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.85), {
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
 								Position = UDim2.new(0.748, 0, 0.5, 0),
 								BackgroundColor3 = onColor
 							}):Play()
@@ -616,7 +625,6 @@ function library:CreateWindow(windowName, keybind)
 								TextColor3 = offColor
 							}):Play()
 						end
-	
 						TglStatus.Text = status
 						callback(toggled)
 						busy = false

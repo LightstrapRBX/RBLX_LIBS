@@ -94,7 +94,7 @@ function library:CreateWindow(windowName, keybind)
 	TabContainer.BorderSizePixel = 0
 	TabContainer.Position = UDim2.new(0.171, 0, 0.538, 0)
 	TabContainer.Size = UDim2.new(0.3, 0, 0.864, 0)
-	TabContainer.ClipDescendants = true
+	TabContainer.ClipsDescendants = true
 
 	TabCorner.CornerRadius = UDim.new(0.02, 0)
 	TabCorner.Name = "TabCorner"

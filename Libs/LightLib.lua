@@ -67,7 +67,7 @@ function library:CreateWindow(windowName, keybind)
 	Window.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 	Window.BackgroundTransparency = 0.050
 	Window.Position = UDim2.new(0.5, 0, 4.98170471, 0)
-	Window.Size = UDim2.new(0.63, 0, 10.746, 0)
+	Window.Size = UDim2.new(0.63, 0, 9.746, 0)
 
 	local originalWindowPosition = Window.Position
 	local originalWindowSize = Window.Size
@@ -88,8 +88,8 @@ function library:CreateWindow(windowName, keybind)
 	TabContainer.AnchorPoint = Vector2.new(0.5, 0.5)
 	TabContainer.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabContainer.BorderSizePixel = 0
-	TabContainer.Position = UDim2.new({0.171, 0},{0.538, 0})
-	TabContainer.Size = UDim2.new({0.3, 0},{0.864, 0})
+	TabContainer.Position = UDim2.new(0.171, 0, 0.538, 0)
+	TabContainer.Size = UDim2.new(0.3, 0, 0.864, 0)
 
 	TabCorner.CornerRadius = UDim.new(0.02, 0)
 	TabCorner.Name = "TabCorner"
@@ -102,8 +102,8 @@ function library:CreateWindow(windowName, keybind)
 	TabHolder.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabHolder.BackgroundTransparency = 1.000
 	TabHolder.BorderSizePixel = 0
-	TabHolder.Position = UDim2.new({0.501, 0},{0.504, 0})
-	TabHolder.Size = UDim2.new({0.928, 0},{0.94, 0})
+	TabHolder.Position = UDim2.new(0.501, 0, 0.504, 0)
+	TabHolder.Size = UDim2.new(0.928, 0, 0.94, 0)
 	TabHolder.ScrollBarImageTransparency = 1
 
 	TabHolderLayout.Name = "TabHolderLayout"
@@ -116,8 +116,8 @@ function library:CreateWindow(windowName, keybind)
 	TabDataContainer.AnchorPoint = Vector2.new(0.5, 0.5)
 	TabDataContainer.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	TabDataContainer.BorderSizePixel = 0
-	TabDataContainer.Position = UDim2.new({0.661, 0},{0.536, 0})
-	TabDataContainer.Size = UDim2.new({0.645, 0},{0.861, 0})
+	TabDataContainer.Position = UDim2.new(0.661, 0, 0.536, 0)
+	TabDataContainer.Size = UDim2.new(0.645, 0, 0.861, 0)
 
 	TabDataCorner.CornerRadius = UDim.new(0.02, 0)
 	TabDataCorner.Name = "TabDataCorner"
@@ -130,8 +130,8 @@ function library:CreateWindow(windowName, keybind)
 	DataHolder.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
 	DataHolder.BackgroundTransparency = 1.000
 	DataHolder.BorderSizePixel = 0
-	DataHolder.Position = UDim2.new({0.555, 0},{0.5, 0})
-	DataHolder.Size = UDim2.new({1.111, 0},{1, 0})
+	DataHolder.Position = UDim2.new(0.555, 0, 0.5, 0)
+	DataHolder.Size = UDim2.new(1.111, 0, 1, 0)
 	DataHolder.ScrollBarImageTransparency = 1
 
 	TitleContainer.Name = "TitleContainer"
@@ -271,7 +271,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 		TabBtn.BorderSizePixel = 0
-		TabBtn.Size = UDim2.new({1, 0},{0.06, 0})
+		TabBtn.Size = UDim2.new(1, 0, .06, 0)
 		TabBtn.AutoButtonColor = false
 		TabBtn.Font = Enum.Font.Oswald
 		TabBtn.Text = ""
@@ -504,16 +504,16 @@ function library:CreateWindow(windowName, keybind)
 				TglBg.AnchorPoint = Vector2.new(0.5, 0.5)
 				TglBg.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 				TglBg.BorderSizePixel = 0
-				TglBg.Position = UDim2.new({0.708, 0},{0.5, 0})
-				TglBg.Size = UDim2.new({0.211, 0},{0.65, 0})
+				TglBg.Position = UDim2.new(0.708, 0, 0.5, 0)
+				TglBg.Size = UDim2.new(0.211, 0, 0.65, 0)
 
 				TglBtn.Name = "TglBtn"
 				TglBtn.Parent = TglBg
 				TglBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 				TglBtn.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
 				TglBtn.BorderSizePixel = 0
-				TglBtn.Position = UDim2.new({0.236, 0},{0.5, 0})
-				TglBtn.Size = UDim2.new({0.5, 0},{1, 0})
+				TglBtn.Position = UDim2.new(0.236, 0, 0.5, 0)
+				TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 				TglBtn.AutoButtonColor = false
 				TglBtn.Font = Enum.Font.GothamBold
 				TglBtn.Text = ""
@@ -544,12 +544,12 @@ function library:CreateWindow(windowName, keybind)
 				task.spawn(function()
 					TglBtn.MouseEnter:Connect(function()
 						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.125), {
-							Size = UDim2.new({0.525, 0},{1.25, 0}),
+							Size = UDim2.new(0.525, 0, 1.25, 0),
 						}):Play()
 					end)
 					TglBtn.MouseLeave:Connect(function()
 						game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.125), {
-							Size = UDim2.new({0.5, 0},{1, 0}),
+							Size = UDim2.new(0.5, 0, 1, 0),
 						}):Play()
 					end)
 					TglBtn.Activated:Connect(function()
@@ -557,13 +557,15 @@ function library:CreateWindow(windowName, keybind)
 						if toggled then
 							task.spawn(function()
 								TglBtn:TweenPosition(
-									UDim2.new({0.748, 0},{0.5, 0}),
+									UDim2.new(0.748, 0, 0.5, 0),
 									Enum.EasingDirection.Out,
 									Enum.EasingStyle.Cubic,
 									.5
 								)
 							end)
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = onColor}):Play()
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {
+								BackgroundColor3 = onColor
+							}):Play()
 							status = "ON"
 							TglStatus.BackgroundColor3 = onColor
 						elseif toggled ~= true then
@@ -575,7 +577,9 @@ function library:CreateWindow(windowName, keybind)
 									.5
 								)
 							end)
-							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {BackgroundColor3 = offColor}):Play()
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(.5), {
+								BackgroundColor3 = offColor
+							}):Play()
 							status = "OFF"
 							TglStatus.BackgroundColor3 = offColor
 						end

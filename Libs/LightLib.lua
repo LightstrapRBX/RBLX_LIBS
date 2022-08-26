@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2"
+	VERSION = "1.0.2.1"
 }
 
 warn("Required library: VERSION = ", library.VERSION)
@@ -203,7 +203,16 @@ function library:CreateWindow(windowName, keybind)
 	UpdatedTimeText.Position = UDim2.new(0.5, 0, 0.5, 0)
 	UpdatedTimeText.Size = UDim2.new(1, 0, 1, 0)
 	UpdatedTimeText.Font = Enum.Font.GothamBlack
+
 	UpdatedTimeText.Text = lastUpdated
+	task.spawn(function()
+		while UpdatedTimeText do
+			lastUpdated = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec)))
+			UpdatedTimeText.Text = lastUpdated
+			task.wait(0.5)
+		end
+	end)
+
 	UpdatedTimeText.TextColor3 = Color3.fromRGB(58, 58, 58)
 	UpdatedTimeText.TextScaled = true
 	UpdatedTimeText.TextSize = 14.000
@@ -668,13 +677,14 @@ function library:CreateWindow(windowName, keybind)
 						if t2.PlaybackState == Enum.PlaybackState.Playing then
 							t2:Cancel()
 						end]]
-						TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
+						--TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then
 							task.spawn(function()
 								game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
 									Position = UDim2.new(0.748, 0, 0.5, 0),
-									BackgroundColor3 = onColor
+									BackgroundColor3 = onColor,
+									Size = UDim2.new(0.5, 0, 1, 0)
 								}):Play()
 							end)
 							task.spawn(function()
@@ -690,7 +700,8 @@ function library:CreateWindow(windowName, keybind)
 							task.spawn(function()
 								game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
 									Position = UDim2.new(0.236, 0, 0.5, 0),
-									BackgroundColor3 = offColor
+									BackgroundColor3 = offColor,
+									Size = UDim2.new(0.5, 0, 1, 0)
 								}):Play()
 							end)
 							task.spawn(function()

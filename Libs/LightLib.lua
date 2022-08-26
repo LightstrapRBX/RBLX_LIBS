@@ -66,8 +66,8 @@ function library:CreateWindow(windowName, keybind)
 	Window.AnchorPoint = Vector2.new(0.5, 0.5)
 	Window.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 	Window.BackgroundTransparency = 0.050
-	Window.Position = UDim2.new(0.5, 0, 4.98170471, 0)
-	Window.Size = UDim2.new(0.63, 0, 9.746, 0)
+	Window.Position = UDim2.new(0.5, 0, 0.5, 0)
+	Window.Size = UDim2.new(0.63, 0, 7.746, 0)
 
 	local originalWindowPosition = Window.Position
 	local originalWindowSize = Window.Size

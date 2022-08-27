@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [FIXED 1.7]",
+	VERSION = "1.0.2.4 [FIXED 1.71]",
 	THEMES = {
 		Default = {
 
@@ -26,7 +26,7 @@ local library = {
 								Hover = Color3.fromRGB(104, 104, 104),
 								Selected = Color3.fromRGB(87, 87, 87)
 							},
-							TabBtnTxt = {
+							TabBtnText = {
 								TextColor3 = Color3.fromRGB(157, 157, 157)
 							},
 							TglBg = {

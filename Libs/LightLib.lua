@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.78]",
+	VERSION = "1.0.2.4 [PATCH 1.79]",
 	THEMES = {
 		Default = {
 
@@ -19,7 +19,7 @@ local library = {
 						BackgroundColor3 = Color3.fromRGB(43, 43, 43),
 						TabBtn = {
 							NoHover = Color3.fromRGB(35, 35, 35),
-							Hover = Color3.fromRGB(67, 67, 67),
+							Hover = Color3.fromRGB(24, 24, 24),
 							Selected = Color3.fromRGB(53, 53, 53),
 							TabBtnStroke = {
 								NoHover = Color3.fromRGB(21, 21, 21),
@@ -47,8 +47,8 @@ local library = {
 						TabData = {
 							DataBtn = {
 								NoHover = Color3.fromRGB(35, 35, 35),
-								Hover = Color3.fromRGB(67, 67, 67),
-								Clicked = Color3.fromRGB(24, 24, 24),
+								Hover = Color3.fromRGB(24, 24, 24),
+								Clicked = Color3.fromRGB(16, 16, 16),
 								TextColor3 = Color3.fromRGB(255, 255, 255),
 								DataBtnStroke = {
 									NoHover = Color3.fromRGB(21, 21, 21),
@@ -58,7 +58,7 @@ local library = {
 							},
 							DataTxtLbl = {
 								NoHover = Color3.fromRGB(35, 35, 35),
-								Hover = Color3.fromRGB(67, 67, 67),
+								Hover = Color3.fromRGB(24, 24, 24),
 								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
 								Lbl = {
 									BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -70,7 +70,7 @@ local library = {
 							},
 							DataTgl = {
 								NoHover = Color3.fromRGB(35, 35, 35),
-								Hover = Color3.fromRGB(67, 67, 67),
+								Hover = Color3.fromRGB(24, 24, 24),
 								DataTxtLbl = {
 									BackgroundColor3 = Color3.fromRGB(35, 35, 35),
 									ON = Color3.fromRGB(139, 139, 139),
@@ -236,7 +236,7 @@ function library:CreateWindow(windowName, keybind, theme)
 	TabHolder.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.BackgroundColor3
 	TabHolder.BackgroundTransparency = 1.000
 	TabHolder.BorderSizePixel = 0
-	TabHolder.Position = UDim2.new(0.501, 0, 0.498, 0)
+	TabHolder.Position = UDim2.new(0.501, 0, 0.5, 0)
 	TabHolder.Size = UDim2.new(0.928, 0, 0.953, 0)
 	TabHolder.ScrollBarImageTransparency = 1
 	TabHolder.ClipsDescendants = false
@@ -443,7 +443,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
 		TabBtn.BorderSizePixel = 0
-		TabBtn.Size = UDim2.new(1, 0, 0.06, 0)
+		TabBtn.Size = UDim2.new(1, 0, 0.075, 0)
 		TabBtn.AutoButtonColor = false
 		TabBtn.Font = Enum.Font.Oswald
 		TabBtn.Text = ""

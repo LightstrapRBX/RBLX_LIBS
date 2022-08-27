@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.73]",
+	VERSION = "1.0.2.4 [PATCH 1.74]",
 	THEMES = {
 		Default = {
 
@@ -500,13 +500,15 @@ function library:CreateWindow(windowName, keybind, theme)
 						end
 						TabData.Visible = true
 						for _, obj in pairs(TabHolder:GetChildren()) do
-							obj.TabBtnSelected.Value = false
-							game:GetService("TweenService"):Create(obj, TweenInfo.new(0.25), {
-								BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.NoHover
-							}):Play()
-							game:GetService("TweenService"):Create(obj.TabBtnStroke, TweenInfo.new(0.25), {
-								Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.NoHover
-							}):Play()
+							if obj:IsA("TextButton") then
+								obj.TabBtnSelected.Value = false
+								game:GetService("TweenService"):Create(obj, TweenInfo.new(0.25), {
+									BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.NoHover
+								}):Play()
+								game:GetService("TweenService"):Create(obj.TabBtnStroke, TweenInfo.new(0.25), {
+									Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.NoHover
+								}):Play()
+							end
 						end
 					end)
 					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {

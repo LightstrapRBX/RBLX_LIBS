@@ -46,9 +46,11 @@ local library = {
 					DataHolder = {
 						TabData = {
 							DataBtn = {
-								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
+								NoHover = Color3.fromRGB(35, 35, 35),
+								Hover = Color3.fromRGB(67, 67, 67),
 								TextColor3 = Color3.fromRGB(255, 255, 255),
-								DataBtnDivider = Color3.fromRGB(29, 29, 29)
+								DataBtnDivider = Color3.fromRGB(29, 29, 29),
+								DataBtnStroke = Color3.fromRGB(21, 21, 21)
 							},
 							DataTxtLbl = {
 								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
@@ -57,7 +59,8 @@ local library = {
 								},
 								DataTxtLblDivider = {
 									BackgroundColor3 = Color3.fromRGB(29, 29, 29)
-								}
+								},
+								DataTxtStroke = Color3.fromRGB(21, 21, 21)
 							},
 							DataTgl = {
 								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
@@ -84,7 +87,8 @@ local library = {
 								},
 								DataTglDivider = {
 									BackgroundColor3 = Color3.fromRGB(29, 29, 29)
-								}
+								},
+								DataTglStroke = Color3.fromRGB(21, 21, 21)
 							}
 						}
 					}
@@ -187,7 +191,7 @@ function library:CreateWindow(windowName, keybind, theme)
 	local originalWindowPosition = Window.Position
 	local originalWindowSize = Window.Size
 
-	WindowCorner.CornerRadius = UDim.new(0.0199999996, 0)
+	WindowCorner.CornerRadius = UDim.new(0.02, 0)
 	WindowCorner.Name = "WindowCorner"
 	WindowCorner.Parent = Window
 
@@ -398,8 +402,8 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabData.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabData.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		TabData.BackgroundTransparency = 1.000
-		TabData.Position = UDim2.new(0.5, 0, 0.5, 0)
-		TabData.Size = UDim2.new(1, 0, 1, 0)
+		TabData.Position = UDim2.new(0.497, 0, 0.486, 0)
+		TabData.Size = UDim2.new(0.952, 0, 0.93, 0)
 		TabData.Name = #DataHolder:GetChildren() + 1
 		TabData.Parent = DataHolder
 
@@ -424,7 +428,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabDataLayout.Name = "TabDataLayout"
 		TabDataLayout.Parent = TabData
 		TabDataLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		TabDataLayout.Padding = UDim.new(0.002, 0)
+		TabDataLayout.Padding = UDim.new(0.02, 0)
 
 		TabBtn.Name = #TabHolder:GetChildren() --- 1 --"TabBtn"
 		TabBtn.Parent = TabHolder
@@ -546,6 +550,8 @@ function library:CreateWindow(windowName, keybind, theme)
 				local DataBtn = Instance.new("TextButton")
 				local BtnText = Instance.new("TextLabel")
 				local DataBtnDivider = Instance.new("Frame")
+				local DataBtnStroke = Instance.new("UIStroke")
+				local DataBtnCorner = Instance.new("UICorner")
 
 				local function getNumOfBTNs()
 					local numOfBTNs = 0
@@ -560,9 +566,9 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtn.Name = "DataBtn"
 				DataBtn.Parent = TabData
 				DataBtn.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.BackgroundColor3
+				DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 				DataBtn.BorderSizePixel = 0
-				DataBtn.Size = UDim2.new(0.899999976, 0, 0.0599999987, 0)
+				DataBtn.Size = UDim2.new(0.9, 0, 0.04, 0)
 				DataBtn.AutoButtonColor = false
 				DataBtn.Font = Enum.Font.Oswald
 				DataBtn.Text = ""
@@ -600,6 +606,32 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtnDivider.Position = UDim2.new(0.5, 0, 1, 0)
 				DataBtnDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
 
+				DataBtnCorner.Name = "DataBtnCorner"
+				DataBtnCorner.Parent = DataBtn
+				DataBtnCorner.CornerRadius = UDim.new(0.2, 0)
+
+				DataBtnStroke.Name = "DataBtnStroke"
+				DataBtnStroke.Parent = DataBtn
+				DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke
+
+				DataBtn.MouseEnter:Connect(function()
+					game:GetService("TweenService"):Create(DataBtn, TweenInfo.new(0.25), {
+						BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Hover
+					}):Play()
+					game:GetService("TweenService"):Create(DataBtnStroke, TweenInfo.new(0.25), {
+						Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Hover
+					}):Play()
+				end)
+
+				DataBtn.MouseLeave:Connect(function()
+					game:GetService("TweenService"):Create(DataBtn, TweenInfo.new(0.25), {
+						BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
+					}):Play()
+					game:GetService("TweenService"):Create(DataBtnStroke, TweenInfo.new(0.25), {
+						Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.NoHover
+					}):Play()
+				end)
+
 				DataBtn.Activated:Connect(callback)
 			end
 		end
@@ -609,6 +641,8 @@ function library:CreateWindow(windowName, keybind, theme)
 			local DataTxtLbl = Instance.new("Frame")
 			local Lbl = Instance.new("TextLabel")
 			local DataTxtLblDivider = Instance.new("Frame")
+			local DataTxtStroke = Instance.new("UIStroke")
+			local DataTxtCorner = Instance.new("UICorner")
 
 			local function getNumOfLBLs()
 				local numOfLBLs = 0
@@ -650,6 +684,14 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtLblDivider.BorderSizePixel = 0
 			DataTxtLblDivider.Position = UDim2.new(0.5, 0, 1, 0)
 			DataTxtLblDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
+
+			DataTxtCorner.Name = "DataTxtCorner"
+			DataTxtCorner.Parent = DataTxtLbl
+			DataTxtCorner.CornerRadius = UDim.new(0.2, 0)
+
+			DataTxtStroke.Name = "DataTxtStroke"
+			DataTxtStroke.Parent = DataTxtLbl
+			DataTxtStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.DataTxtStroke
 		end
 
 		function tabData:CreateToggle(name, default, callback)
@@ -657,6 +699,8 @@ function library:CreateWindow(windowName, keybind, theme)
 				local DataTgl = Instance.new("Frame")
 				local DataTglLbl = Instance.new("TextLabel")
 				local DataTglDivider = Instance.new("Frame")
+				local DataTglCorner = Instance.new("UICorner")
+				local DataTglStroke = Instance.new("UIStroke")
 
 				local TglBg = Instance.new("Frame")
 				local TglBtn = Instance.new("TextButton")
@@ -769,6 +813,10 @@ function library:CreateWindow(windowName, keybind, theme)
 				TglStatus.TextScaled = true
 				TglStatus.TextSize = 14.000
 				TglStatus.TextWrapped = true
+
+				DataTglCorner.Name = "DataTglCorner"
+				DataTglCorner.Parent = DataTgl
+				DataTglCorner.CornerRadius = UDim.new(0.2, 0)
 
 				local busy = false
 				local t1, t2, r1, r2

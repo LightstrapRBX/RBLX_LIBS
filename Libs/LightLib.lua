@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.86]",
+	VERSION = "1.0.2.4 [PATCH 1.87]",
 	THEMES = {
 		Default = {
 
@@ -970,13 +970,19 @@ function library:CreateWindow(windowName, keybind, theme)
 
 	function tabs:ChangeKeybind(kb)
 		if not kb then return end
+		local succ = false
 		if typeof(kb) == "string" then
 			if Enum.KeyCode[kb] then
 				_G.LightLib_Hub_KEYBIND = Enum.KeyCode[kb]
+				succ = true
 			end
 		elseif typeof(kb) == "EnumItem" then
 			if not string.match(tostring(kb), "Enum.KeyCode") then return end
 			_G.LightLib_Hub_KEYBIND = kb
+			succ = true
+		end
+		if succ then
+			warn("New hub keybind:", string.gsub(tostring(_G.LightLib_Hub_KEYBIND), "Enum.KeyCode.", ""))
 		end
 	end
 

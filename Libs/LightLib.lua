@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [FIXED 1.3]",
+	VERSION = "1.0.2.4 [FIXED 1.4]",
 	THEMES = {
 		Default = {
 
@@ -423,7 +423,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabDataLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		TabDataLayout.Padding = UDim.new(0.002, 0)
 
-		TabBtn.Name = "TabBtn"
+		TabBtn.Name = #TabHolder:GetChildren() + 1 --"TabBtn"
 		TabBtn.Parent = TabHolder
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
@@ -476,7 +476,7 @@ function library:CreateWindow(windowName, keybind, theme)
 
 		for _, obj in pairs(DataHolder:GetChildren()) do
 			if obj.Name == "1" then
-				TabBtnSelected.Value = true
+				TabHolder[obj.Name].TabBtnSelected.Value = true
 				TabBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
 				TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
 				obj.Visible = true

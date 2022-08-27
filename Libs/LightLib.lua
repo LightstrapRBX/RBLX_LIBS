@@ -1,15 +1,123 @@
 local library = {
-	VERSION = "1.0.2.3"
+	VERSION = "1.0.2.4",
+	THEMES = {
+		Default = {
+
+		},
+		Dark = {
+			Window = {
+				BackgroundColor3 = Color3.fromRGB(25, 25, 25),
+				WindowStroke = {
+					Color = Color3.fromRGB(0, 0, 0),
+				},
+				TabContainer = {
+					BackgroundColor3 = Color3.fromRGB(43, 43, 43),
+					TabStroke = {
+						Color = Color3.fromRGB(16, 16, 16)
+					},
+					TabHolder = {
+						BackgroundColor3 = Color3.fromRGB(43, 43, 43),
+						TabBtn = {
+							NoHover = Color3.fromRGB(35, 35, 35),
+							Hover = Color3.fromRGB(67, 67, 67),
+							Selected = Color3.fromRGB(53, 53, 53),
+							TabBtnStroke = {
+								NoHover = Color3.fromRGB(21, 21, 21),
+								Hover = Color3.fromRGB(104, 104, 104),
+								Selected = Color3.fromRGB(87, 87, 87)
+							},
+							TglBg = {
+								BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+							},
+							TglBtn = {
+								BackgroundColor3 = Color3.fromRGB(77, 77, 77)
+							}
+						}
+					},
+				},
+				TabDataContainer = {
+					BackgroundColor3 = Color3.fromRGB(43, 43, 43),
+					TabDataStroke = {
+						Color = Color3.fromRGB(16, 16, 16)
+					},
+					DataHolder = {
+						TabData = {
+							DataBtn = {
+								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
+								TextColor3 = Color3.fromRGB(255, 255, 255),
+								DataBtnDivider = Color3.fromRGB(29, 29, 29)
+							},
+							DataTxtLbl = {
+								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
+								Lbl = {
+									BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+								},
+								DataTxtLblDivider = {
+									BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+								}
+							},
+							DataTgl = {
+								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
+								DataTxtLbl = {
+									BackgroundColor3 = Color3.fromRGB(35, 35, 35),
+									ON = Color3.fromRGB(139, 139, 139),
+									OFF = Color3.fromRGB(58, 58, 58)
+								},
+								TglBg = {
+									BackgroundColor3 = Color3.fromRGB(25, 25, 25),
+									TglBtn = {
+										BackgroundColor3 = Color3.fromRGB(77, 77, 77),
+										ON = Color3.fromRGB(139, 139, 139),
+										OFF = Color3.fromRGB(58, 58, 58)
+									}
+								},
+								DataTglLbl = {
+									ON = Color3.fromRGB(139, 139, 139),
+									OFF = Color3.fromRGB(58, 58, 58)
+								},
+								TglStatus = {
+									ON = Color3.fromRGB(139, 139, 139),
+									OFF = Color3.fromRGB(58, 58, 58)
+								},
+								DataTglDivider = {
+									BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+								}
+							}
+						}
+					}
+				},
+				TitleContainer = {
+					HubNameText = {
+						TextColor3 = Color3.fromRGB(58, 58, 58)
+					}
+				},
+				UpdatedContainer = {
+					UpdatedTimeText = {
+						TextColor3 = Color3.fromRGB(58, 58, 58)
+					}
+				}
+			}
+		}
+	}
 }
 
 warn("Required library: VERSION = ", library.VERSION)
 
-function library:CreateWindow(windowName, keybind)
+function library:CreateWindow(windowName, keybind, theme)
 
 	for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
 		if obj.Name == "LightLib_Hub" then
 			obj:Destroy()
 		end
+	end
+
+	theme = tostring(theme)
+	theme = string.upper(string.sub(theme, 1, 1)) .. string.lower(string.sub(theme, 2, #theme))
+
+	if not theme or not library.THEMES[theme] then
+		_G.LightLib_Hub_THEME = library.THEMES.Default
+	else
+		_G.LightLib_Hub_THEME = library.THEMES[theme]
 	end
 
 	local LightLib_Hub = Instance.new("ScreenGui")
@@ -68,7 +176,7 @@ function library:CreateWindow(windowName, keybind)
 	Window.Name = "Window"
 	Window.Parent = Drag
 	Window.AnchorPoint = Vector2.new(0.5, 0.5)
-	Window.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	Window.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.BackgroundColor3
 	Window.BackgroundTransparency = 0.050
 	Window.Position = UDim2.new(0.5, 0, 4, 0)
 	Window.Size = UDim2.new(1, 0, 7.746, 0)
@@ -83,14 +191,14 @@ function library:CreateWindow(windowName, keybind)
 	WindowStroke.Name = "WindowStroke"
 	WindowStroke.Parent = Window
 	WindowStroke.ApplyStrokeMode = "Contextual"
-	WindowStroke.Color = Color3.fromRGB(0, 0, 0)
+	WindowStroke.Color = _G.LightLib_Hub_THEME.Window.WindowStroke.Color
 	WindowStroke.LineJoinMode = "Round"
 	WindowStroke.Thickness = 2.5
 
 	TabContainer.Name = "TabContainer"
 	TabContainer.Parent = Window
 	TabContainer.AnchorPoint = Vector2.new(0.5, 0.5)
-	TabContainer.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
+	TabContainer.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.BackgroundColor3
 	TabContainer.BorderSizePixel = 0
 	TabContainer.Position = UDim2.new(0.171, 0, 0.538, 0)
 	TabContainer.Size = UDim2.new(0.3, 0, 0.864, 0)
@@ -101,7 +209,7 @@ function library:CreateWindow(windowName, keybind)
 	TabCorner.Parent = TabContainer
 
 	TabStroke.ApplyStrokeMode = "Contextual"
-	TabStroke.Color = Color3.fromRGB(16, 16, 16)
+	TabStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabStroke.Color
 	TabStroke.LineJoinMode = "Bevel"
 	TabStroke.Thickness = 2
 	TabStroke.Name = "TabStroke"
@@ -111,7 +219,7 @@ function library:CreateWindow(windowName, keybind)
 	TabHolder.Parent = TabContainer
 	TabHolder.Active = true
 	TabHolder.AnchorPoint = Vector2.new(0.5, 0.5)
-	TabHolder.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
+	TabHolder.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.BackgroundColor3
 	TabHolder.BackgroundTransparency = 1.000
 	TabHolder.BorderSizePixel = 0
 	TabHolder.Position = UDim2.new(0.501, 0, 0.498, 0)
@@ -127,7 +235,7 @@ function library:CreateWindow(windowName, keybind)
 	TabDataContainer.Name = "TabDataContainer"
 	TabDataContainer.Parent = Window
 	TabDataContainer.AnchorPoint = Vector2.new(0.5, 0.5)
-	TabDataContainer.BackgroundColor3 = Color3.fromRGB(43, 43, 43)
+	TabDataContainer.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.BackgroundColor3
 	TabDataContainer.BorderSizePixel = 0
 	TabDataContainer.Position = UDim2.new(0.661, 0, 0.536, 0)
 	TabDataContainer.Size = UDim2.new(0.645, 0, 0.861, 0)
@@ -140,7 +248,7 @@ function library:CreateWindow(windowName, keybind)
 	TabDataStroke.Name = "TabDataStroke"
 	TabDataStroke.Parent = TabDataContainer
 	TabDataStroke.ApplyStrokeMode = "Contextual"
-	TabDataStroke.Color = Color3.fromRGB(16, 16, 16)
+	TabDataStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.TabDataStroke.Color
 	TabDataStroke.LineJoinMode = "Bevel"
 	TabDataStroke.Thickness = 2
 
@@ -175,7 +283,7 @@ function library:CreateWindow(windowName, keybind)
 	HubNameText.Size = UDim2.new(1, 0, 1, 0)
 	HubNameText.Font = Enum.Font.GothamBlack
 	HubNameText.Text = windowName or "HUB"
-	HubNameText.TextColor3 = Color3.fromRGB(58, 58, 58)
+	HubNameText.TextColor3 = _G.LightLib_Hub_THEME.Window.TitleContainer.HubNameText.TextColor3
 	HubNameText.TextScaled = true
 	HubNameText.TextSize = 14.000
 	HubNameText.TextWrapped = true
@@ -204,16 +312,16 @@ function library:CreateWindow(windowName, keybind)
 		while LightLib_Hub do
 			local time = os.date("*t")
 			UpdatedTimeText.Text = tostring((os.date("%A, %m %B %Y | ") .. ("%02d:%02d:%02d"):format(time.hour, time.min, time.sec)))
-			task.wait(0.5)
+			task.wait(0.1)
 		end
 	end)
 
-	UpdatedTimeText.TextColor3 = Color3.fromRGB(58, 58, 58)
+	UpdatedTimeText.TextColor3 = _G.LightLib_Hub_THEME.Window.UpdatedContainer.UpdatedTimeText.TextColor3
 	UpdatedTimeText.TextScaled = true
 	UpdatedTimeText.TextSize = 14.000
 	UpdatedTimeText.TextWrapped = true
 	UpdatedTimeText.TextXAlignment = Enum.TextXAlignment.Right
-	-- or not Enum.KeyCode[tostring(string.gsub(tostring(keybind), "Enum.KeyCode.", ""))]
+
 	if not keybind then
 		_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
 	else
@@ -224,8 +332,11 @@ function library:CreateWindow(windowName, keybind)
 				_G.LightLib_Hub_KEYBIND = Enum.KeyCode[keybind]
 			end
 		elseif typeof(keybind) == "EnumItem" then
-			if not string.match(tostring(keybind), "Enum.KeyCode") then return end
-			_G.LightLib_Hub_KEYBIND = keybind
+			if not string.match(tostring(keybind), "Enum.KeyCode") then
+				_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
+			else
+				_G.LightLib_Hub_KEYBIND = keybind
+			end
 		end
 	end
 
@@ -238,28 +349,24 @@ function library:CreateWindow(windowName, keybind)
 				if debounce then return end
 				debounce = true
 				if UI_TOGGLED then
-					task.spawn(function()
-						Window:TweenSizeAndPosition(
-							originalWindowSize,
-							originalWindowPosition,
-							Enum.EasingDirection.Out,
-							Enum.EasingStyle.Cubic,
-							.75
-						)
-					end)
+					Window:TweenSizeAndPosition(
+						originalWindowSize,
+						originalWindowPosition,
+						Enum.EasingDirection.Out,
+						Enum.EasingStyle.Cubic,
+						0.75
+					)
 					task.wait(1.5)
 					Drag.Active = true
 					Drag.Visible = true
 				elseif UI_TOGGLED ~= true then
-					task.spawn(function()
-						Window:TweenSizeAndPosition(
-							UDim2.fromScale(0, 0),
-							UDim2.fromScale(0, 0),
-							Enum.EasingDirection.Out,
-							Enum.EasingStyle.Cubic,
-							.75
-						)
-					end)
+					Window:TweenSizeAndPosition(
+						UDim2.fromScale(0, 0),
+						UDim2.fromScale(0, 0),
+						Enum.EasingDirection.Out,
+						Enum.EasingStyle.Cubic,
+						0.75
+					)
 					task.wait(1.5)
 					Drag.Active = false
 					Drag.Visible = false
@@ -283,6 +390,7 @@ function library:CreateWindow(windowName, keybind)
 		local TabBtnText = Instance.new("TextLabel")
 		local TabBtnCorner = Instance.new("UICorner")
 		local TabBtnStroke = Instance.new("UIStroke")
+		local TabBtnSelected = Instance.new("BoolValue")
 
 		TabData.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabData.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -292,7 +400,7 @@ function library:CreateWindow(windowName, keybind)
 		TabData.Name = #DataHolder:GetChildren() + 1
 		TabData.Parent = DataHolder
 
-		print("New tab name:", TabData.Name)
+		--print("New tab name:", TabData.Name)
 
 		if not table.find(tabs.currentTabs, TabData.Name) then
 			table.insert(tabs.currentTabs, TabData.Name)
@@ -318,9 +426,9 @@ function library:CreateWindow(windowName, keybind)
 		TabBtn.Name = "TabBtn"
 		TabBtn.Parent = TabHolder
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
-		TabBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+		TabBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
 		TabBtn.BorderSizePixel = 0
-		TabBtn.Size = UDim2.new(1, 0, 0.06, 0)
+		TabBtn.Size = UDim2.new(1, 0, 0.04, 0)
 		TabBtn.AutoButtonColor = false
 		TabBtn.Font = Enum.Font.Oswald
 		TabBtn.Text = ""
@@ -336,7 +444,7 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnStroke.Name = "TabBtnStroke"
 		TabBtnStroke.Parent = TabBtn
 		TabBtnStroke.ApplyStrokeMode = "Border"
-		TabBtnStroke.Color = Color3.fromRGB(21,21,21)
+		TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
 		TabBtnStroke.LineJoinMode = "Round"
 		TabBtnStroke.Thickness = 2
 		TabBtnStroke.Transparency = 0.5
@@ -350,6 +458,9 @@ function library:CreateWindow(windowName, keybind)
 		TabBtnText.Position = UDim2.new(0.5, 0, 0.5, 0)
 		TabBtnText.Size = UDim2.new(0.7, 0, 0.6, 0)
 		TabBtnText.Font = Enum.Font.GothamBold
+
+		TabBtnSelected.Value = false
+		TabBtnSelected.Parent = TabBtn
 
 		if tabName and typeof(tabName) == "string" and tabName ~= "" and tabName ~= nil then
 			TabBtnText.Text = tabName
@@ -372,33 +483,55 @@ function library:CreateWindow(windowName, keybind)
 		end
 
 		task.spawn(function()
-			local connection1, connection2
+			for _, obj in pairs(TabHolder:GetChildren()) do
+				if obj:IsA("TextButton") then
+					obj.Activated:Connect(function()
+						if obj.TabBtnSelected.Value == false then
+							for _, obj2 in pairs(TabHolder:GetChildren()) do
+								if obj2.Name == obj.Name then
+									obj.TabBtnSelected.Value = true
+								else
+									obj2.TabBtnSelected.Value = false
+								end
+							end
+						end
+					end)
+				end
+			end
+		end)
+
+		task.spawn(function()
+
 			TabBtn.Activated:Connect(function()
-				-- connection1:Disconnect()
-				-- connection2:Disconnect()
+				task.wait(0.25)
+				if TabBtnSelected.Value == true then return end
+				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
+					BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
+				}):Play()
+				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
+					Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
+				}):Play()
 				for _, obj in pairs(DataHolder:GetChildren()) do
 					obj.Visible = false
 				end
 				TabData.Visible = true
 			end)
-			connection1 = TabBtn.MouseEnter:Connect(function()
-				task.spawn(function()
-					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
-						BackgroundColor3 = Color3.fromRGB(67, 67, 67)
-					}):Play()
-				end)
+			TabBtn.MouseEnter:Connect(function()
+				if TabBtnSelected.Value == true then return end
+				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
+					BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Hover
+				}):Play()
 				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
-					Color = Color3.fromRGB(104, 104, 104)
+					Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Hover
 				}):Play()
 			end)
-			connection2 = TabBtn.MouseLeave:Connect(function()
-				task.spawn(function()
-					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
-						BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-					}):Play()
-				end)
+			TabBtn.MouseLeave:Connect(function()
+				if TabBtnSelected.Value == true then return end
+				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
+					BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.NoHover
+				}):Play()
 				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
-					Color = Color3.fromRGB(21, 21, 21)
+					Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.NoHover
 				}):Play()
 			end)
 		end)
@@ -424,13 +557,13 @@ function library:CreateWindow(windowName, keybind)
 				DataBtn.Name = "DataBtn"
 				DataBtn.Parent = TabData
 				DataBtn.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+				DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.BackgroundColor3
 				DataBtn.BorderSizePixel = 0
 				DataBtn.Size = UDim2.new(0.899999976, 0, 0.0599999987, 0)
 				DataBtn.AutoButtonColor = false
 				DataBtn.Font = Enum.Font.Oswald
 				DataBtn.Text = ""
-				DataBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+				DataBtn.TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.TextColor3
 				DataBtn.TextScaled = true
 				DataBtn.TextSize = 14.000
 				DataBtn.TextWrapped = true
@@ -459,7 +592,7 @@ function library:CreateWindow(windowName, keybind)
 				DataBtnDivider.Name = "DataBtnDivider"
 				DataBtnDivider.Parent = DataBtn
 				DataBtnDivider.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataBtnDivider.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+				DataBtnDivider.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnDivider.BackgroundColor3
 				DataBtnDivider.BorderSizePixel = 0
 				DataBtnDivider.Position = UDim2.new(0.5, 0, 1, 0)
 				DataBtnDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
@@ -487,7 +620,7 @@ function library:CreateWindow(windowName, keybind)
 			DataTxtLbl.Name = "DataTxtLbl"
 			DataTxtLbl.Parent = TabData
 			DataTxtLbl.AnchorPoint = Vector2.new(0.5, 0.5)
-			DataTxtLbl.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+			DataTxtLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.BackgroundColor3
 			DataTxtLbl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 			DataTxtLbl.BorderSizePixel = 0
 			DataTxtLbl.Size = UDim2.new(0.899999976, 0, 0.0599999987, 0)
@@ -495,7 +628,7 @@ function library:CreateWindow(windowName, keybind)
 			Lbl.Name = "Lbl"
 			Lbl.Parent = DataTxtLbl
 			Lbl.AnchorPoint = Vector2.new(0.5, 0.5)
-			Lbl.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+			Lbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.Lbl.BackgroundColor3
 			Lbl.BackgroundTransparency = 1.000
 			Lbl.BorderSizePixel = 0
 			Lbl.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -510,7 +643,7 @@ function library:CreateWindow(windowName, keybind)
 			DataTxtLblDivider.Name = "DataTxtLblDivider"
 			DataTxtLblDivider.Parent = DataTxtLbl
 			DataTxtLblDivider.AnchorPoint = Vector2.new(0.5, 0.5)
-			DataTxtLblDivider.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+			DataTxtLblDivider.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.DataTxtLblDivider.BackgroundColor3
 			DataTxtLblDivider.BorderSizePixel = 0
 			DataTxtLblDivider.Position = UDim2.new(0.5, 0, 1, 0)
 			DataTxtLblDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
@@ -545,13 +678,10 @@ function library:CreateWindow(windowName, keybind)
 					status = "OFF"
 				end
 
-				local onColor = Color3.fromRGB(139, 139, 139)
-				local offColor = Color3.fromRGB(58, 58, 58)
-
 				DataTgl.Name = "DataTgl"
 				DataTgl.Parent = TabData
 				DataTgl.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataTgl.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+				DataTgl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.BackgroundColor3
 				DataTgl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 				DataTgl.BorderSizePixel = 0
 				DataTgl.Size = UDim2.new(0.899999976, 0, 0.0599999987, 0)
@@ -559,7 +689,7 @@ function library:CreateWindow(windowName, keybind)
 				DataTglLbl.Name = "DataTglLbl"
 				DataTglLbl.Parent = DataTgl
 				DataTglLbl.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataTglLbl.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+				DataTglLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.BackgroundColor3
 				DataTglLbl.BackgroundTransparency = 1.000
 				DataTglLbl.BorderSizePixel = 0
 				DataTglLbl.Position = UDim2.new(0.324374288, 0, 0.5, 0)
@@ -573,9 +703,9 @@ function library:CreateWindow(windowName, keybind)
 				end
 
 				if status == "ON" then
-					DataTglLbl.TextColor3 = onColor
+					DataTglLbl.TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.ON
 				elseif status == "OFF" then
-					DataTglLbl.TextColor3 = offColor
+					DataTglLbl.TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.OFF
 				end
 
 				DataTglLbl.TextScaled = true
@@ -585,7 +715,7 @@ function library:CreateWindow(windowName, keybind)
 				DataTglDivider.Name = "Divider"
 				DataTglDivider.Parent = DataTgl
 				DataTglDivider.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataTglDivider.BackgroundColor3 = Color3.fromRGB(29, 29, 29)
+				DataTglDivider.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglDivider.BackgroundColor3
 				DataTglDivider.BorderSizePixel = 0
 				DataTglDivider.Position = UDim2.new(0.5, 0, 1, 0)
 				DataTglDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
@@ -593,7 +723,7 @@ function library:CreateWindow(windowName, keybind)
 				TglBg.Name = "TglBg"
 				TglBg.Parent = DataTgl
 				TglBg.AnchorPoint = Vector2.new(0.5, 0.5)
-				TglBg.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+				TglBg.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.BackgroundColor3
 				TglBg.BorderSizePixel = 0
 				TglBg.Position = UDim2.new(0.708, 0, 0.5, 0)
 				TglBg.Size = UDim2.new(0.211, 0, 0.65, 0)
@@ -601,7 +731,7 @@ function library:CreateWindow(windowName, keybind)
 				TglBtn.Name = "TglBtn"
 				TglBtn.Parent = TglBg
 				TglBtn.AnchorPoint = Vector2.new(0.5, 0.5)
-				TglBtn.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
+				TglBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.TglBtn.BackgroundColor3
 				TglBtn.BorderSizePixel = 0
 				TglBtn.Position = UDim2.new(0.236, 0, 0.5, 0)
 				TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
@@ -616,9 +746,9 @@ function library:CreateWindow(windowName, keybind)
 				TglStatus.AnchorPoint = Vector2.new(0.5, 0.5)
 
 				if status == "OFF" then
-					TglStatus.TextColor3 = offColor
+					TglStatus.TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglStatus.OFF
 				elseif status == "ON" then
-					TglStatus.TextColor3 = onColor
+					TglStatus.TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglStatus.ON
 				end
 
 				TglStatus.BackgroundTransparency = 1.000
@@ -627,7 +757,6 @@ function library:CreateWindow(windowName, keybind)
 				TglStatus.Size = UDim2.new(0.100000001, 0, 0.600000024, 0)
 				TglStatus.Font = Enum.Font.GothamBold
 				TglStatus.Text = status
-				TglStatus.TextColor3 = Color3.fromRGB(58, 58, 58)
 				TglStatus.TextScaled = true
 				TglStatus.TextSize = 14.000
 				TglStatus.TextWrapped = true
@@ -666,48 +795,33 @@ function library:CreateWindow(windowName, keybind)
 							t2:Cancel()
 							r2 = false
 						end
-						--[[if t1.PlaybackState == Enum.PlaybackState.Playing then
-							t1:Cancel()
-						end
-						if t2.PlaybackState == Enum.PlaybackState.Playing then
-							t2:Cancel()
-						end]]
-						--TglBtn.Size = UDim2.new(0.5, 0, 1, 0)
 						toggled = not toggled
 						if toggled then
-							task.spawn(function()
-								game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
-									Position = UDim2.new(0.748, 0, 0.5, 0),
-									BackgroundColor3 = onColor,
-									Size = UDim2.new(0.5, 0, 1, 0)
-								}):Play()
-							end)
-							task.spawn(function()
-								game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
-									TextColor3 = onColor
-								}):Play()
-							end)
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
+								Position = UDim2.new(0.748, 0, 0.5, 0),
+								BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.TglBtn.ON,
+								Size = UDim2.new(0.5, 0, 1, 0)
+							}):Play()
+							game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+								TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglStatus.ON
+							}):Play()
+							game:GetService("TweenService"):Create(DataTglLbl, TweenInfo.new(0.25), {
+								TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.ON
+							}):Play()
 							status = "ON"
-							game:GetService("TweenService"):Create(DataTglLbl, TweenInfo.new(0.25), {
-								TextColor3 = onColor
-							}):Play()
 						elseif toggled ~= true then
-							task.spawn(function()
-								game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
-									Position = UDim2.new(0.236, 0, 0.5, 0),
-									BackgroundColor3 = offColor,
-									Size = UDim2.new(0.5, 0, 1, 0)
-								}):Play()
-							end)
-							task.spawn(function()
-								game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
-									TextColor3 = offColor
-								}):Play()
-							end)
-							status = "OFF"
-							game:GetService("TweenService"):Create(DataTglLbl, TweenInfo.new(0.25), {
-								TextColor3 = offColor
+							game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.25), {
+								Position = UDim2.new(0.236, 0, 0.5, 0),
+								BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.TglBtn.OFF,
+								Size = UDim2.new(0.5, 0, 1, 0)
 							}):Play()
+							game:GetService("TweenService"):Create(TglStatus, TweenInfo.new(0.25), {
+								TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglStatus.OFF
+							}):Play()
+							game:GetService("TweenService"):Create(DataTglLbl, TweenInfo.new(0.25), {
+								TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.OFF
+							}):Play()
+							status = "OFF"
 						end
 						TglStatus.Text = status
 						callback(toggled)

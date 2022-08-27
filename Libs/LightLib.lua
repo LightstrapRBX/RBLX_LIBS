@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.80]",
+	VERSION = "1.0.2.4 [PATCH 1.81]",
 	THEMES = {
 		Default = {
 
@@ -195,8 +195,7 @@ function library:CreateWindow(windowName, keybind, theme)
 	Window.Position = UDim2.new(0.5, 0, 4, 0)
 	Window.Size = UDim2.new(1, 0, 7.746, 0)
 
-	local originalWindowPosition = Window.Position
-	local originalWindowSize = Window.Size
+	local originalWindowSize = UDim2.new(1, 0, 7.746, 0)
 
 	WindowCorner.CornerRadius = UDim.new(0.02, 0)
 	WindowCorner.Name = "WindowCorner"
@@ -278,6 +277,12 @@ function library:CreateWindow(windowName, keybind, theme)
 	DataHolder.ScrollBarImageTransparency = 1
 	DataHolder.ClipsDescendants = false
 
+	local function update1()
+		TabHolder.CanvasSize = UDim2.new(0, TabHolderLayout.AbsoluteContentSize.X, 0, TabHolderLayout.AbsoluteContentSize.Y)
+	end
+	TabHolderLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(update1)
+	TabHolder.CanvasSize = UDim2.new(0, TabHolderLayout.AbsoluteContentSize.X, 0, TabHolderLayout.AbsoluteContentSize.Y)
+
 	TitleContainer.Name = "TitleContainer"
 	TitleContainer.Parent = Window
 	TitleContainer.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -340,6 +345,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
 	else
 		if typeof(keybind) == "string" then
+			keybind = keybind:upper()
 			if not Enum.KeyCode[keybind] then
 				_G.LightLib_Hub_KEYBIND = Enum.KeyCode.RightControl
 			else
@@ -364,25 +370,25 @@ function library:CreateWindow(windowName, keybind, theme)
 				debounce = true
 				UI_TOGGLED = not UI_TOGGLED
 				if UI_TOGGLED then
-					Window:TweenSizeAndPosition(
+					Window:TweenSize(
 						originalWindowSize,
-						originalWindowPosition,
 						Enum.EasingDirection.Out,
-						Enum.EasingStyle.Cubic,
-						1.25
+						Enum.EasingStyle.Quart,
+						0.6,
+						true
 					)
-					task.wait(1.5)
+					task.wait(0.6)
 					Drag.Active = true
 					Drag.Visible = true
 				elseif UI_TOGGLED ~= true then
-					Window:TweenSizeAndPosition(
-						UDim2.new(0, 0, 0, 0),
+					Window:TweenSize(
 						UDim2.new(0, 0, 0, 0),
 						Enum.EasingDirection.Out,
-						Enum.EasingStyle.Cubic,
-						1.25
+						Enum.EasingStyle.Quart,
+						0.6,
+						true
 					)
-					task.wait(1.75)
+					task.wait(0.6)
 					Drag.Active = false
 					Drag.Visible = false
 				end
@@ -458,8 +464,8 @@ function library:CreateWindow(windowName, keybind, theme)
 
 		TabBtnStroke.Name = "TabBtnStroke"
 		TabBtnStroke.Parent = TabBtn
-		TabBtnStroke.ApplyStrokeMode = "Border"
 		TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
+		TabBtnStroke.ApplyStrokeMode = "Border"
 		TabBtnStroke.LineJoinMode = "Round"
 		TabBtnStroke.Thickness = 2
 		TabBtnStroke.Transparency = 0.5
@@ -502,17 +508,12 @@ function library:CreateWindow(windowName, keybind, theme)
 			end
 		end
 
-		TabHolder.CanvasSize = UDim2.new(0, TabHolderLayout.AbsoluteContentSize.X, 0, TabHolderLayout.AbsoluteContentSize.Y)
-		TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
 		task.spawn(function()
-			local function update1()
-				TabHolder.CanvasSize = UDim2.new(0, TabHolderLayout.AbsoluteContentSize.X, 0, TabHolderLayout.AbsoluteContentSize.Y)
-			end
 			local function update2()
 				TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
 			end
-			TabHolderLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(update1)
 			TabDataLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(update2)
+			TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
 		end)
 
 		task.spawn(function()
@@ -591,7 +592,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 				DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 				DataBtn.BorderSizePixel = 0
-				DataBtn.Size = UDim2.new(0.9, 0, 0.0325, 0)
+				DataBtn.Size = UDim2.new(0.9, 0, 0.045, 0)
 				DataBtn.AutoButtonColor = false
 				DataBtn.Font = Enum.Font.Oswald
 				DataBtn.Text = ""
@@ -628,8 +629,14 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtnStroke.Name = "DataBtnStroke"
 				DataBtnStroke.Parent = DataBtn
 				DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.NoHover
+				DataBtnStroke.ApplyStrokeMode = "Border"
+				DataBtnStroke.LineJoinMode = "Round"
+				DataBtnStroke.Thickness = 2
+				DataBtnStroke.Transparency = 0.5
 
+				local busy2 = false
 				DataBtn.MouseEnter:Connect(function()
+					if busy2 then return end
 					game:GetService("TweenService"):Create(DataBtn, TweenInfo.new(0.25), {
 						BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Hover
 					}):Play()
@@ -639,6 +646,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				end)
 
 				DataBtn.MouseLeave:Connect(function()
+					if busy2 then return end
 					game:GetService("TweenService"):Create(DataBtn, TweenInfo.new(0.25), {
 						BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 					}):Play()
@@ -648,11 +656,13 @@ function library:CreateWindow(windowName, keybind, theme)
 				end)
 
 				DataBtn.Activated:Connect(function()
+					busy2 = true
 					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Clicked
 					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.Clicked
 					task.wait(.35)
 					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.NoHover
+					busy2 = false
 					pcall(callback)
 				end)
 			end
@@ -681,7 +691,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.BackgroundColor3
 			DataTxtLbl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 			DataTxtLbl.BorderSizePixel = 0
-			DataTxtLbl.Size = UDim2.new(0.9, 0, 0.0325, 0)
+			DataTxtLbl.Size = UDim2.new(0.9, 0, 0.045, 0)
 
 			Lbl.Name = "Lbl"
 			Lbl.Parent = DataTxtLbl
@@ -705,6 +715,10 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtStroke.Name = "DataTxtStroke"
 			DataTxtStroke.Parent = DataTxtLbl
 			DataTxtStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.DataTxtStroke.NoHover
+			DataTxtStroke.ApplyStrokeMode = "Border"
+			DataTxtStroke.LineJoinMode = "Round"
+			DataTxtStroke.Thickness = 2
+			DataTxtStroke.Transparency = 0.5
 
 			DataTxtLbl.MouseEnter:Connect(function()
 				game:GetService("TweenService"):Create(DataTxtLbl, TweenInfo.new(0.25), {
@@ -761,7 +775,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTgl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.NoHover
 				DataTgl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 				DataTgl.BorderSizePixel = 0
-				DataTgl.Size = UDim2.new(0.9, 0, 0.0325, 0)
+				DataTgl.Size = UDim2.new(0.9, 0, 0.045, 0)
 
 				DataTglLbl.Name = "DataTglLbl"
 				DataTglLbl.Parent = DataTgl
@@ -843,6 +857,10 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTglStroke.Name = "DataTglStroke"
 				DataTglStroke.Parent = DataTgl
 				DataTglStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglStroke.NoHover
+				DataTglStroke.ApplyStrokeMode = "Border"
+				DataTglStroke.LineJoinMode = "Round"
+				DataTglStroke.Thickness = 2
+				DataTglStroke.Transparency = 0.5
 
 				local busy = false
 				local t1, t2, r1, r2

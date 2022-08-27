@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [FIXED 1.71]",
+	VERSION = "1.0.2.4 [PATCH 1.72]",
 	THEMES = {
 		Default = {
 
@@ -484,6 +484,8 @@ function library:CreateWindow(windowName, keybind, theme)
 				TabHolder[obj.Name].TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
 				obj.Visible = true
 			else
+				TabHolder[obj.Name].BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.NoHover
+				TabHolder[obj.Name].TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.NoHover
 				obj.Visible = false
 			end
 		end
@@ -498,6 +500,12 @@ function library:CreateWindow(windowName, keybind, theme)
 									if obj2.Name == obj.Name then
 										obj.TabBtnSelected.Value = true
 									else
+										game:GetService("TweenService"):Create(obj2, TweenInfo.new(0.25), {
+											BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.NoHover
+										}):Play()
+										game:GetService("TweenService"):Create(obj2.TabBtnStroke, TweenInfo.new(0.25), {
+											Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.NoHover
+										}):Play()
 										obj2.TabBtnSelected.Value = false
 									end
 								end
@@ -511,18 +519,20 @@ function library:CreateWindow(windowName, keybind, theme)
 		task.spawn(function()
 
 			TabBtn.Activated:Connect(function()
-				task.wait(0.25)
-				if TabBtnSelected.Value == true then return end
-				game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
-					BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
-				}):Play()
-				game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
-					Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
-				}):Play()
-				for _, obj in pairs(DataHolder:GetChildren()) do
-					obj.Visible = false
+				task.wait(0.3)
+				if TabBtnSelected.Value == true then
+					TabBtnSelected.Value = false
+					game:GetService("TweenService"):Create(TabBtn, TweenInfo.new(0.25), {
+						BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
+					}):Play()
+					game:GetService("TweenService"):Create(TabBtnStroke, TweenInfo.new(0.25), {
+						Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
+					}):Play()
+					for _, obj in pairs(DataHolder:GetChildren()) do
+						obj.Visible = false
+					end
+					TabData.Visible = true
 				end
-				TabData.Visible = true
 			end)
 			TabBtn.MouseEnter:Connect(function()
 				if TabBtnSelected.Value == true then return end

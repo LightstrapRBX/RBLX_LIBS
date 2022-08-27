@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.77]",
+	VERSION = "1.0.2.4 [PATCH 1.78]",
 	THEMES = {
 		Default = {
 
@@ -48,11 +48,12 @@ local library = {
 							DataBtn = {
 								NoHover = Color3.fromRGB(35, 35, 35),
 								Hover = Color3.fromRGB(67, 67, 67),
+								Clicked = Color3.fromRGB(24, 24, 24),
 								TextColor3 = Color3.fromRGB(255, 255, 255),
-								DataBtnDivider = Color3.fromRGB(29, 29, 29),
 								DataBtnStroke = {
 									NoHover = Color3.fromRGB(21, 21, 21),
 									Hover = Color3.fromRGB(104, 104, 104),
+									Clicked = Color3.fromRGB(0, 0, 0),
 								}
 							},
 							DataTxtLbl = {
@@ -61,9 +62,6 @@ local library = {
 								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
 								Lbl = {
 									BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-								},
-								DataTxtLblDivider = {
-									BackgroundColor3 = Color3.fromRGB(29, 29, 29)
 								},
 								DataTxtStroke = {
 									NoHover = Color3.fromRGB(21, 21, 21),
@@ -93,9 +91,6 @@ local library = {
 								TglStatus = {
 									ON = Color3.fromRGB(139, 139, 139),
 									OFF = Color3.fromRGB(58, 58, 58)
-								},
-								DataTglDivider = {
-									BackgroundColor3 = Color3.fromRGB(29, 29, 29)
 								},
 								DataTglStroke = {
 									NoHover = Color3.fromRGB(21, 21, 21),
@@ -402,7 +397,7 @@ function library:CreateWindow(windowName, keybind, theme)
 	}
 
 	function tabs:CreateTab(tabName)
-		local TabData = Instance.new("Frame")
+		local TabData = Instance.new("ScrollingFrame")
 		local TabDataLayout = Instance.new("UIListLayout")
 
 		local TabBtn = Instance.new("TextButton")
@@ -418,6 +413,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabData.Size = UDim2.new(0.952, 0, 0.93, 0)
 		TabData.Name = #DataHolder:GetChildren() + 1
 		TabData.Parent = DataHolder
+		TabData.ClipsDescendants = false
 
 		--print("New tab name:", TabData.Name)
 
@@ -447,7 +443,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 		TabBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
 		TabBtn.BorderSizePixel = 0
-		TabBtn.Size = UDim2.new(1, 0, 0.04, 0)
+		TabBtn.Size = UDim2.new(1, 0, 0.06, 0)
 		TabBtn.AutoButtonColor = false
 		TabBtn.Font = Enum.Font.Oswald
 		TabBtn.Text = ""
@@ -506,6 +502,8 @@ function library:CreateWindow(windowName, keybind, theme)
 			end
 		end
 
+		TabHolder.CanvasSize = UDim2.new(0, TabHolderLayout.AbsoluteContentSize.X, 0, TabHolderLayout.AbsoluteContentSize.Y)
+		TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
 		task.spawn(function()
 			local function update1()
 				TabHolder.CanvasSize = UDim2.new(0, TabHolderLayout.AbsoluteContentSize.X, 0, TabHolderLayout.AbsoluteContentSize.Y)
@@ -575,7 +573,6 @@ function library:CreateWindow(windowName, keybind, theme)
 			if typeof(callback) == "function" then
 				local DataBtn = Instance.new("TextButton")
 				local BtnText = Instance.new("TextLabel")
-				local DataBtnDivider = Instance.new("Frame")
 				local DataBtnStroke = Instance.new("UIStroke")
 				local DataBtnCorner = Instance.new("UICorner")
 
@@ -594,7 +591,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 				DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 				DataBtn.BorderSizePixel = 0
-				DataBtn.Size = UDim2.new(0.9, 0, 0.04, 0)
+				DataBtn.Size = UDim2.new(0.9, 0, 0.0325, 0)
 				DataBtn.AutoButtonColor = false
 				DataBtn.Font = Enum.Font.Oswald
 				DataBtn.Text = ""
@@ -624,14 +621,6 @@ function library:CreateWindow(windowName, keybind, theme)
 				BtnText.TextSize = 14.000
 				BtnText.TextWrapped = true
 
-				DataBtnDivider.Name = "DataBtnDivider"
-				DataBtnDivider.Parent = DataBtn
-				DataBtnDivider.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataBtnDivider.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnDivider
-				DataBtnDivider.BorderSizePixel = 0
-				DataBtnDivider.Position = UDim2.new(0.5, 0, 1, 0)
-				DataBtnDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
-
 				DataBtnCorner.Name = "DataBtnCorner"
 				DataBtnCorner.Parent = DataBtn
 				DataBtnCorner.CornerRadius = UDim.new(0.2, 0)
@@ -659,9 +648,9 @@ function library:CreateWindow(windowName, keybind, theme)
 				end)
 
 				DataBtn.Activated:Connect(function()
-					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Hover
-					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.Hover
-					task.wait(.25)
+					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Clicked
+					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.Clicked
+					task.wait(.35)
 					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.NoHover
 					pcall(callback)
@@ -673,7 +662,6 @@ function library:CreateWindow(windowName, keybind, theme)
 			if not text then return end
 			local DataTxtLbl = Instance.new("Frame")
 			local Lbl = Instance.new("TextLabel")
-			local DataTxtLblDivider = Instance.new("Frame")
 			local DataTxtStroke = Instance.new("UIStroke")
 			local DataTxtCorner = Instance.new("UICorner")
 
@@ -693,7 +681,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.BackgroundColor3
 			DataTxtLbl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 			DataTxtLbl.BorderSizePixel = 0
-			DataTxtLbl.Size = UDim2.new(0.899999976, 0, 0.0599999987, 0)
+			DataTxtLbl.Size = UDim2.new(0.9, 0, 0.0325, 0)
 
 			Lbl.Name = "Lbl"
 			Lbl.Parent = DataTxtLbl
@@ -709,14 +697,6 @@ function library:CreateWindow(windowName, keybind, theme)
 			Lbl.TextScaled = true
 			Lbl.TextSize = 14.000
 			Lbl.TextWrapped = true
-
-			DataTxtLblDivider.Name = "DataTxtLblDivider"
-			DataTxtLblDivider.Parent = DataTxtLbl
-			DataTxtLblDivider.AnchorPoint = Vector2.new(0.5, 0.5)
-			DataTxtLblDivider.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.DataTxtLblDivider.BackgroundColor3
-			DataTxtLblDivider.BorderSizePixel = 0
-			DataTxtLblDivider.Position = UDim2.new(0.5, 0, 1, 0)
-			DataTxtLblDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
 
 			DataTxtCorner.Name = "DataTxtCorner"
 			DataTxtCorner.Parent = DataTxtLbl
@@ -749,7 +729,6 @@ function library:CreateWindow(windowName, keybind, theme)
 			if typeof(callback) == "function" then
 				local DataTgl = Instance.new("Frame")
 				local DataTglLbl = Instance.new("TextLabel")
-				local DataTglDivider = Instance.new("Frame")
 				local DataTglCorner = Instance.new("UICorner")
 				local DataTglStroke = Instance.new("UIStroke")
 
@@ -782,7 +761,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTgl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.NoHover
 				DataTgl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 				DataTgl.BorderSizePixel = 0
-				DataTgl.Size = UDim2.new(0.899999976, 0, 0.0599999987, 0)
+				DataTgl.Size = UDim2.new(0.9, 0, 0.0325, 0)
 
 				DataTglLbl.Name = "DataTglLbl"
 				DataTglLbl.Parent = DataTgl
@@ -815,14 +794,6 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTglLbl.TextScaled = true
 				DataTglLbl.TextSize = 14.000
 				DataTglLbl.TextWrapped = true
-
-				DataTglDivider.Name = "Divider"
-				DataTglDivider.Parent = DataTgl
-				DataTglDivider.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataTglDivider.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglDivider.BackgroundColor3
-				DataTglDivider.BorderSizePixel = 0
-				DataTglDivider.Position = UDim2.new(0.5, 0, 1, 0)
-				DataTglDivider.Size = UDim2.new(1, 0, 0.075000003, 0)
 
 				TglBg.Name = "TglBg"
 				TglBg.Parent = DataTgl

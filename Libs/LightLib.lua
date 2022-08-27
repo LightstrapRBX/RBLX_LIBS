@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.74]",
+	VERSION = "1.0.2.4 [PATCH 1.75]",
 	THEMES = {
 		Default = {
 
@@ -500,7 +500,7 @@ function library:CreateWindow(windowName, keybind, theme)
 						end
 						TabData.Visible = true
 						for _, obj in pairs(TabHolder:GetChildren()) do
-							if obj:IsA("TextButton") then
+							if obj:IsA("TextButton") and obj.Name ~= TabBtn.Name then
 								obj.TabBtnSelected.Value = false
 								game:GetService("TweenService"):Create(obj, TweenInfo.new(0.25), {
 									BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.NoHover

@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.85]",
+	VERSION = "1.0.2.4 [PATCH 1.86]",
 	THEMES = {
 		Default = {
 
@@ -373,6 +373,8 @@ function library:CreateWindow(windowName, keybind, theme)
 				debounce = true
 				UI_TOGGLED = not UI_TOGGLED
 				if UI_TOGGLED then
+					Drag.Active = true
+					Drag.Visible = true
 					Window:TweenSize(
 						UDim2.new(1, 0, 7.746, 0),
 						Enum.EasingDirection.Out,
@@ -381,8 +383,6 @@ function library:CreateWindow(windowName, keybind, theme)
 						true
 					)
 					task.wait(0.6)
-					Drag.Active = true
-					Drag.Visible = true
 				elseif UI_TOGGLED ~= true then
 					Window:TweenSize(
 						UDim2.new(0, 0, 0, 0),

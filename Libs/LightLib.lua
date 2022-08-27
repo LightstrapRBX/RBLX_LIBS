@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [FIXED 1.4]",
+	VERSION = "1.0.2.4 [FIXED 1.5]",
 	THEMES = {
 		Default = {
 
@@ -477,8 +477,8 @@ function library:CreateWindow(windowName, keybind, theme)
 		for _, obj in pairs(DataHolder:GetChildren()) do
 			if obj.Name == "1" then
 				TabHolder[obj.Name].TabBtnSelected.Value = true
-				TabBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
-				TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
+				TabHolder[obj.Name].BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
+				TabHolder[obj.Name].TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
 				obj.Visible = true
 			else
 				obj.Visible = false

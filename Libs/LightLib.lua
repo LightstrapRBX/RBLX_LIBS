@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.79]",
+	VERSION = "1.0.2.4 [PATCH 1.80]",
 	THEMES = {
 		Default = {
 
@@ -362,33 +362,33 @@ function library:CreateWindow(windowName, keybind, theme)
 			if input.KeyCode == _G.LightLib_Hub_KEYBIND then
 				if debounce then return end
 				debounce = true
+				UI_TOGGLED = not UI_TOGGLED
 				if UI_TOGGLED then
 					Window:TweenSizeAndPosition(
 						originalWindowSize,
 						originalWindowPosition,
 						Enum.EasingDirection.Out,
 						Enum.EasingStyle.Cubic,
-						0.75
+						1.25
 					)
 					task.wait(1.5)
 					Drag.Active = true
 					Drag.Visible = true
 				elseif UI_TOGGLED ~= true then
 					Window:TweenSizeAndPosition(
-						UDim2.fromScale(0, 0),
-						UDim2.fromScale(0, 0),
+						UDim2.new(0, 0, 0, 0),
+						UDim2.new(0, 0, 0, 0),
 						Enum.EasingDirection.Out,
 						Enum.EasingStyle.Cubic,
-						0.75
+						1.25
 					)
-					task.wait(1.5)
+					task.wait(1.75)
 					Drag.Active = false
 					Drag.Visible = false
 				end
 				task.wait(0.25)
 				debounce = false
 			end
-			UI_TOGGLED = not UI_TOGGLED
 		end)
 	end)
 

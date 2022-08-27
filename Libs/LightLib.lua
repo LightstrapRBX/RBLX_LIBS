@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [FIXED 1.1]",
+	VERSION = "1.0.2.4 [FIXED 1.2]",
 	THEMES = {
 		Default = {
 
@@ -460,6 +460,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabBtnText.Font = Enum.Font.GothamBold
 
 		TabBtnSelected.Value = false
+		TabBtnSelected.Name = "TabBtnSelected"
 		TabBtnSelected.Parent = TabBtn
 
 		if tabName and typeof(tabName) == "string" and tabName ~= "" and tabName ~= nil then
@@ -474,8 +475,10 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabBtnText.TextWrapped = true
 
 		for _, obj in pairs(DataHolder:GetChildren()) do
-			--print(obj.Name)
 			if obj.Name == "1" then
+				TabBtnSelected.Value = true
+				TabBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.Selected
+				TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
 				obj.Visible = true
 			else
 				obj.Visible = false

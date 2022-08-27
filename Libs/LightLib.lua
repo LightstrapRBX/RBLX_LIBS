@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [FIXED 1.6]",
+	VERSION = "1.0.2.4 [FIXED 1.7]",
 	THEMES = {
 		Default = {
 
@@ -25,6 +25,9 @@ local library = {
 								NoHover = Color3.fromRGB(21, 21, 21),
 								Hover = Color3.fromRGB(104, 104, 104),
 								Selected = Color3.fromRGB(87, 87, 87)
+							},
+							TabBtnTxt = {
+								TextColor3 = Color3.fromRGB(157, 157, 157)
 							},
 							TglBg = {
 								BackgroundColor3 = Color3.fromRGB(25, 25, 25)
@@ -469,7 +472,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			TabBtnText.Text = "Tab "..#tabs.currentTabs
 		end
 
-		TabBtnText.TextColor3 = Color3.fromRGB(157, 157, 157)
+		TabBtnText.TextColor3 = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnText.TextColor3
 		TabBtnText.TextScaled = true
 		TabBtnText.TextSize = 14.000
 		TabBtnText.TextWrapped = true
@@ -491,10 +494,12 @@ function library:CreateWindow(windowName, keybind, theme)
 					obj.Activated:Connect(function()
 						if obj.TabBtnSelected.Value == false then
 							for _, obj2 in pairs(TabHolder:GetChildren()) do
-								if obj2.Name == obj.Name then
-									obj.TabBtnSelected.Value = true
-								else
-									obj2.TabBtnSelected.Value = false
+								if obj2:IsA("TextButton") then
+									if obj2.Name == obj.Name then
+										obj.TabBtnSelected.Value = true
+									else
+										obj2.TabBtnSelected.Value = false
+									end
 								end
 							end
 						end

@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.76]",
+	VERSION = "1.0.2.4 [PATCH 1.77]",
 	THEMES = {
 		Default = {
 
@@ -133,7 +133,7 @@ function library:CreateWindow(windowName, keybind, theme)
 	theme = tostring(theme)
 	theme = string.upper(string.sub(theme, 1, 1)) .. string.lower(string.sub(theme, 2, #theme))
 
-	if not theme or not library.THEMES[theme] then
+	if typeof(theme) ~= "string" or not theme or not library.THEMES[theme] then
 		_G.LightLib_Hub_THEME = library.THEMES.Default
 	else
 		_G.LightLib_Hub_THEME = library.THEMES[theme]

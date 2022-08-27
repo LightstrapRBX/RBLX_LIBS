@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.83]",
+	VERSION = "1.0.2.4 [PATCH 1.84]",
 	THEMES = {
 		Default = {
 
@@ -54,6 +54,9 @@ local library = {
 									NoHover = Color3.fromRGB(21, 21, 21),
 									Hover = Color3.fromRGB(104, 104, 104),
 									Clicked = Color3.fromRGB(63, 63, 63),
+								},
+								BtnText = {
+									TextColor3 = Color3.fromRGB(81, 81, 81)
 								}
 							},
 							DataTxtLbl = {
@@ -61,7 +64,8 @@ local library = {
 								Hover = Color3.fromRGB(24, 24, 24),
 								BackgroundColor3 = Color3.fromRGB(35, 35, 35),
 								Lbl = {
-									BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+									BackgroundColor3 = Color3.fromRGB(35, 35, 35),
+									TextColor3 = Color3.fromRGB(81, 81, 81)
 								},
 								DataTxtStroke = {
 									NoHover = Color3.fromRGB(21, 21, 21),
@@ -591,7 +595,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 				DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 				DataBtn.BorderSizePixel = 0
-				DataBtn.Size = UDim2.new(0.9, 0, 0.0725, 0)
+				DataBtn.Size = UDim2.new(0.9, 0, 0.0775, 0)
 				DataBtn.AutoButtonColor = false
 				DataBtn.Font = Enum.Font.Oswald
 				DataBtn.Text = ""
@@ -616,7 +620,7 @@ function library:CreateWindow(windowName, keybind, theme)
 					BtnText.Text = "Button " .. getNumOfBTNs()
 				end
 
-				BtnText.TextColor3 = Color3.fromRGB(58, 58, 58)
+				BtnText.TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.BtnText.TextColor3
 				BtnText.TextScaled = true
 				BtnText.TextSize = 14.000
 				BtnText.TextWrapped = true
@@ -692,7 +696,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.BackgroundColor3
 			DataTxtLbl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 			DataTxtLbl.BorderSizePixel = 0
-			DataTxtLbl.Size = UDim2.new(0.9, 0, 0.0725, 0)
+			DataTxtLbl.Size = UDim2.new(0.9, 0, 0.0775, 0)
 
 			Lbl.Name = "Lbl"
 			Lbl.Parent = DataTxtLbl
@@ -704,7 +708,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			Lbl.Size = UDim2.new(0.699999988, 0, 0.600000024, 0)
 			Lbl.Font = Enum.Font.GothamBold
 			Lbl.Text = text or ("Label " .. getNumOfLBLs())
-			Lbl.TextColor3 = Color3.fromRGB(58, 58, 58)
+			Lbl.TextColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.Lbl.TextColor3
 			Lbl.TextScaled = true
 			Lbl.TextSize = 14.000
 			Lbl.TextWrapped = true
@@ -778,7 +782,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTgl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.NoHover
 				DataTgl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 				DataTgl.BorderSizePixel = 0
-				DataTgl.Size = UDim2.new(0.9, 0, 0.0725, 0)
+				DataTgl.Size = UDim2.new(0.9, 0, 0.0775, 0)
 
 				DataTglLbl.Name = "DataTglLbl"
 				DataTglLbl.Parent = DataTgl

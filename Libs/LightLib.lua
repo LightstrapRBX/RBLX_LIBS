@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.84]",
+	VERSION = "1.0.2.4 [PATCH 1.85]",
 	THEMES = {
 		Default = {
 
@@ -796,8 +796,8 @@ function library:CreateWindow(windowName, keybind, theme)
 
 				DataTglLbl.BackgroundTransparency = 1.000
 				DataTglLbl.BorderSizePixel = 0
-				DataTglLbl.Position = UDim2.new(0.324374288, 0, 0.5, 0)
-				DataTglLbl.Size = UDim2.new(0.450000077, 0, 0.600000024, 0)
+				DataTglLbl.Position = UDim2.new(0.293, 0, 0.5, 0)
+				DataTglLbl.Size = UDim2.new(0.45, 0, 0.6, 0)
 				DataTglLbl.Font = Enum.Font.GothamBold
 
 				if name and typeof(name) == "string" and name ~= nil and name ~= "" then
@@ -883,7 +883,7 @@ function library:CreateWindow(windowName, keybind, theme)
 							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglStroke.Hover
 						}):Play()
 						game:GetService("TweenService"):Create(TglBg, TweenInfo.new(0.25), {
-							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.Hover
+							BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.Hover
 						}):Play()
 					end)
 					DataTgl.MouseLeave:Connect(function()
@@ -894,7 +894,7 @@ function library:CreateWindow(windowName, keybind, theme)
 							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglStroke.NoHover
 						}):Play()
 						game:GetService("TweenService"):Create(TglBg, TweenInfo.new(0.25), {
-							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.NoHover
+							BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.NoHover
 						}):Play()
 					end)
 				end)
@@ -905,16 +905,16 @@ function library:CreateWindow(windowName, keybind, theme)
 						t1 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.12), {
 							Size = UDim2.new(0.52, 0, 1.2, 0)
 						})
-						r1 = true
 						t1:Play()
+						r1 = true
 					end)
 					TglBtn.MouseLeave:Connect(function()
 						if busy then return end
 						t2 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.12), {
 							Size = UDim2.new(0.5, 0, 1, 0)
 						})
-						r2 = true
 						t2:Play()
+						r2 = true
 					end)
 				end)
 

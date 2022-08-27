@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.81]",
+	VERSION = "1.0.2.4 [PATCH 1.82]",
 	THEMES = {
 		Default = {
 
@@ -53,7 +53,7 @@ local library = {
 								DataBtnStroke = {
 									NoHover = Color3.fromRGB(21, 21, 21),
 									Hover = Color3.fromRGB(104, 104, 104),
-									Clicked = Color3.fromRGB(0, 0, 0),
+									Clicked = Color3.fromRGB(63, 63, 63),
 								}
 							},
 							DataTxtLbl = {
@@ -78,6 +78,8 @@ local library = {
 								},
 								TglBg = {
 									BackgroundColor3 = Color3.fromRGB(25, 25, 25),
+									Hover = Color3.fromRGB(38, 38, 38),
+									NoHover = Color3.fromRGB(25, 25, 25),
 									TglBtn = {
 										BackgroundColor3 = Color3.fromRGB(77, 77, 77),
 										ON = Color3.fromRGB(139, 139, 139),
@@ -151,14 +153,14 @@ function library:CreateWindow(windowName, keybind, theme)
 	local TabContainer = Instance.new("Frame")
 	local TabCorner = Instance.new("UICorner")
 	local TabStroke = Instance.new("UIStroke")
-
 	local TabHolder = Instance.new("ScrollingFrame")
 	local TabHolderLayout = Instance.new("UIListLayout")
 
 	local TabDataContainer = Instance.new("Frame")
 	local TabDataCorner = Instance.new("UICorner")
 	local TabDataStroke = Instance.new("UIStroke")
-	local DataHolder = Instance.new("ScrollingFrame")
+
+	local DataHolder = Instance.new("Frame")
 
 	LightLib_Hub.Name = "LightLib_Hub"
 	LightLib_Hub.Parent = game:GetService("CoreGui")
@@ -195,8 +197,6 @@ function library:CreateWindow(windowName, keybind, theme)
 	Window.Position = UDim2.new(0.5, 0, 4, 0)
 	Window.Size = UDim2.new(1, 0, 7.746, 0)
 
-	local originalWindowSize = UDim2.new(1, 0, 7.746, 0)
-
 	WindowCorner.CornerRadius = UDim.new(0.02, 0)
 	WindowCorner.Name = "WindowCorner"
 	WindowCorner.Parent = Window
@@ -223,7 +223,7 @@ function library:CreateWindow(windowName, keybind, theme)
 
 	TabStroke.ApplyStrokeMode = "Contextual"
 	TabStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabStroke.Color
-	TabStroke.LineJoinMode = "Bevel"
+	TabStroke.LineJoinMode = "Round"
 	TabStroke.Thickness = 2
 	TabStroke.Name = "TabStroke"
 	TabStroke.Parent = TabContainer
@@ -250,8 +250,8 @@ function library:CreateWindow(windowName, keybind, theme)
 	TabDataContainer.AnchorPoint = Vector2.new(0.5, 0.5)
 	TabDataContainer.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.BackgroundColor3
 	TabDataContainer.BorderSizePixel = 0
-	TabDataContainer.Position = UDim2.new(0.661, 0, 0.536, 0)
-	TabDataContainer.Size = UDim2.new(0.645, 0, 0.861, 0)
+	TabDataContainer.Position = UDim2.new(0.661, 0, 0.538, 0)
+	TabDataContainer.Size = UDim2.new(0.645, 0, 0.864, 0)
 	TabDataContainer.ClipsDescendants = true
 
 	TabDataCorner.CornerRadius = UDim.new(0.02, 0)
@@ -262,7 +262,7 @@ function library:CreateWindow(windowName, keybind, theme)
 	TabDataStroke.Parent = TabDataContainer
 	TabDataStroke.ApplyStrokeMode = "Contextual"
 	TabDataStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.TabDataStroke.Color
-	TabDataStroke.LineJoinMode = "Bevel"
+	TabDataStroke.LineJoinMode = "Round"
 	TabDataStroke.Thickness = 2
 
 	DataHolder.Name = "DataHolder"
@@ -274,7 +274,6 @@ function library:CreateWindow(windowName, keybind, theme)
 	DataHolder.BorderSizePixel = 0
 	DataHolder.Position = UDim2.new(0.555, 0, 0.5, 0)
 	DataHolder.Size = UDim2.new(1.111, 0, 1, 0)
-	DataHolder.ScrollBarImageTransparency = 1
 	DataHolder.ClipsDescendants = false
 
 	local function update1()
@@ -371,7 +370,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				UI_TOGGLED = not UI_TOGGLED
 				if UI_TOGGLED then
 					Window:TweenSize(
-						originalWindowSize,
+						UDim2.new(1, 0, 7.746, 0),
 						Enum.EasingDirection.Out,
 						Enum.EasingStyle.Quart,
 						0.6,
@@ -634,6 +633,8 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtnStroke.Thickness = 2
 				DataBtnStroke.Transparency = 0.5
 
+				TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
+
 				local busy2 = false
 				DataBtn.MouseEnter:Connect(function()
 					if busy2 then return end
@@ -659,7 +660,7 @@ function library:CreateWindow(windowName, keybind, theme)
 					busy2 = true
 					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Clicked
 					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.Clicked
-					task.wait(.35)
+					task.wait(.125)
 					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.NoHover
 					busy2 = false
@@ -719,6 +720,8 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtStroke.LineJoinMode = "Round"
 			DataTxtStroke.Thickness = 2
 			DataTxtStroke.Transparency = 0.5
+			
+			TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
 
 			DataTxtLbl.MouseEnter:Connect(function()
 				game:GetService("TweenService"):Create(DataTxtLbl, TweenInfo.new(0.25), {
@@ -862,27 +865,10 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTglStroke.Thickness = 2
 				DataTglStroke.Transparency = 0.5
 
+				TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
+
 				local busy = false
 				local t1, t2, r1, r2
-
-				task.spawn(function()
-					TglBtn.MouseEnter:Connect(function()
-						if busy then return end
-						t1 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
-							Size = UDim2.new(0.525, 0, 1.25, 0)
-						})
-						r1 = true
-						t1:Play()
-					end)
-					TglBtn.MouseLeave:Connect(function()
-						if busy then return end
-						t2 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.125), {
-							Size = UDim2.new(0.5, 0, 1, 0)
-						})
-						r2 = true
-						t2:Play()
-					end)
-				end)
 
 				task.spawn(function()
 					DataTgl.MouseEnter:Connect(function()
@@ -892,6 +878,9 @@ function library:CreateWindow(windowName, keybind, theme)
 						game:GetService("TweenService"):Create(DataTglStroke, TweenInfo.new(0.25), {
 							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglStroke.Hover
 						}):Play()
+						game:GetService("TweenService"):Create(TglBg, TweenInfo.new(0.25), {
+							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.Hover
+						}):Play()
 					end)
 					DataTgl.MouseLeave:Connect(function()
 						game:GetService("TweenService"):Create(DataTgl, TweenInfo.new(0.25), {
@@ -900,6 +889,28 @@ function library:CreateWindow(windowName, keybind, theme)
 						game:GetService("TweenService"):Create(DataTglStroke, TweenInfo.new(0.25), {
 							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglStroke.NoHover
 						}):Play()
+						game:GetService("TweenService"):Create(TglBg, TweenInfo.new(0.25), {
+							Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.NoHover
+						}):Play()
+					end)
+				end)
+
+				task.spawn(function()
+					TglBtn.MouseEnter:Connect(function()
+						if busy then return end
+						t1 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.12), {
+							Size = UDim2.new(0.52, 0, 1.2, 0)
+						})
+						r1 = true
+						t1:Play()
+					end)
+					TglBtn.MouseLeave:Connect(function()
+						if busy then return end
+						t2 = game:GetService("TweenService"):Create(TglBtn, TweenInfo.new(0.12), {
+							Size = UDim2.new(0.5, 0, 1, 0)
+						})
+						r2 = true
+						t2:Play()
 					end)
 				end)
 

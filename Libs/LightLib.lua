@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [FIXED 1.2]",
+	VERSION = "1.0.2.4 [FIXED 1.3]",
 	THEMES = {
 		Default = {
 
@@ -692,7 +692,13 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTglLbl.Name = "DataTglLbl"
 				DataTglLbl.Parent = DataTgl
 				DataTglLbl.AnchorPoint = Vector2.new(0.5, 0.5)
-				DataTglLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.BackgroundColor3
+
+				if status == "ON" then
+					DataTglLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.ON
+				elseif status == "OFF" then
+					DataTglLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglLbl.OFF
+				end
+
 				DataTglLbl.BackgroundTransparency = 1.000
 				DataTglLbl.BorderSizePixel = 0
 				DataTglLbl.Position = UDim2.new(0.324374288, 0, 0.5, 0)

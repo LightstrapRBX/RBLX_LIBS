@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.82]",
+	VERSION = "1.0.2.4 [PATCH 1.83]",
 	THEMES = {
 		Default = {
 
@@ -466,7 +466,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		TabBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabContainer.TabHolder.TabBtn.TabBtnStroke.Selected
 		TabBtnStroke.ApplyStrokeMode = "Border"
 		TabBtnStroke.LineJoinMode = "Round"
-		TabBtnStroke.Thickness = 2
+		TabBtnStroke.Thickness = 1.25
 		TabBtnStroke.Transparency = 0.5
 
 		TabBtnText.Name = "TabBtnText"
@@ -591,7 +591,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtn.AnchorPoint = Vector2.new(0.5, 0.5)
 				DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
 				DataBtn.BorderSizePixel = 0
-				DataBtn.Size = UDim2.new(0.9, 0, 0.045, 0)
+				DataBtn.Size = UDim2.new(0.9, 0, 0.0725, 0)
 				DataBtn.AutoButtonColor = false
 				DataBtn.Font = Enum.Font.Oswald
 				DataBtn.Text = ""
@@ -630,7 +630,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.NoHover
 				DataBtnStroke.ApplyStrokeMode = "Border"
 				DataBtnStroke.LineJoinMode = "Round"
-				DataBtnStroke.Thickness = 2
+				DataBtnStroke.Thickness = 1.25
 				DataBtnStroke.Transparency = 0.5
 
 				TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
@@ -660,9 +660,9 @@ function library:CreateWindow(windowName, keybind, theme)
 					busy2 = true
 					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Clicked
 					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.Clicked
-					task.wait(.125)
-					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.NoHover
-					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.NoHover
+					task.wait(.075)
+					DataBtn.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.Hover
+					DataBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataBtn.DataBtnStroke.Hover
 					busy2 = false
 					pcall(callback)
 				end)
@@ -692,7 +692,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtLbl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.BackgroundColor3
 			DataTxtLbl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 			DataTxtLbl.BorderSizePixel = 0
-			DataTxtLbl.Size = UDim2.new(0.9, 0, 0.045, 0)
+			DataTxtLbl.Size = UDim2.new(0.9, 0, 0.0725, 0)
 
 			Lbl.Name = "Lbl"
 			Lbl.Parent = DataTxtLbl
@@ -718,7 +718,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			DataTxtStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTxtLbl.DataTxtStroke.NoHover
 			DataTxtStroke.ApplyStrokeMode = "Border"
 			DataTxtStroke.LineJoinMode = "Round"
-			DataTxtStroke.Thickness = 2
+			DataTxtStroke.Thickness = 1.25
 			DataTxtStroke.Transparency = 0.5
 			
 			TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)
@@ -778,7 +778,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTgl.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.NoHover
 				DataTgl.BorderColor3 = Color3.fromRGB(27, 42, 53)
 				DataTgl.BorderSizePixel = 0
-				DataTgl.Size = UDim2.new(0.9, 0, 0.045, 0)
+				DataTgl.Size = UDim2.new(0.9, 0, 0.0725, 0)
 
 				DataTglLbl.Name = "DataTglLbl"
 				DataTglLbl.Parent = DataTgl
@@ -862,7 +862,7 @@ function library:CreateWindow(windowName, keybind, theme)
 				DataTglStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.DataTglStroke.NoHover
 				DataTglStroke.ApplyStrokeMode = "Border"
 				DataTglStroke.LineJoinMode = "Round"
-				DataTglStroke.Thickness = 2
+				DataTglStroke.Thickness = 1.25
 				DataTglStroke.Transparency = 0.5
 
 				TabData.CanvasSize = UDim2.new(0, TabDataLayout.AbsoluteContentSize.X, 0, TabDataLayout.AbsoluteContentSize.Y)

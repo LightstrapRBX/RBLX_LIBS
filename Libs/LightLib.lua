@@ -1050,8 +1050,8 @@ function library:CreateWindow(windowName, keybind, theme)
                 TglBg.BackgroundColor3 =
                     _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataTgl.TglBg.BackgroundColor3
                 TglBg.BorderSizePixel = 0
-                TglBg.Position = UDim2.new(0.708, 0, 0.5, 0)
-                TglBg.Size = UDim2.new(0.211, 0, 0.65, 0)
+                TglBg.Position = UDim2.new(0.685, 0, 0.466, 0)
+                TglBg.Size = UDim2.new(0.211, 0, 0.394, 0)
 
                 TglBtn.Name = 'TglBtn'
                 TglBtn.Parent = TglBg

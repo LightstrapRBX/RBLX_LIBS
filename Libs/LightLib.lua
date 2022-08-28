@@ -1409,6 +1409,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			local dropdownToggled = false
 			local debounce = false
 			TglDropdown.Activated:Connect(function()
+                dropdownToggled = not dropdownToggled
 				if dropdownToggled and not debounce then
 					debounce = true
                     DropdownContanier.Visible = true
@@ -1537,7 +1538,7 @@ function library:CreateWindow(windowName, keybind, theme)
 						0.4,
 						true
 					)
-					for _, obj in DropdownData:GetChildren() do
+					for _, obj in pairs(DropdownData:GetChildren()) do
 						if obj:IsA("TextButton") then
 							obj:Destroy()
 						end
@@ -1545,7 +1546,6 @@ function library:CreateWindow(windowName, keybind, theme)
                     DropdownContanier.Visible = false
 				end
 				task.wait(2.5)
-				dropdownToggled = not dropdownToggled
                 debounce = false
 			end)
             

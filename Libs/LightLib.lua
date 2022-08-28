@@ -1,5 +1,5 @@
 local library = {
-    VERSION = '1.0 [PATCH 1.01]',
+    VERSION = '1.0 [PATCH 1.00]',
     THEMES = {
         Default = {},
         Dark = {
@@ -300,7 +300,7 @@ function library:CreateWindow(windowName, keybind, theme)
     TabDataContainer.BorderSizePixel = 0
     TabDataContainer.Position = UDim2.new(0.661, 0, 0.538, 0)
     TabDataContainer.Size = UDim2.new(0.645, 0, 0.864, 0)
-    TabDataContainer.ClipsDescendants = true
+    TabDataContainer.ClipsDescendants = false
 
     TabDataCorner.CornerRadius = UDim.new(0.02, 0)
     TabDataCorner.Name = 'TabDataCorner'
@@ -1407,18 +1407,17 @@ function library:CreateWindow(windowName, keybind, theme)
 			local dropdownToggled = false
 			local debounce = false
 			TglDropdown.Activated:Connect(function()
-                game:GetService('TweenService'):Create(
-                    TglDropdown,
-                    TweenInfo.new(0.25),
-                    {
-						Size = UDim2.new(0.057, 0, 0.481, 0),
-                        Rotation = 0
-                    }
-                ):Play()
                 dropdownToggled = not dropdownToggled
 				if dropdownToggled and not debounce then
 					debounce = true
-                    --DropdownContanier.Visible = true
+                    game:GetService('TweenService'):Create(
+                        TglDropdown,
+                        TweenInfo.new(0.25),
+                        {
+                            Size = UDim2.new(0.057, 0, 0.481, 0),
+                            Rotation = 90
+                        }
+                     ):Play()
                     DropdownContanier:TweenPosition(
 						UDim2.new(0.5, 0, 0.5, 0),
 						Enum.EasingDirection.Out,
@@ -1537,6 +1536,14 @@ function library:CreateWindow(windowName, keybind, theme)
 						)
 					end
 				elseif not dropdownToggled and not debounce then
+                    game:GetService('TweenService'):Create(
+                        TglDropdown,
+                        TweenInfo.new(0.25),
+                        {
+                            Size = UDim2.new(0.057, 0, 0.481, 0),
+                            Rotation = 0
+                        }
+                     ):Play()
 					DropdownContanier:TweenPosition(
 						UDim2.new(-0.5, 0, 0.5, 0),
 						Enum.EasingDirection.Out,

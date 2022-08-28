@@ -373,8 +373,6 @@ function library:CreateWindow(windowName, keybind, theme)
 				debounce = true
 				UI_TOGGLED = not UI_TOGGLED
 				if UI_TOGGLED then
-					Drag.Active = true
-					Drag.Visible = true
 					Window:TweenSize(
 						UDim2.new(1, 0, 7.746, 0),
 						Enum.EasingDirection.Out,
@@ -383,7 +381,9 @@ function library:CreateWindow(windowName, keybind, theme)
 						true
 					)
 					task.wait(0.6)
+					Drag.Draggable = true
 				elseif UI_TOGGLED ~= true then
+					Drag.Draggable = false
 					Window:TweenSize(
 						UDim2.new(0, 0, 0, 0),
 						Enum.EasingDirection.Out,
@@ -391,9 +391,6 @@ function library:CreateWindow(windowName, keybind, theme)
 						0.6,
 						true
 					)
-					task.wait(0.6)
-					Drag.Active = false
-					Drag.Visible = false
 				end
 				task.wait(0.25)
 				debounce = false

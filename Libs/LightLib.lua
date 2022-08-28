@@ -1,5 +1,5 @@
 local library = {
-    VERSION = '1.0.2.4 [PATCH 1.90]',
+    VERSION = '1.0.2.4 [PATCH 1.91]',
     THEMES = {
         Default = {},
         Dark = {
@@ -1268,7 +1268,9 @@ function library:CreateWindow(windowName, keybind, theme)
                                     status = 'OFF'
                                 end
                                 TglStatus.Text = status
-                                pcall(callback, toggled)
+                                task.spawn(function()
+									pcall(callback, toggled)
+								end)
                                 busy = false
                             end
                         )
@@ -1280,15 +1282,15 @@ function library:CreateWindow(windowName, keybind, theme)
         function tabData:CreateDropdown(name, list, callback)
 
 			local DataDropdown = Instance.new("Frame")
-			local DataDropdownLbl = Instance.new("TextLabel")
 			local DataDropdownCorner = Instance.new("UICorner")
+            local DataDropdownStroke = Instance.new("UIStroke")
 			local TglDropdown = Instance.new("ImageButton")
-			local DataDropdownStroke = Instance.new("UIStroke")
+            local DataDropdownLbl = Instance.new("TextLabel")
 
 			local function getNumOfLBLs()
 				local numOfLBLs = 0
-				for _, obj in pairs(DataDropdown:GetChildren()) do
-					if obj:IsA("TextLabel") then
+				for _, obj in pairs(TabData:GetChildren()) do
+					if obj.Name == "DataDropdown" then
 						numOfLBLs = numOfLBLs + 1
 					end
 				end
@@ -1300,6 +1302,7 @@ function library:CreateWindow(windowName, keybind, theme)
             DataDropdown.AnchorPoint = Vector2.new(0.5, 0.5)
             DataDropdown.BackgroundColor3 =
                 _G.LightLib_Hub_THEME.Window.TabDataContainer.DataHolder.TabData.DataDropdown.NoHover
+            DataDropdown.Size = UDim2.new(0.9, 0, 0.0775, 0)
 
             DataDropdownLbl.Name = "DataDropdownLbl"
 			DataDropdownLbl.Parent = DataDropdown
@@ -1408,6 +1411,7 @@ function library:CreateWindow(windowName, keybind, theme)
 			TglDropdown.Activated:Connect(function()
 				if dropdownToggled and not debounce then
 					debounce = true
+                    DropdownContanier.Visible = true
 					for i, v in next, list do
 						if typeof(i) ~= "number" or typeof(v) ~= "string" then continue end
 						local Select = Instance.new('TextButton')
@@ -1522,7 +1526,7 @@ function library:CreateWindow(windowName, keybind, theme)
 						UDim2.new(0.5, 0, 0.5, 0),
 						Enum.EasingDirection.Out,
 						Enum.EasingStyle.Quart,
-						0.25,
+						0.4,
 						true
 					)
 				elseif not dropdownToggled and not debounce then
@@ -1530,7 +1534,7 @@ function library:CreateWindow(windowName, keybind, theme)
 						UDim2.new(-0.5, 0, 0.5, 0),
 						Enum.EasingDirection.Out,
 						Enum.EasingStyle.Quart,
-						0.25,
+						0.4,
 						true
 					)
 					for _, obj in DropdownData:GetChildren() do
@@ -1538,10 +1542,11 @@ function library:CreateWindow(windowName, keybind, theme)
 							obj:Destroy()
 						end
 					end
+                    DropdownContanier.Visible = false
 				end
+				task.wait(2.5)
 				dropdownToggled = not dropdownToggled
-				task.wait(1)
-				debounce = false
+                debounce = false
 			end)
             
         end

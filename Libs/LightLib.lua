@@ -370,7 +370,7 @@ function library:CreateWindow(windowName, keybind, theme)
     DropdownDataLayout.Parent = DropdownData
     DropdownDataLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     DropdownDataLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    DropdownDataLayout.Padding = UDim.new(0.0199999996, 0)
+    DropdownDataLayout.Padding = UDim.new(0.025, 0)
 
     DropdownDataPadding.Name = 'DropdownDataPadding'
     DropdownDataPadding.Parent = DropdownData

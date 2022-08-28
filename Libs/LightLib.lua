@@ -1,5 +1,5 @@
 local library = {
-    VERSION = '1.0.2.4 [PATCH 1.91]',
+    VERSION = '1.0 [PATCH 1.01]',
     THEMES = {
         Default = {},
         Dark = {
@@ -1389,8 +1389,7 @@ function library:CreateWindow(windowName, keybind, theme)
                     TglDropdown,
                     TweenInfo.new(0.25),
                     {
-						Size = UDim2.new(0.077, 0, 0.681, 0),
-                        Rotation = 90
+						Size = UDim2.new(0.077, 0, 0.681, 0)
                     }
                 ):Play()
 			end)
@@ -1400,8 +1399,7 @@ function library:CreateWindow(windowName, keybind, theme)
                     TglDropdown,
                     TweenInfo.new(0.25),
                     {
-						Size = UDim2.new(0.057, 0, 0.481, 0),
-                        Rotation = 0
+						Size = UDim2.new(0.057, 0, 0.481, 0)
                     }
                 ):Play()
 			end)
@@ -1420,7 +1418,14 @@ function library:CreateWindow(windowName, keybind, theme)
                 dropdownToggled = not dropdownToggled
 				if dropdownToggled and not debounce then
 					debounce = true
-                    DropdownContanier.Visible = true
+                    --DropdownContanier.Visible = true
+                    DropdownContanier:TweenPosition(
+						UDim2.new(0.5, 0, 0.5, 0),
+						Enum.EasingDirection.Out,
+						Enum.EasingStyle.Quart,
+						0.4,
+						true
+					)
 					for i, v in next, list do
 						if typeof(i) ~= "number" or typeof(v) ~= "string" then continue end
 						local Select = Instance.new('TextButton')
@@ -1531,13 +1536,6 @@ function library:CreateWindow(windowName, keybind, theme)
 							end
 						)
 					end
-					DropdownContanier:TweenPosition(
-						UDim2.new(0.5, 0, 0.5, 0),
-						Enum.EasingDirection.Out,
-						Enum.EasingStyle.Quart,
-						0.4,
-						true
-					)
 				elseif not dropdownToggled and not debounce then
 					DropdownContanier:TweenPosition(
 						UDim2.new(-0.5, 0, 0.5, 0),
@@ -1551,7 +1549,7 @@ function library:CreateWindow(windowName, keybind, theme)
 							obj:Destroy()
 						end
 					end
-                    DropdownContanier.Visible = false
+                    --DropdownContanier.Visible = false
 				end
 				task.wait(2.5)
                 debounce = false

@@ -1409,6 +1409,14 @@ function library:CreateWindow(windowName, keybind, theme)
 			local dropdownToggled = false
 			local debounce = false
 			TglDropdown.Activated:Connect(function()
+                game:GetService('TweenService'):Create(
+                    TglDropdown,
+                    TweenInfo.new(0.25),
+                    {
+						Size = UDim2.new(0.057, 0, 0.481, 0),
+                        Rotation = 0
+                    }
+                ):Play()
                 dropdownToggled = not dropdownToggled
 				if dropdownToggled and not debounce then
 					debounce = true

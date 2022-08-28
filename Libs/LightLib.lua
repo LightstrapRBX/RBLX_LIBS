@@ -1,5 +1,5 @@
 local library = {
-    VERSION = '1.0 [PATCH 1.00]',
+    VERSION = '1.0 [PATCH 1.01]',
     THEMES = {
         Default = {},
         Dark = {
@@ -52,11 +52,13 @@ local library = {
 							BackgroundColor3 = Color3.fromRGB(43, 43, 43),
 							DropdownData = {
 								Select = {
+                                    Clicked = Color3.fromRGB(16, 16, 16),
 									NoHover = Color3.fromRGB(35, 35, 35),
                             		Hover = Color3.fromRGB(24, 24, 24),
 									DropdownBtnStroke = {
 										NoHover = Color3.fromRGB(21, 21, 21),
                                 		Hover = Color3.fromRGB(104, 104, 104),
+                                        Clicked = Color3.fromRGB(63, 63, 63)
 									}
 								}
 							}
@@ -128,7 +130,8 @@ local library = {
 								Clicked = Color3.fromRGB(16, 16, 16),
 								DataDropdownStroke = {
 									NoHover = Color3.fromRGB(21, 21, 21),
-                                    Hover = Color3.fromRGB(104, 104, 104)
+                                    Hover = Color3.fromRGB(104, 104, 104),
+                                    Clicked = Color3.fromRGB(63, 63, 63)
 								}
 							}
                         }
@@ -1407,9 +1410,10 @@ function library:CreateWindow(windowName, keybind, theme)
 			local dropdownToggled = false
 			local debounce = false
 			TglDropdown.Activated:Connect(function()
+                if debounce then return end
+                debounce = true
                 dropdownToggled = not dropdownToggled
-				if dropdownToggled and not debounce then
-					debounce = true
+				if dropdownToggled then
                     game:GetService('TweenService'):Create(
                         TglDropdown,
                         TweenInfo.new(0.25),
@@ -1437,7 +1441,7 @@ function library:CreateWindow(windowName, keybind, theme)
 						Select.AnchorPoint = Vector2.new(0.5, 0.5)
 						Select.BackgroundColor3 = _G.LightLib_Hub_THEME.Window.TabDataContainer.DropdownHolder.DropdownContanier.DropdownData.Select.NoHover
 						Select.BorderSizePixel = 0
-						Select.Size = UDim2.new(0.899999976, 0, 0.0399999991, 0)
+						Select.Size = UDim2.new(0.899999976, 0, 0.0575, 0)
 						Select.AutoButtonColor = false
 						Select.Font = Enum.Font.Oswald
 						Select.Text = ''
@@ -1467,7 +1471,7 @@ function library:CreateWindow(windowName, keybind, theme)
 		
 						DropdownBtnStroke.Name = 'DropdownBtnStroke'
 						DropdownBtnStroke.Parent = Select
-						DropdownBtnStroke.ApplyStrokeMode = 'Contextual'
+						DropdownBtnStroke.ApplyStrokeMode = 'Border'
 						DropdownBtnStroke.Color = _G.LightLib_Hub_THEME.Window.TabDataContainer.DropdownBtnStroke.Color
 						DropdownBtnStroke.LineJoinMode = 'Round'
 						DropdownBtnStroke.Thickness = 2
@@ -1535,7 +1539,7 @@ function library:CreateWindow(windowName, keybind, theme)
 							end
 						)
 					end
-				elseif not dropdownToggled and not debounce then
+				elseif not dropdownToggled then
                     game:GetService('TweenService'):Create(
                         TglDropdown,
                         TweenInfo.new(0.25),

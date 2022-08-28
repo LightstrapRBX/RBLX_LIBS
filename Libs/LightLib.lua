@@ -1,5 +1,5 @@
 local library = {
-    VERSION = '1.0 [PATCH 1.01]',
+    VERSION = '1.0 [PATCH 1.00]',
     THEMES = {
         Default = {},
         Dark = {
@@ -1562,7 +1562,7 @@ function library:CreateWindow(windowName, keybind, theme)
 					end
                     --DropdownContanier.Visible = false
 				end
-				task.wait(2.5)
+				task.wait(0.75)
                 debounce = false
 			end)
             

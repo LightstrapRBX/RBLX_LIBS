@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.87]",
+	VERSION = "1.0.2.4 [PATCH 1.88]",
 	THEMES = {
 		Default = {
 
@@ -982,7 +982,9 @@ function library:CreateWindow(windowName, keybind, theme)
 			succ = true
 		end
 		if succ then
-			warn("New hub keybind:", string.gsub(tostring(_G.LightLib_Hub_KEYBIND), "Enum.KeyCode.", ""))
+			local str = tostring(_G.LightLib_Hub_KEYBIND)
+			str = string.gsub(str, "Enum.KeyCode.", "")
+			warn("New hub keybind:", str)
 		end
 	end
 

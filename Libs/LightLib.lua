@@ -1,5 +1,5 @@
 local library = {
-	VERSION = "1.0.2.4 [PATCH 1.88]",
+	VERSION = "1.0.2.4 [PATCH 1.89]",
 	THEMES = {
 		Default = {
 
@@ -122,6 +122,14 @@ local library = {
 }
 
 warn("Required library: VERSION = ", library.VERSION)
+
+function library:DeleteWindow()
+	for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
+		if obj.Name == "LightLib_Hub" then
+			obj:Destroy()
+		end
+	end
+end
 
 function library:CreateWindow(windowName, keybind, theme)
 

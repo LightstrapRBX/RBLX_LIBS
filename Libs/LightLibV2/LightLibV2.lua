@@ -1,3 +1,7 @@
+local function updateLayout(scrlFrame, listLayout)
+    scrlFrame.CanvasSize = UDim2.new(0, listLayout.AbsoluteContentSize.X, 0, listLayout.AbsoluteContentSize.Y)
+end
+
 local function getNumberOfWindows()
     local num = 0
     for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
@@ -32,10 +36,6 @@ local function getNumberOfSectionsInTab(tab)
     return num
 end
 
-local function updateLayout(scrlFrame, listLayout)
-    scrlFrame.CanvasSize = UDim2.new(0, listLayout.AbsoluteContentSize.X, 0, listLayout.AbsoluteContentSize.Y)
-end
-
 local function createSectionDivider(mainHolder)
     local SectionDivider = Instance.new("Frame")
     SectionDivider.Name = "SectionDivider"
@@ -64,23 +64,32 @@ end
 
 _G.LightLibV2 = {}
 
-local library = {
-    themes = {
-        ["default"] = true,
-        ["white"] = false,
-        ["dark_grey"] = false,
-        ["light_red"] = false,
-        ["green"] = false,
-        ["purple"] = false
-    }
+local library = {}
+
+library.themes = {
+    ["default"] = true,
+    ["white"] = false,
+    ["dark_grey"] = false,
+    ["light_red"] = false,
+    ["green"] = false,
+    ["purple"] = false
 }
 
-library.DeleteAllWindows = function(name)
-    
+library.DeleteAllWindows = function()
+    for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
+        if obj.Name.match("LightLibV2") then
+            obj:Destroy()
+        end
+    end
 end
 
-library.DeleteWindow = function(name)
-    
+library.DeleteWindow = function(windowName)
+    for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
+        if obj.Name.match(windowName) then
+            obj:Destroy()
+            break
+        end
+    end
 end
 
 library.CreateWindow = function(windowName)

@@ -62,7 +62,7 @@ end
 ----------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------
 
-_G.LightHubV2 = {}
+_G.LightLibV2 = {}
 
 local library = {
     themes = {
@@ -611,18 +611,18 @@ library.CreateWindow = function(windowName)
 		local succ = false
 		if typeof(newKeybind) == "string" then
 			if Enum.KeyCode[newKeybind] then
-				_G.LightHubV2.WindowKeybind = Enum.KeyCode[newKeybind]
+				_G.LightLibV2.WindowKeybind = Enum.KeyCode[newKeybind]
 				succ = true
 			end
 		elseif typeof(newKeybind) == "EnumItem" then
 			if not string.match(tostring(newKeybind), "Enum.KeyCode") then
 				return
 			end
-			_G.LightHubV2.WindowKeybind = newKeybind
+			_G.LightLibV2.WindowKeybind = newKeybind
 			succ = true
 		end
 		if succ then
-			local str = tostring(_G.LightHubV2.WindowKeybind)
+			local str = tostring(_G.LightLibV2.WindowKeybind)
 			str = string.gsub(str, "Enum.KeyCode.", "")
 			warn("New window keybind for window \"" + windowName + "\":", str)
 		end

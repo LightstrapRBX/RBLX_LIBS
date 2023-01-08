@@ -517,8 +517,7 @@ library.CreateWindow = function(windowName)
             local sectionFunctions = {}
 
             sectionFunctions.CreateLabel = function(...)
-                local args = {...}
-                args = args[1]
+                local args = ({...})[1]
     
                 local labelText = args["Text"] or "This is just a text label. Nothing much, really. Why are you still reading this?"
     

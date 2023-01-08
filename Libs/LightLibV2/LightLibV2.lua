@@ -564,44 +564,38 @@ library.CreateWindow = function(windowName)
             end
     
             sectionFunctions.CreateButton = function(...)
-                local args = {...}
-                args = args[1]
+                local args = ({...})[1]
     
                 local buttonText = args["Text"] or args[1]
                 local callback = args["Callback"] or args[2]
             end
     
             sectionFunctions.CreateNumberInput = function(...)
-                local args = {...}
-                args = args[1]
+                local args = ({...})[1]
     
                 
             end
     
             sectionFunctions.CreateDropdown = function(...)
-                local args = {...}
-                args = args[1]
+                local args = ({...})[1]
     
                 
             end
     
             sectionFunctions.CreateToggle = function(...)
-                local args = {...}
-                args = args[1]
+                local args = ({...})[1]
     
                 
             end
     
             sectionFunctions.CreateSlider = function(...)
-                local args = {...}
-                args = args[1]
+                local args = ({...})[1]
     
                 
             end
     
             sectionFunctions.CreateKeybind = function(...)
-                local args = {...}
-                args = args[1]
+                local args = ({...})[1]
     
                 
             end

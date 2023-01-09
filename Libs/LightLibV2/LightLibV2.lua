@@ -1130,31 +1130,53 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                         KeybindBox.Text = "[" .. default.Name .. "]" 
                     end
                 end
-                
-                KeybindBox:GetPropertyChangedSignal("Text"):Connect(function()
-                    local kbText = KeybindBox.Text
-                    if not kbText or kbText == "" then return end
 
-                    local kb = nil
+                local connection = nil
+                local debounce = false
 
-                    if Enum.KeyCode[kbText] then
-                        kb = Enum.KeyCode[kbText].Name
-                    else
-                        kb = "Unknown Key"
-                    end
-
-                    KeybindBox.Text = "[" .. kb .. "]" 
+                KeybindBox.InputBegan:Connect(function()
+                    if debounce then return end
+                    connection = UIS.InputBegan:Connect(function(input)
+                        if input.UserInputType ~= Enum.UserInputType.Keyboard then
+                            debounce = true
+                            connection:Disconnect()
+                            connection = nil
+                            KeybindBox.Text = "[Unknown Key]"
+                            task.wait(3)
+                            KeybindBox.Text = ""
+                            debounce = false
+                            return
+                        end
+                        KeybindBox.Text = "[" .. input.KeyCode.Name .. "]"
+                    end)
                 end)
+
+                local debounce2 = false
                 
                 KeybindBox.FocusLost:Connect(function(enterPressed)
-                    if not enterPressed then return end
+                    connection:Disconnect()
+                    connection = nil
 
-                    local kbText = KeybindBox.Text
+                    if not enterPressed then return end
+                    if debounce2 then return end
+
+                    local kbText = KeybindBox.Text:upper()
+                    if not kbText or kbText == "" then return end
+
+                    kbText = kbText:gsub("[^%a%w%s_]+", "")
 
                     if Enum.KeyCode[kbText] then
+                        KeybindBox.PlaceholderText = "[" .. kbText .. "]"
+                        KeybindBox.Text = ""
                         task.spawn(function()
                             pcall(callback, Enum.KeyCode[KeybindBox.Text])
                         end)
+                    else
+                        debounce2 = true
+                        KeybindBox.Text = "[Unknown Key]"
+                        task.wait(3)
+                        KeybindBox.Text = ""
+                        debounce2 = false
                     end
                 end)
 
@@ -1311,7 +1333,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
 
                 NumberBox.FocusLost:Connect(function(enterPressed)
                     if not enterPressed then return end
-                    local number = NumberBox.Text
+                    local number = tonumber(NumberBox.Text)
                     if number > max then return end
                     Slider:TweenSize(
                         UDim2.fromScale(number/max, Slider.Size.Y),

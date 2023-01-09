@@ -201,6 +201,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
     TabH.Position = UDim2.new(0.485000014, 0, 0.5, 0)
     TabH.Size = UDim2.new(0.888999999, 0, 0.949999988, 0)
     TabH.ScrollBarThickness = 0
+    TabH.ScrollingDirection = Enum.ScrollingDirection.Y
 
     TabLayout.Parent = TabH
     TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -504,7 +505,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
         TabB.BackgroundColor3 = Color3.fromRGB(255, 203, 46)
         TabB.BorderSizePixel = 0
         TabB.Position = UDim2.new(0.5, 0, 0.038815178, 0)
-        TabB.Size = UDim2.new(1, 0, 0.111, 0)
+        TabB.Size = UDim2.new(1, 0, 0.25, 0)
 
         UICorner.CornerRadius = UDim.new(0.125, 0)
         UICorner.Parent = TabB
@@ -535,6 +536,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
         MainH.Size = UDim2.new(0.949999988, 0, 0.949999988, 0)
         MainH.ScrollBarThickness = 0
         MainH.Visible = false
+        MainH.ScrollingDirection = Enum.ScrollingDirection.Y
 
         MainLayout.Parent = MainH
         MainLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -560,14 +562,14 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
 
         RealTabB.MouseEnter:Connect(function()
             if TabBSelected.Value == true then return end
-            game:GetService("TweenService"):Create(TabB, 0.25, {
+            game:GetService("TweenService"):Create(TabB, TweenInfo.new(0.25), {
                 BackgroundColor3 = Color3.fromRGB(236, 184, 25)
             }):Play()
         end)
 
         RealTabB.MouseLeave:Connect(function()
             if TabBSelected.Value == true then return end
-            game:GetService("TweenService"):Create(TabB, 0.25, {
+            game:GetService("TweenService"):Create(TabB, TweenInfo.new(0.25), {
                 BackgroundColor3 = Color3.fromRGB(255, 203, 46)
             }):Play()
         end)
@@ -592,11 +594,11 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                     end
                 end)
 
-                game:GetService("TweenService"):Create(TabB, 0.25, {
+                game:GetService("TweenService"):Create(TabB, TweenInfo.new(0.25), {
                     BackgroundColor3 = Color3.fromRGB(255, 203, 46)
                 }):Play()
 
-                game:GetService("TweenService"):Create(TabB, 0.25, {
+                game:GetService("TweenService"):Create(TabB, TweenInfo.new(0.25), {
                     BackgroundColor3 = Color3.fromRGB(236, 184, 25)
                 }):Play()
 
@@ -719,7 +721,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Label.Position = UDim2.new(0.5, 0, 0.5, 0)
                 Label.Size = UDim2.new(1, 0, 1, 0)
                 Label.Font = Enum.Font.GothamBold
-                Label.Text = buttonText or "This is a text button. Theree isn't much to it. Press it and it does what you ask it to.."
+                Label.Text = buttonText
                 Label.TextColor3 = Color3.fromRGB(255, 203, 46)
                 Label.TextScaled = true
                 Label.TextSize = 21.000
@@ -742,14 +744,14 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 
                 Button.MouseEnter:Connect(function()
                     if buttonBusy then return end
-                    game:GetService("TweenService"):Create(Section_Button, 0.25, {
+                    game:GetService("TweenService"):Create(Section_Button, TweenInfo.new(0.25), {
                         BackgroundColor3 = Color3.fromRGB(241, 236, 87)
                     }):Play()
                 end)
 
                 Button.MouseLeave:Connect(function()
                     if buttonBusy then return end
-                    game:GetService("TweenService"):Create(Section_Button, 0.25, {
+                    game:GetService("TweenService"):Create(Section_Button, TweenInfo.new(0.25), {
                         BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                     }):Play()
                 end)
@@ -761,10 +763,10 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                         pcall(callback)
                     end)
 
-                    local tween1 = game:GetService("TweenService"):Create(Section_Button, 0.25, {
+                    local tween1 = game:GetService("TweenService"):Create(Section_Button, TweenInfo.new(0.25), {
                         BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                     })
-                    local tween2 = game:GetService("TweenService"):Create(Section_Button, 0.25, {
+                    local tween2 = game:GetService("TweenService"):Create(Section_Button, TweenInfo.new(0.25), {
                         BackgroundColor3 = Color3.fromRGB(241, 236, 87)
                     })
 
@@ -1034,12 +1036,12 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                     end
                     if not toggled then
                         toggled = true
-                        game:GetService("TweenService"):Create(Toggle, 0.25, {
+                        game:GetService("TweenService"):Create(Toggle, TweenInfo.new(0.25), {
                             BackgroundColor3 = Color3.fromRGB(251, 255, 170)
                         }):Play()
                     else
                         toggled = false
-                        game:GetService("TweenService"):Create(Toggle, 0.25, {
+                        game:GetService("TweenService"):Create(Toggle, TweenInfo.new(0.25), {
                             BackgroundColor3 = Color3.fromRGB(255, 203, 46)
                         }):Play()
                     end
@@ -1350,7 +1352,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 DropdownC.BorderSizePixel = 0
                 DropdownC.ClipsDescendants = true
                 DropdownC.Position = UDim2.new(0.5, 0, 2.81939244, 0)
-                DropdownC.Size = UDim2.new(1.00399995, 0, 3.23699999, 0)
+                DropdownC.Size = UDim2.new(1.00399995, 0, 0, 0)
                 
                 UICorner_2.CornerRadius = UDim.new(0.0500000007, 0)
                 UICorner_2.Parent = DropdownC
@@ -1366,6 +1368,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 DropdownH.Position = UDim2.new(0.5, 0, 0.5, 0)
                 DropdownH.Size = UDim2.new(0.970532596, 0, 0.925000012, 0)
                 DropdownH.ScrollBarThickness = 0
+                DropdownH.ScrollingDirection = Enum.ScrollingDirection.Y
                 
                 DropdownLayout.Parent = DropdownH
                 DropdownLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -1500,14 +1503,14 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 
                             Button.MouseEnter:Connect(function()
                                 if buttonBusy then return end
-                                game:GetService("TweenService"):Create(Section_Selection, 0.25, {
+                                game:GetService("TweenService"):Create(Section_Selection, TweenInfo.new(0.25), {
                                     BackgroundColor3 = Color3.fromRGB(227, 180, 41)
                                 }):Play()
                             end)
             
                             Button.MouseLeave:Connect(function()
                                 if buttonBusy then return end
-                                game:GetService("TweenService"):Create(Section_Selection, 0.25, {
+                                game:GetService("TweenService"):Create(Section_Selection, TweenInfo.new(0.25), {
                                     BackgroundColor3 = Color3.fromRGB(255, 203, 46)
                                 }):Play()
                             end)
@@ -1519,10 +1522,10 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                                     pcall(callback, item)
                                 end)
             
-                                local tween1 = game:GetService("TweenService"):Create(Section_Selection, 0.25, {
+                                local tween1 = game:GetService("TweenService"):Create(Section_Selection, TweenInfo.new(0.25), {
                                     BackgroundColor3 = Color3.fromRGB(255, 203, 46)
                                 })
-                                local tween2 = game:GetService("TweenService"):Create(Section_Selection, 0.25, {
+                                local tween2 = game:GetService("TweenService"):Create(Section_Selection, TweenInfo.new(0.25), {
                                     BackgroundColor3 = Color3.fromRGB(227, 180, 41)
                                 })
             

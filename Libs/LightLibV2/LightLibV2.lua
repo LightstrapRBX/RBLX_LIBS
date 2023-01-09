@@ -425,6 +425,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
     task.spawn(function()
 		local UI_TOGGLED = true
 		local debounce = false
+        local C1_Size = C1.Size
 		UIS.InputBegan:Connect(function(input)
 			if input.KeyCode == _G.LightLibV2.WindowKeybind then
 				if debounce then return end
@@ -432,7 +433,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
 				UI_TOGGLED = not UI_TOGGLED
 				if UI_TOGGLED then
 					C1:TweenSize(
-						UDim2.new(1, 0, 7.746, 0),
+						C1_Size,
 						Enum.EasingDirection.Out,
 						Enum.EasingStyle.Quart,
 						0.6,
@@ -446,6 +447,8 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                         0.6,
                         true
                     )
+                    task.wait(0.6)
+                    C1.Visible = false
 				end
 				task.wait(0.25)
 				debounce = false
@@ -1136,11 +1139,20 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
 
                 local connection = nil
                 local debounce = false
+                local debounce2 = false
 
                 KeybindBox.InputBegan:Connect(function()
-                    if debounce then return end
+                    if debounce or debounce2 then return end
+                    local oldText = KeybindBox.Text
                     connection = UIS.InputBegan:Connect(function(input)
-                        if input.UserInputType ~= Enum.UserInputType.Keyboard and KeybindBox.Text ~= "" then
+                        task.wait(.5)
+                        if KeybindBox.Text == "" then return end
+                        if debounce2 then
+                            KeybindBox.Text = oldText
+                            return
+                        end
+                        if input.UserInputType ~= Enum.UserInputType.Keyboard then
+                            if KeybindBox.Text == "" then return end
                             debounce = true
                             if connection then
                                 connection:Disconnect()
@@ -1155,8 +1167,6 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                         KeybindBox.Text = "[" .. input.KeyCode.Name .. "]"
                     end)
                 end)
-
-                local debounce2 = false
                 
                 KeybindBox.FocusLost:Connect(function(enterPressed)
                     if connection then
@@ -1173,11 +1183,15 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                     kbText = kbText:gsub("[^%a%w%s_]+", "")
 
                     if Enum.KeyCode[kbText] then
+                        debounce2 = true
                         KeybindBox.PlaceholderText = "[" .. kbText .. "]"
-                        KeybindBox.Text = ""
+                        KeybindBox.Text = "[Success]"
                         task.spawn(function()
-                            pcall(callback, Enum.KeyCode[KeybindBox.Text])
+                            pcall(callback, Enum.KeyCode[kbText])
                         end)
+                        task.wait(3)
+                        KeybindBox.Text = ""
+                        debounce2 = false
                     else
                         debounce2 = true
                         KeybindBox.Text = "[Unknown Key]"

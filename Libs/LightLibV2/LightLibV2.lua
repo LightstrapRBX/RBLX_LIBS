@@ -505,7 +505,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
         TabB.BackgroundColor3 = Color3.fromRGB(255, 203, 46)
         TabB.BorderSizePixel = 0
         TabB.Position = UDim2.new(0.5, 0, 0.038815178, 0)
-        TabB.Size = UDim2.new(1, 0, 0.25, 0)
+        TabB.Size = UDim2.new(1, 0, 0.175, 0)
 
         UICorner.CornerRadius = UDim.new(0.125, 0)
         UICorner.Parent = TabB

@@ -845,6 +845,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 NumberBox.PlaceholderColor3 = Color3.fromRGB(244, 255, 143)
                 NumberBox.PlaceholderText = "Input"
                 NumberBox.Text = ""
+                NumberBox.TextScaled = true
                 NumberBox.TextColor3 = Color3.fromRGB(255, 250, 92)
                 NumberBox.TextSize = 12.000
 
@@ -922,6 +923,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 TextBox.PlaceholderColor3 = Color3.fromRGB(244, 255, 143)
                 TextBox.PlaceholderText = "Input"
                 TextBox.Text = ""
+                TextBox.TextScaled = true
                 TextBox.TextColor3 = Color3.fromRGB(255, 250, 92)
                 TextBox.TextSize = 12.000
 
@@ -1093,6 +1095,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 KeybindBox.PlaceholderColor3 = Color3.fromRGB(244, 255, 143)
                 KeybindBox.PlaceholderText = "[...]"
                 KeybindBox.Text = ""
+                KeybindBox.TextScaled = true
                 KeybindBox.TextColor3 = Color3.fromRGB(255, 250, 92)
                 KeybindBox.TextSize = 12.000
                 
@@ -1137,10 +1140,12 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 KeybindBox.InputBegan:Connect(function()
                     if debounce then return end
                     connection = UIS.InputBegan:Connect(function(input)
-                        if input.UserInputType ~= Enum.UserInputType.Keyboard then
+                        if input.UserInputType ~= Enum.UserInputType.Keyboard and KeybindBox.Text ~= "" then
                             debounce = true
-                            connection:Disconnect()
-                            connection = nil
+                            if connection then
+                                connection:Disconnect()
+                                connection = nil
+                            end
                             KeybindBox.Text = "[Unknown Key]"
                             task.wait(3)
                             KeybindBox.Text = ""
@@ -1154,8 +1159,10 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 local debounce2 = false
                 
                 KeybindBox.FocusLost:Connect(function(enterPressed)
-                    connection:Disconnect()
-                    connection = nil
+                    if connection then
+                        connection:Disconnect()
+                        connection = nil
+                    end
 
                     if not enterPressed then return end
                     if debounce2 then return end

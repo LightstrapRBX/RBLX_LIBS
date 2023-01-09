@@ -1600,7 +1600,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
 
     end
 
-    windowFunctions.ChangeKeybind = function(newKeybind)
+    function windowFunctions:ChangeKeybind(newKeybind)
         if not newKeybind then
 			return
 		end

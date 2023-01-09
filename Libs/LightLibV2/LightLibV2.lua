@@ -1,3 +1,28 @@
+--[[
+
+
+    .____    .__       .__     __  .____    ._____.    
+    |    |   |__| ____ |  |___/  |_|    |   |__\_ |__  
+    |    |   |  |/ ___\|  |  \   __\    |   |  || __ \ 
+    |    |___|  / /_/  >   Y  \  | |    |___|  || \_\ \
+    |_______ \__\___  /|___|  /__| |_______ \__||___  /
+            \/ /_____/      \/             \/       \/ 
+                ________                            
+            ___  _\_____  \                           
+            \  \/ //  ____/                           
+            \   //       \                           
+            \_/ \_______ \                          
+                        \/
+
+    
+    Made by: Lightstrap#0658
+    Design by: Lightstrap#0658
+
+]]
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
 local RS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local mouse = game.Players.LocalPlayer:GetMouse()
@@ -69,7 +94,7 @@ library.themes = {
     ["purple"] = false
 }
 
-library.DeleteAllWindows = function()
+function library:DeleteAllWindows()
     for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
         if obj.Name.match("LightLibV2") then
             obj:Destroy()
@@ -77,19 +102,16 @@ library.DeleteAllWindows = function()
     end
 end
 
-library.DeleteWindow = function(windowName)
-    for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
-        if obj.Name.match(windowName) then
-            obj:Destroy()
-            break
-        end
+function library:DeleteWindow(windowName)
+    if game:GetService("CoreGui"):FindFirstChild("LightLibV2_" .. windowName) then
+        game:GetService("CoreGui")["LightLibV2_" .. windowName]:Destroy()
     end
 end
 
-library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
+function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
 
     if deleteAllWindows then
-        library.DeleteAllWindows()
+        library:DeleteAllWindows()
     end
 
     local LightLibV2 = Instance.new("ScreenGui")
@@ -468,7 +490,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
 
     local windowFunctions = {}
 
-    windowFunctions.CreateTab = function(tabName)
+    function windowFunctions:CreateTab(tabName)
         local TabB = Instance.new("Frame")
         local UICorner = Instance.new("UICorner")
         local RealTabB = Instance.new("TextButton")
@@ -585,7 +607,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
 
         local tabFunctions = {}
 
-        tabFunctions.CreateSection = function()
+        function tabFunctions:CreateSection()
             if getNumberOfSectionsInTab(MainH) > 0 then
                 createSectionEnder(MainH)
                 createSectionDivider(MainH)
@@ -594,8 +616,8 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
 
             local sectionFunctions = {}
 
-            sectionFunctions.CreateLabel = function(args)
-                local labelText = args["Text"] or "This is just a text label. Nothing much, really. Why are you still reading this?"
+            function sectionFunctions:CreateLabel(args)
+                local labelText = args["Text"] or args[1] or "Text here."
     
                 local Section_Label = Instance.new("Frame")
                 local UICorner = Instance.new("UICorner")
@@ -638,8 +660,8 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
                 Label.TextWrapped = true
             end
     
-            sectionFunctions.CreateButton = function(args)
-                local buttonText = args["Text"] or args[1]
+            function sectionFunctions:CreateButton(args)
+                local buttonText = args["Text"] or args[1] or "Text here."
                 local callback = args["Callback"] or args[2]
 
                 if not callback or typeof(callback) ~= "function" then return end
@@ -756,7 +778,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
 
             end
     
-            sectionFunctions.CreateNumberInput = function(args)
+            function sectionFunctions:CreateNumberInput(args)
 
                 local labelText = args["Text"] or args[1] or "Text here."
                 local callback = args["Callback"] or args[2]
@@ -834,7 +856,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
             
             end
 
-            sectionFunctions.CreateTextInput = function(args)
+            function sectionFunctions:CreateTextInput(args)
                 local labelText = args["Text"] or args[1] or "Text here."
                 local callback = args["Callback"] or args[2]
 
@@ -906,7 +928,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
                 end)
             end
     
-            sectionFunctions.CreateToggle = function(args)
+            function sectionFunctions:CreateToggle(args)
                 local labelText = args["Text"] or args[1] or "Text here."
                 local default = args["Default"] or args[2] or false
                 local callback = args["Callback"] or args[3]
@@ -1028,7 +1050,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
 
             end
 
-            sectionFunctions.CreateKeybind = function(args)
+            function sectionFunctions:CreateKeybind(args)
                 local labelText = args["Text"] or args[1] or "Text here."
                 local default = args["Default"] or args[2]
                 local callback = args["Callback"] or args[3]
@@ -1130,7 +1152,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
 
             end
 
-            sectionFunctions.CreateSlider = function(args)
+            function sectionFunctions:CreateSlider(args)
                 local labelText = args["Text"] or args[1] or "Text here."
                 local min = args["Min"] or args[2]
                 local max = args["Max"] or args[3]
@@ -1292,7 +1314,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
             
             end
 
-            sectionFunctions.CreateDropdown = function(args)
+            function sectionFunctions:CreateDropdown(args)
                 local labelText = args["Text"] or args[1] or "Text here."
                 local list = args["List"] or args[2]
                 local callback = args["Callback"] or args[3]
@@ -1304,7 +1326,7 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
                 local DropdownC = Instance.new("Frame")
                 local UICorner_2 = Instance.new("UICorner")
                 local DropdownH = Instance.new("ScrollingFrame")
-                local UIListLayout = Instance.new("UIListLayout")
+                local DropdownLayout = Instance.new("UIListLayout")
                 local LabelH = Instance.new("Frame")
                 local Label = Instance.new("TextLabel")
                 local Arrow = Instance.new("ImageButton")
@@ -1344,9 +1366,9 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
                 DropdownH.Size = UDim2.new(0.970532596, 0, 0.925000012, 0)
                 DropdownH.ScrollBarThickness = 0
                 
-                UIListLayout.Parent = DropdownH
-                UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-                UIListLayout.Padding = UDim.new(0.00999999978, 0)
+                DropdownLayout.Parent = DropdownH
+                DropdownLayout.SortOrder = Enum.SortOrder.LayoutOrder
+                DropdownLayout.Padding = UDim.new(0.00999999978, 0)
                 
                 LabelH.Name = "LabelH"
                 LabelH.Parent = Section_Dropdown
@@ -1388,6 +1410,14 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
                 ----------------------------------------------------------------------------------------------
                 ----------------------------------------------------------------------------------------------
 
+                DropdownLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+                    updateLayout(DropdownH, DropdownLayout)
+                end)
+                DropdownH.CanvasSize = UDim2.new(0, DropdownLayout.AbsoluteContentSize.X, 0, DropdownLayout.AbsoluteContentSize.Y)
+
+                ----------------------------------------------------------------------------------------------
+                ----------------------------------------------------------------------------------------------
+                
                 local debounce = false
                 local open = false
 
@@ -1470,14 +1500,14 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
                             Button.MouseEnter:Connect(function()
                                 if buttonBusy then return end
                                 game:GetService("TweenService"):Create(Section_Selection, 0.25, {
-                                    BackgroundColor3 = Color3.fromRGB(241, 236, 87)
+                                    BackgroundColor3 = Color3.fromRGB(227, 180, 41)
                                 }):Play()
                             end)
             
                             Button.MouseLeave:Connect(function()
                                 if buttonBusy then return end
                                 game:GetService("TweenService"):Create(Section_Selection, 0.25, {
-                                    BackgroundColor3 = Color3.fromRGB(255, 250, 92)
+                                    BackgroundColor3 = Color3.fromRGB(255, 203, 46)
                                 }):Play()
                             end)
             
@@ -1489,10 +1519,10 @@ library.CreateWindow = function(windowName, windowKeybind, deleteAllWindows)
                                 end)
             
                                 local tween1 = game:GetService("TweenService"):Create(Section_Selection, 0.25, {
-                                    BackgroundColor3 = Color3.fromRGB(255, 250, 92)
+                                    BackgroundColor3 = Color3.fromRGB(255, 203, 46)
                                 })
                                 local tween2 = game:GetService("TweenService"):Create(Section_Selection, 0.25, {
-                                    BackgroundColor3 = Color3.fromRGB(241, 236, 87)
+                                    BackgroundColor3 = Color3.fromRGB(227, 180, 41)
                                 })
             
                                 tween1:Play()

@@ -26,6 +26,7 @@
 local RS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local mouse = game.Players.LocalPlayer:GetMouse()
+local playerGui = game.Players.LocalPlayer.PlayerGui
 
 local function updateLayout(scrlFrame, listLayout)
     scrlFrame.CanvasSize = UDim2.new(0, listLayout.AbsoluteContentSize.X, 0, listLayout.AbsoluteContentSize.Y)
@@ -42,7 +43,7 @@ local function getNumberOfWindows()
 end
 
 local function getNumberOfTabsInWindow(window)
-    return #window["C1"]["C2"]["TabC"]["TabH"]:GetChildren() - 1
+    return #window["Drag"]["C1"]["C2"]["TabC"]["TabH"]:GetChildren() - 1
 end
 
 local function getNumberOfSectionsInTab(tab)
@@ -524,7 +525,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
         RealTabB.TextSize = 14.000
         RealTabB.TextWrapped = true
 
-        MainH.Name = tabName or getNumberOfTabsInWindow(windowName) + 1
+        MainH.Name = tabName or getNumberOfTabsInWindow(LightLibV2) + 1
         MainH.Parent = MainC
         MainH.Active = true
         MainH.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -550,8 +551,12 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
         ----------------------------------------------------------------------------------------------
 
         task.spawn(function()
-            if getNumberOfTabsInWindow(windowName) == 0 then
+            if getNumberOfTabsInWindow(LightLibV2) == 1 then
                 MainH.Visible = true
+                TabBSelected.Value = true
+                game:GetService("TweenService"):Create(TabB, TweenInfo.new(0.25), {
+                    BackgroundColor3 = Color3.fromRGB(236, 184, 25)
+                }):Play()
             end
         end)
 
@@ -587,7 +592,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
 
                 task.spawn(function()
                     for _, obj in pairs(TabH:GetChildren()) do
-                        if obj.Name ~= tabName then
+                        if obj.Name ~= tabName and obj:IsA("Frame") then
                             obj.TabBSelected.Value = false
                             obj.BackgroundColor3 = Color3.fromRGB(255, 203, 46)
                         end
@@ -633,7 +638,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Label.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Label.BorderSizePixel = 0
                 Section_Label.Position = UDim2.new(0.498244613, 0, 0.0631578341, 0)
-                Section_Label.Size = UDim2.new(1.00399995, 0, 0.0599999987, 0)
+                Section_Label.Size = UDim2.new(1.00399995, 0, 0.115, 0)
     
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Label
@@ -682,7 +687,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Button.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Button.BorderSizePixel = 0
                 Section_Button.Position = UDim2.new(0.498244613, 0, 0.0631578341, 0)
-                Section_Button.Size = UDim2.new(1.00399995, 0, 0.0599999987, 0)
+                Section_Button.Size = UDim2.new(1.00399995, 0, 0.115, 0)
 
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Button
@@ -800,7 +805,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Number.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Number.BorderSizePixel = 0
                 Section_Number.Position = UDim2.new(0.498244613, 0, 0.0631578341, 0)
-                Section_Number.Size = UDim2.new(1.00399995, 0, 0.0599999987, 0)
+                Section_Number.Size = UDim2.new(1.00399995, 0, 0.115, 0)
 
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Number
@@ -877,7 +882,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Text.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Text.BorderSizePixel = 0
                 Section_Text.Position = UDim2.new(0.498244613, 0, 0.0631578341, 0)
-                Section_Text.Size = UDim2.new(1.00399995, 0, 0.0599999987, 0)
+                Section_Text.Size = UDim2.new(1.00399995, 0, 0.115, 0)
 
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Text
@@ -951,7 +956,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Toggle.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Toggle.BorderSizePixel = 0
                 Section_Toggle.Position = UDim2.new(0.498244613, 0, 0.0631578341, 0)
-                Section_Toggle.Size = UDim2.new(1.00399995, 0, 0.0599999987, 0)
+                Section_Toggle.Size = UDim2.new(1.00399995, 0, 0.115, 0)
                 
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Toggle
@@ -1072,7 +1077,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Keybind.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Keybind.BorderSizePixel = 0
                 Section_Keybind.Position = UDim2.new(0.498244613, 0, 0.0631578341, 0)
-                Section_Keybind.Size = UDim2.new(1.00399995, 0, 0.0599999987, 0)
+                Section_Keybind.Size = UDim2.new(1.00399995, 0, 0.115, 0)
                 
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Keybind
@@ -1166,6 +1171,10 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 
                 default = default or min
 
+                min = tonumber(min)
+                max = tonumber(max)
+                default = tonumber(default)
+
                 local Section_Slider = Instance.new("Frame")
                 local UICorner = Instance.new("UICorner")
                 local LabelH = Instance.new("Frame")
@@ -1183,7 +1192,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Slider.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Slider.BorderSizePixel = 0
                 Section_Slider.Position = UDim2.new(0.502000034, 0, 0.034457434, 0)
-                Section_Slider.Size = UDim2.new(1.00399995, 0, 0.0689148307, 0)
+                Section_Slider.Size = UDim2.new(1.00399995, 0, 0.125, 0)
                 
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Slider
@@ -1340,7 +1349,7 @@ function library:CreateWindow(windowName, windowKeybind, deleteAllWindows)
                 Section_Dropdown.BackgroundColor3 = Color3.fromRGB(255, 250, 92)
                 Section_Dropdown.BorderSizePixel = 0
                 Section_Dropdown.Position = UDim2.new(0.498244613, 0, 0.0631578341, 0)
-                Section_Dropdown.Size = UDim2.new(1.00399995, 0, 0.0599999987, 0)
+                Section_Dropdown.Size = UDim2.new(1.00399995, 0, 0.115, 0)
                 
                 UICorner.CornerRadius = UDim.new(0.125, 0)
                 UICorner.Parent = Section_Dropdown

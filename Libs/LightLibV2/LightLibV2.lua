@@ -22,6 +22,46 @@
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+local MoonLib_Main = Instance.new("ScreenGui")
+local MainContainer = Instance.new("Frame")
+
+MoonLib_Main.Name = "MoonLib_Main"
+MoonLib_Main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+MoonLib_Main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+MoonLib_Main.ResetOnSpawn = false
+
+MainContainer.Name = "MainContainer"
+MainContainer.Parent = MoonLib_Main
+MainContainer.AnchorPoint = Vector2.new(0.5, 0.5)
+MainContainer.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
+MainContainer.BorderSizePixel = 0
+MainContainer.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainContainer.Size = UDim2.new(0.4, 0, 0.5, 0)
+
+local TabContainer = Instance.new("Frame")
+local TabScrolling = Instance.new("ScrollingFrame")
+
+TabContainer.Name = "TabContainer"
+TabContainer.Parent = MainContainer
+TabContainer.AnchorPoint = Vector2.new(0.5, 0.5)
+TabContainer.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+TabContainer.BorderSizePixel = 0
+TabContainer.Position = UDim2.new(0.165, 0, 0.5, 0)
+TabContainer.Size = UDim2.new(0.3, 0, 0.95, 0)
+
+TabScrolling.Name = "TabScrolling"
+TabScrolling.Parent = TabContainer
+TabScrolling.Active = true
+TabScrolling.AnchorPoint = Vector2.new(0.5, 0.5)
+TabScrolling.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TabScrolling.BackgroundTransparency = 1.000
+TabScrolling.BorderSizePixel = 0
+TabScrolling.Position = UDim2.new(0.5, 0, 0.5, 0)
+TabScrolling.Size = UDim2.new(0.875, 0, 0.96, 0)
+TabScrolling.CanvasPosition = Vector2.new(0, 150)
+TabScrolling.ScrollBarThickness = 0
+TabScrolling.ScrollingDirection = Enum.ScrollingDirection.Y
+
 
 local RS = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")

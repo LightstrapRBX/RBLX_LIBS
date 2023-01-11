@@ -26,7 +26,7 @@ end
 local function getNumberOfWindows()
     local num = 0
     for _, obj in pairs(game:GetService("CoreGui"):GetChildren()) do
-        if obj.Name.match("LightLibV2") then
+        if obj.Name.match(LibName) then
             num = num + 1
         end
     end
